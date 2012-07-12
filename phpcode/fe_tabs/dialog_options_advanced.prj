@@ -1,0 +1,88 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$maintab"
+parent = "$maintab"
+prefix = "IDC_"
+startval = 1300
+localize = ""
+locprefix = "LANG_"
+istabpage = 1
+tabnumber = 1
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = ""
+
+[Form]
+class = "ModalDialog"
+caption = "Advanced tab"
+geom = "WBC_CENTER WBC_CENTER 313 326"
+style = 0
+value = 0
+controls = 7
+
+[Form_ctrl1]
+class = "Frame"
+caption = "Language options"
+geom = "15 10 275 95"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "Frame"
+caption = "Interface options"
+geom = "15 115 275 115"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl3]
+class = "Label"
+caption = "&Language:"
+geom = "30 35 160 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl4]
+class = "ComboBox"
+caption = ""
+geom = "30 65 235 210"
+style = 64
+value = 0
+id = "IDC_LANGUAGE"
+
+[Form_ctrl5]
+class = "CheckBox"
+caption = "Show &tooltips"
+geom = "30 140 255 15"
+style = 0
+value = 1
+id = "IDC_TOOLTIPS"
+
+[Form_ctrl6]
+class = "CheckBox"
+caption = "&Confirmations"
+geom = "30 170 255 15"
+style = 0
+value = 1
+id = "IDC_CONFIRMATIONS"
+
+[Form_ctrl7]
+class = "CheckBox"
+caption = "&Show all animations"
+geom = "30 200 255 15"
+style = 0
+value = 0
+id = "IDC_ALLANIMATIONS"

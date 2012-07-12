@@ -1,0 +1,44 @@
+<html>
+
+<head>
+
+<title>db_get_next_free_id</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_get_next_free_id-->
+<h2>db_get_next_free_id</h2>
+		<p>int <b>db_get_next_free_id </b>(string tablename [, string idfield])</p>
+<p>Gets the next available id (current id + 1) in a table.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of table to be examined.<br>	<i>idfield</i>  is the name of identifier field (column). Default is &quot;id&quot;.<br><br>
+			<b>Result</b></p>
+		<p>The function returns the next available id (current id +
+1) or NULL if an error occurs. consult</p>
+
+		<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Get the next free id in mytable<br>
+							<br>$id = db_get_next_free_id(&quot;mytable&quot;);<br>
+						</code></p>
+</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

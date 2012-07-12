@@ -1,0 +1,163 @@
+<html>
+
+<head>
+<title>wb_set_cursor</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+wb_set_cursor
+Mouse cursor
+Cursor-->
+<h2>wb_set_cursor</h2>
+<p>bool <b>wb_set_cursor</b> (int wbobject,  mixed source)</p>
+<p>Set or change the mouse cursor shape of a window, control, a whole class 
+or application-wide.</p>
+<p>The cursor can be set for any <a href="../reference/classes_window.html">window class</a> 
+and for control classes <a href="../classes/imagebutton.html">ImageButton</a>, <a href="../classes/invisiblearea.html">InvisibleArea</a> 
+(deprecated), <a href="../classes/hyperlink.html">HyperLink</a> and <a href="../classes/editbox.html">EditBox</a>.</p>
+<p>The <i>source</i> parameter can be a cursor handle from function <a href="wb_load_image.html"><b>wb_load_image()</b></a> 
+or one of the preset system cursors: <b>arrow</b>, <b>cross</b>, <b>finger</b>, 
+<b>forbidden</b>, <b>help</b>, <b>ibeam</b>, <b>null</b> (no cursor), <b>sizeall</b>, <b>sizenesw</b>, <b>sizens</b>, <b>sizenwse</b>, <b>sizewe</b>, 
+<b>uparrow</b>, <b>wait</b> and <b>waitarrow</b>.</p>
+<h1><b>Uses</b></h1>
+<p>Use this function according to the table below.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="94">            <p>wbobject</p>
+        </th>
+        <th width="70">            <p>source</p>
+        </th>
+        <th width="498">            <p>What it does</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="94">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="70">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="498">
+<p>Set the application cursor to the default cursor (arrow).</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="70">
+            <p>Handle</p>
+        </td>
+        <td width="498">
+<p>Set the application cursor to the specified cursor handle.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="70">
+            <p>String</p>
+        </td>
+        <td width="498">
+<p>Set the application cursor to the specified cursor name.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Class name</p>
+        </td>
+        <td width="70">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="498">
+            <p>Set the class cursor to the default cursor (arrow).</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Class name</p>
+        </td>
+        <td width="70">
+            <p>Handle</p>
+        </td>
+        <td width="498">
+            <p>Set the class cursor to the specified cursor handle.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Class name</p>
+        </td>
+        <td width="70">
+            <p>String</p>
+        </td>
+        <td width="498">
+<p>Set the class cursor to the specified cursor name.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Handle</p>
+        </td>
+        <td width="70">
+            <p><code><font size="2">NULL</font></code></p>
+        </td>
+        <td width="498">
+<p>Set the window or control cursor to the default class cursor.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Handle</p>
+        </td>
+        <td width="70">
+            <p>Handle</p>
+        </td>
+        <td width="498">
+<p>Set the window or control cursor to the specified cursor handle.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="94">
+            <p>Handle</p>
+        </td>
+        <td width="70">
+            <p>String</p>
+        </td>
+        <td width="498">
+<p>Set the window or control cursor to the specified cursor name.</p>
+        </td>
+    </tr>
+</table>
+<p> Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1>Examples</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td><pre class="code">
+// Set the cursor of a single control
+</pre>
+            <p class="code">wb_set_cursor($button, 'finger');</p>
+            <p class="code">// Set the cursor of a single window</p>
+            <p class="code">wb_set_cursor($button, 'cross');</p>
+            <p class="code">// Set the cursor for whole classes</p>
+            <p class="code">$cursor = wb_load_image('finger.cur');<br>wb_set_cursor(ImageButton, 
+            $cursor);<br>wb_set_cursor(InvisibleArea, $cursor);<br>wb_set_cursor(HyperLink, 
+            $cursor);</p>
+            <p class="code">// Hide the cursor of the current application</p>
+            <p class="code">wb_set_cursor(NULL, 'none');</p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_load_image.html"><b>wb_load_image</b></a><b><br></b><a href="../reference/classes_window.html">window classes</a><b><br></b><a href="../reference/functions_category.html#system">System functions</a></p>
+<p>&nbsp;</p>
+</body>
+
+</html>

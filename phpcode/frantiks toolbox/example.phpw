@@ -1,0 +1,92 @@
+<?php
+/**
+ * Gives examples of use of the cStruct class for use with WinAPI and Winbinder
+ *
+ * @author Andrew Fitzgerald
+ * @version 0.1.1 
+ *
+ * @file
+ *
+ */
+ 
+include_once('WinAPI.php');
+include_once('cStruct.php');
+
+
+// Define new data structures
+class MEMORYSTATUS extends cStruct
+{
+   static protected $typedef = "   
+		DWORD  dwLength;
+		DWORD  dwMemoryLoad;
+		SIZE_T dwTotalPhys;
+		SIZE_T dwAvailPhys;
+		SIZE_T dwTotalPageFile;
+		SIZE_T dwAvailPageFile;
+		SIZE_T dwTotalVirtual;
+		SIZE_T dwAvailVirtual;
+	";   
+};
+
+class DISPLAY_DEVICE extends cStruct
+{
+   static protected $typedef = "
+		DWORD cb;
+		TCHAR DeviceName[32];
+		TCHAR DeviceString[128];
+		DWORD StateFlags;
+		TCHAR DeviceID[128];
+		TCHAR DeviceKey[128];
+    
+   ";
+};
+
+// set up data structure MEMORYSTATUS
+$status = new MEMORYSTATUS(MEMORYSTATUS::getByteLen(), 0, 0, 0, 0, 0, 0, 0);
+
+
+// call WinAPI function
+Kernel32::GlobalMemoryStatus($status);
+
+// set up data structure DISPLAY_DEVICE.. does basically the same thing as 
+// MEMORYSTATUS but in a different way
+$displayDev = new DISPLAY_DEVICE();
+$displayDev->cb = DISPLAY_DEVICE::getByteLen();
+
+// call WinAPI function
+User32::EnumDisplayDevices(null, 0, $displayDev , 0);
+
+
+
+
+// build output
+$report =  "Total RAM is " . sprintf("%.2f", ($status->dwTotalPhys / (1024 * 1024))) 
+   . " MB, " . $status->dwMemoryLoad . "% used.\n\n"
+   . "Using Display: $displayDev->DeviceString";
+wb_message_box(null, $report);
+/*
+typedef struct _wbo {
+    HWND hwnd;                  // Control or window handle
+    UINT id;                    // Control identifier
+    UINT uClass;                // Object class
+    int item;                   // Item index
+    int subitem;                // Sub-item index
+    DWORD style;                // WinBinder style
+    struct _wbo *parent;        // Parent window
+    LPTSTR pszCallBackFn;       // Callback function
+    LPTSTR pszCallBackObj;      // Object for callback method
+    LPARAM lparam;              // User-defined parameter
+    LONG lparams[8];            // General-purpose parameter array
+    RECT rcTitle;               // Title area
+    AREA arMin;                 // Minimum window area
+    AREA arMax;                 // Maximum window area
+    HBITMAP pbuffer;            // Screen buffer for container windows
+} WBOBJ, *PWBOBJ;
+
+
+*/
+
+
+
+
+

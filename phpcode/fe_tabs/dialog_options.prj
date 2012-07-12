@@ -1,0 +1,56 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$options_dlg"
+parent = "null"
+prefix = "IDC_"
+startval = 1000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = ""
+
+[Form]
+class = "AppWindow"
+caption = "A dialog box with tabs"
+geom = "WBC_CENTER WBC_CENTER 341 397"
+style = 1
+value = 0
+controls = 3
+
+[Form_ctrl1]
+class = "TabControl"
+caption = "General,Advanced"
+geom = "10 10 310 305"
+style = 0
+value = 0
+id = "IDC_MAINTAB"
+
+[Form_ctrl2]
+class = "PushButton"
+caption = "OK"
+geom = "65 330 90 25"
+style = 0
+value = 0
+id = "IDOK"
+
+[Form_ctrl3]
+class = "PushButton"
+caption = "Cancel"
+geom = "170 330 90 25"
+style = 0
+value = 0
+id = "IDCANCEL"

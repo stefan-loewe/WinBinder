@@ -1,0 +1,69 @@
+<html>
+
+<head>
+
+<title>db_open_database</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_open_database
+-->
+<h2>db_open_database</h2>
+		<p>resource <b>db_open_database </b>(string database [, string path
+[, string username [, string password]]])</p>
+		<p>Opens an existing database or creates a new one. If the database is not found, it will be created and opened.</p>
+<p><b>Arguments</b></p>
+<p><i>database</i> is the name of the database to be opened.<br><i>path</i> is an optional URL or path to the database.<br><i>username</i> and
+<i>password</i> are
+optional parameters to grant access to the database.<br>
+		</p>
+		<p><b>Result</b></p>
+		<p>The result will be a database resource if successful or <code>NULL</code>
+otherwise.<br></p>
+
+		<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+					<p><code>// 1. Open SQWLite database<br><br>
+						include &quot;db_common.inc.php&quot;;<br>
+
+					define(&quot;WB_DATABASE&quot;, &quot;SQLite&quot;);<br>
+
+					define(&quot;PATH_DATA&quot;, &quot;C:\winbinder\myApp\&quot;);
+					$database = &quot;sample&quot;; <br>
+							<br>$dbhnd = db_open_database($database, PATH_DATA);<br>
+							// opens the database c:\winbinder\myApp\SQLite_sample.db<br>
+
+					<br>
+
+					// 2. Open MySQL database<br><br>
+							include &quot;db_common.inc.php&quot;;<br>
+
+					define(&quot;APPPREFIX&quot;, &quot;myDB_&quot;);<br>
+
+					define(&quot;WB_DATABASE&quot;, &quot;mySQL&quot;);<br>$database = &quot;test&quot;; <br>
+							<br>
+
+					db_open_database($database, $server = &quot;192.168.168.133&quot;, $username = &quot;root&quot;, $password = &quot;&quot;);<br>// opens the database test on server 192.168.168.133 with user root and no password <br>
+							// all tables will have a prefix myDB_ not seen by the application<br>
+						</code></p>
+				</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

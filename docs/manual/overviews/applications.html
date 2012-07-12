@@ -1,0 +1,73 @@
+<html>
+
+<head>
+<title>Creating WinBinder applications</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+Applications
+WinBinder,Applications
+Creating applications
+-->
+<h2>Creating WinBinder applications</h2>
+<p>There are five&nbsp;steps needed to create a WinBinder application:</p>
+<ol type="1">
+    <li>Create the main window.</li>
+    <li>Create controls for the main window.</li>
+    <li>Create a handler function to process the controls.</li>
+    <li>Assign the handler function to the main window.</li>
+    <li>Enter the application loop.</li>
+</ol>
+<h1><b>Example<br></b></h1>
+<p>The simple example below creates a very basic WinBinder application with
+two button controls. The comments show the required steps.</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+<p><code>&lt;?<br>include &quot;../include/winbinder.php&quot;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+            Location of WinBinder library<br><br>// STEP 1: Create main window<br><br>$mainwin = wb_create_window(NULL, AppWindow, &quot;Five steps&quot;, 320, 240);
+
+<br><br>// STEP 2: Create controls for the main window &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geometry data        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Id
+
+<br><br>wb_create_control($mainwin, PushButton, &quot;Button 1&quot;,  &nbsp;&nbsp;50, 70, 80, 22,     &nbsp;&nbsp;&nbsp;&nbsp;101);
+<br>wb_create_control($mainwin, PushButton, &quot;Button 2&quot;, &nbsp;180, 70, 80, 22,     &nbsp;&nbsp;&nbsp;&nbsp;102);
+
+<br><br>// STEP 3: Create a handler function to process the controls (see below).
+<br>
+
+<br>// STEP 4: Assign the handler function to the main window.
+
+<br><br>wb_set_handler($mainwin, &quot;process_main&quot;);
+
+<br><br>// STEP 5: Enter application loop
+<br>
+
+<br>wb_main_loop();
+
+<br><br>// The handler function from step 3
+
+<br><br>function process_main($window, $id)<br>{<br> &nbsp;&nbsp;&nbsp;&nbsp;switch($id) {
+
+        <br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 101:
+        <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 102:
+            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_message_box($window, &quot;Button #$id was pressed.&quot;);
+            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+
+        <br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case IDCLOSE: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      // The
+constant IDCLOSE is predefined
+            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_destroy_window($window);
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Destroy the window<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code></p>
+            <p><code>?&gt;</code></p>
+</td></tr>
+</table><br>
+
+<h1><b>See also</b></h1>
+    <p><a href="main_loop.html">The main loop</a><br><a href="callback_functions.html">Callback functions and window handlers</a><br><a href="running.html">Running 
+WinBinder applications<br></a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

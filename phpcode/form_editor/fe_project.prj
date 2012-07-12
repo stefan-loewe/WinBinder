@@ -1,0 +1,289 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$wb->winproject"
+parent = "$wb->mainwin"
+prefix = "IDC_"
+startval = 3000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+namecounter = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = 18
+
+[Form]
+class = "ModalDialog"
+caption = "Project Properties"
+geom = "WBC_CENTER WBC_CENTER 620 391"
+style = 1
+value = 0
+controls = 32
+
+[Form_ctrl1]
+class = "Label"
+caption = "The properties below apply to the current project. You may use sprintf() syntax for the control variable name."
+geom = "20 10 580 15"
+style = 128
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "Frame"
+caption = "General project data"
+geom = "15 35 285 205"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl3]
+class = "Frame"
+caption = "Tab pages"
+geom = "15 245 285 65"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl4]
+class = "Frame"
+caption = "Additional code generation options"
+geom = "315 35 285 275"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl5]
+class = "Label"
+caption = "&Form variable name:"
+geom = "20 55 125 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl6]
+class = "EditBox"
+caption = ""
+geom = "155 55 135 20"
+style = 0
+value = 0
+id = "IDC_FORMVAR"
+
+[Form_ctrl7]
+class = "Label"
+caption = "&Parent variable name:"
+geom = "20 85 125 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl8]
+class = "EditBox"
+caption = ""
+geom = "155 85 135 20"
+style = 0
+value = 0
+id = "IDC_PARENT"
+
+[Form_ctrl9]
+class = "Label"
+caption = "&Control variable name:"
+geom = "20 115 125 15"
+style = 32
+value = 0
+id = "IDC_LABEL3001"
+
+[Form_ctrl10]
+class = "EditBox"
+caption = ""
+geom = "155 115 135 20"
+style = 0
+value = 0
+id = "IDC_CTRLVAR"
+
+[Form_ctrl11]
+class = "Label"
+caption = "Control &start value:"
+geom = "20 145 125 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl12]
+class = "EditBox"
+caption = ""
+geom = "155 145 75 20"
+style = 0
+value = 0
+id = "IDC_STARTCTRLVAL"
+
+[Form_ctrl13]
+class = "Label"
+caption = "Constant prefi&x:"
+geom = "25 175 120 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl14]
+class = "EditBox"
+caption = ""
+geom = "155 175 75 20"
+style = 0
+value = 0
+id = "IDC_PREFIX"
+
+[Form_ctrl15]
+class = "Label"
+caption = "Constant start &value:"
+geom = "20 205 125 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl16]
+class = "EditBox"
+caption = ""
+geom = "155 205 75 20"
+style = 1024
+value = 0
+id = "IDC_STARTVAL"
+
+[Form_ctrl17]
+class = "CheckBox"
+caption = "This form is a &tab page"
+geom = "30 270 135 15"
+style = 0
+value = 0
+id = "IDC_ISTABPAGE"
+
+[Form_ctrl18]
+class = "Label"
+caption = "Ta&b #"
+geom = "165 270 45 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl19]
+class = "EditBox"
+caption = 0
+geom = "215 270 55 20"
+style = 1024
+value = 0
+id = "IDC_TABNUMBER"
+
+[Form_ctrl20]
+class = "Spinner"
+caption = "Spinner20"
+geom = "270 270 20 20"
+style = 524288
+value = 0
+id = "IDC_TABNUMBERSPINNER"
+
+[Form_ctrl21]
+class = "CheckBox"
+caption = "Use captions to &fill out ListBoxes and ComboBoxes"
+geom = "325 60 270 15"
+style = 0
+value = 0
+id = "IDC_FILLLISTS"
+
+[Form_ctrl22]
+class = "CheckBox"
+caption = "Use captions as ListView &headers"
+geom = "325 85 255 15"
+style = 0
+value = 0
+id = "IDC_FILLHEADERS"
+
+[Form_ctrl23]
+class = "CheckBox"
+caption = "Use captions as image &names for ImageButtons"
+geom = "325 110 255 15"
+style = 0
+value = 0
+id = "IDC_IMAGENAMES"
+
+[Form_ctrl24]
+class = "CheckBox"
+caption = "&Force controls over tabs to be children of tabs"
+geom = "325 135 260 15"
+style = 0
+value = 0
+id = "IDC_INSERTONTABS"
+
+[Form_ctrl25]
+class = "CheckBox"
+caption = "Apply &values to ScrollBars, Gauges, and Sliders"
+geom = "325 160 270 15"
+style = 0
+value = 0
+id = "IDC_APPLYVALUES"
+
+[Form_ctrl26]
+class = "CheckBox"
+caption = "Generate additional PHP code for &localization"
+geom = "325 185 245 15"
+style = 0
+value = 0
+id = "IDC_LOCALIZE"
+
+[Form_ctrl27]
+class = "Label"
+caption = "Locali&zation prefix:"
+geom = "340 205 114 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl28]
+class = "EditBox"
+caption = ""
+geom = "465 200 65 20"
+style = 0
+value = 0
+id = "IDC_LOCPREFIX"
+
+[Form_ctrl29]
+class = "PushButton"
+caption = "OK"
+geom = "210 325 90 25"
+style = 0
+value = 0
+id = "IDOK"
+
+[Form_ctrl30]
+class = "PushButton"
+caption = "Cancel"
+geom = "315 325 90 25"
+style = 0
+value = 0
+id = "IDCANCEL"
+
+[Form_ctrl31]
+class = "Label"
+caption = "(%d above)"
+geom = "238 145 65 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl32]
+class = "CheckBox"
+caption = "Generate null &identifiers for new static controls"
+geom = "325 230 260 15"
+style = 0
+value = 0
+id = "IDC_STATICNULLID"

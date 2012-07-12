@@ -1,0 +1,75 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Code sample: Demonstrates wb_get_system_info()
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"WinBinder version ". WBC_VERSION . ": System information");
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// NOTE: This kind of application does not need a window handler function
+
+$mainwin = wb_create_window(NULL, PopupWindow, APPNAME, 550, 400);
+$list = wb_create_control($mainwin, ListView, "", 0, 0, 543, 375, 101, WBC_LINES | WBC_READONLY);
+
+wb_set_text($list, array(
+	array("", 25),
+	array("Parameter", 100),
+	array("Current value", 408)));
+
+$params = array(
+	"AppMemory",
+	"CommandLine",
+	"ComputerName",
+	"ConsoleMode",
+	"DiskDrives",
+	"ExePath",
+	"ExtensionPath",
+	"FontPath",
+	"FreeMemory",
+	"GDIObjects",
+	"Instance",
+	"OsPath",
+	"OSVersion",
+	"OSNumber",
+	"PgmPath",
+	"ScreenArea",
+	"SystemFont",
+	"SystemPath",
+	"TempPath",
+	"TotalMemory",
+	"UserName",
+	"UserObjects",
+	"WorkArea",
+);
+
+$count = 0;
+foreach($params as $param)
+	wb_create_items($list, array(array(@++$count, $param, wb_get_system_info($param))));
+
+wb_main_loop();                                                 // Enter message loop
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

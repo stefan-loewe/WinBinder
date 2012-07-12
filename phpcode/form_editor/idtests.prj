@@ -1,0 +1,128 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$winmain"
+parent = "null"
+prefix = "IDC_"
+startval = 1000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = 2
+
+[Form]
+class = "AppWindow"
+caption = "ID tests"
+geom = "WBC_CENTER WBC_CENTER 382 470"
+style = 0
+value = 0
+controls = 12
+
+[Form_ctrl1]
+class = "Frame"
+caption = "Null identifier"
+geom = "20 20 140 60"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "Label"
+caption = "Null identifier"
+geom = "50 45 90 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl3]
+class = "EditBox"
+caption = "Valid ID (1001)"
+geom = "20 100 185 20"
+style = 0
+value = 0
+id = "IDC_EDITBOX1001"
+
+[Form_ctrl4]
+class = "PushButton"
+caption = "OK"
+geom = "240 25 90 25"
+style = 0
+value = 0
+id = "IDOK"
+
+[Form_ctrl5]
+class = "PushButton"
+caption = "Cancel"
+geom = "240 60 90 25"
+style = 0
+value = 0
+id = "IDCANCEL"
+
+[Form_ctrl6]
+class = "EditBox"
+caption = "Valid ID (1002)"
+geom = "20 130 185 20"
+style = 0
+value = 0
+id = "IDC_EDITBOX1002"
+
+[Form_ctrl7]
+class = "EditBox"
+caption = "Duplicate ID (1002)"
+geom = "20 160 185 20"
+style = 0
+value = 0
+id = "IDC_EDITBOX1002"
+
+[Form_ctrl8]
+class = "CheckBox"
+caption = "Invalid ID (1k1k)"
+geom = "20 195 185 15"
+style = 0
+value = 0
+id = "1k1k"
+
+[Form_ctrl9]
+class = "CheckBox"
+caption = "Invalid ID (2k2k)"
+geom = "20 220 175 15"
+style = 0
+value = 0
+id = "2k2k"
+
+[Form_ctrl10]
+class = "CheckBox"
+caption = "Invalid ID (2k2k, duplicated)"
+geom = "20 245 175 15"
+style = 0
+value = 0
+id = "2k2k"
+
+[Form_ctrl11]
+class = "RadioButton"
+caption = "Numeric ID (800)"
+geom = "200 200 120 15"
+style = 0
+value = 0
+id = 800
+
+[Form_ctrl12]
+class = "RadioButton"
+caption = "Numeric ID (800, duplicated)"
+geom = "200 230 155 15"
+style = 0
+value = 0
+id = "IDC_RADIOBUTTON1009"

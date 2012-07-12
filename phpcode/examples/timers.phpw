@@ -1,0 +1,112 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Hi- and lo-resolution timers demo
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define('PATH_SCRIPT',	dirname(__FILE__) . '/');
+define('PATH_DATA',		PATH_SCRIPT);
+define('PATH_INC',		PATH_SCRIPT . '../include/');
+define('PATH_RES',		PATH_SCRIPT . '../resources/');
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . 'winbinder.php';
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define('APPNAME',			'Timers demonstration');
+define('ANIMATION_SPEED',	10);
+
+define('ID_SLIDER',			401);
+define('ID_MS',				402);
+define('ID_START',			403);
+define('ID_STOP',			404);
+
+define('ID_LABELLO',		103);
+define('ID_TIMERLO',		501);
+define('ID_LABELHI',		106);
+define('ID_TIMERHI',		-1);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+create_main_window();
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function create_main_window()
+{
+	$mainwin = wb_create_window(NULL, AppWindow, APPNAME,
+	  WBC_CENTER, WBC_CENTER, 305, 200, 0, WBC_REDRAW | WBC_MOUSEMOVE);
+
+	wb_create_control($mainwin, PushButton, "Start timers", 90, 14, 120, 24, ID_START);
+	wb_create_control($mainwin, PushButton, "Stop timers",  90, 44, 120, 24, ID_STOP);
+
+	wb_create_control($mainwin, Label, "1 ms", 20, 83, 40, 24, ID_MS);
+	wb_create_control($mainwin, Slider, "",    60, 80, 228, 24, ID_SLIDER);
+	wb_set_range(wb_get_control($mainwin, ID_SLIDER), 1, 500);
+
+	wb_create_control($mainwin, Label, "Lo-res: 0", 50, 120, 120, 24, ID_LABELLO);
+	wb_create_control($mainwin, Label, "Hi-res: 0", 190, 120, 120, 24, ID_LABELHI);
+
+	wb_set_handler($mainwin, 'process_main');
+}
+
+/* Process main window commands */
+
+function process_main($window, $id, $ctrl, $lparam1=0, $lparam2=0, $lparam3=0)
+{
+	static $countlo = 0;
+	static $counthi = 0;
+	static $val = 1;
+
+    switch($id) {
+
+		case ID_SLIDER:
+			$val = max(1, wb_get_value($ctrl));
+			wb_set_text(wb_get_control($window, ID_MS), "$val ms");
+			break;
+
+		case ID_START:
+			$countlo = 0;
+			$counthi = 0;
+			wb_set_enabled(wb_get_control($window, ID_SLIDER), false);
+			wb_create_timer($window, ID_TIMERLO, $val);	// Create a slow timer
+			wb_create_timer($window, ID_TIMERHI, $val);	// Create a fast timer
+			break;
+
+		case ID_STOP:
+			wb_destroy_timer($window, ID_TIMERLO);	// Stop the slow timer
+			wb_destroy_timer($window, ID_TIMERHI);	// Stop the fast timer
+			wb_set_enabled(wb_get_control($window, ID_SLIDER), true);
+			break;
+
+		case ID_TIMERLO:
+			wb_set_text(wb_get_control($window, ID_LABELLO), "Lo-res: $countlo");
+			$countlo++;
+			break;
+
+		case ID_TIMERHI:
+			wb_set_text(wb_get_control($window, ID_LABELHI), "Hi-res: $counthi");
+			$counthi++;
+			break;
+
+        case IDCLOSE:
+            wb_destroy_window($window);
+            break;
+    }
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

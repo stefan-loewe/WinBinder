@@ -1,0 +1,200 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$winmain"
+parent = "null"
+prefix = "IDC_"
+startval = 1000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = 1
+fillheaders = 1
+imagenames = 1
+insertontabs = 1
+applyvalues = 1
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = 22
+
+[Form]
+class = "AppWindow"
+caption = "(Empty Form)"
+geom = "WBC_CENTER WBC_CENTER 593 484"
+style = 4096
+value = 1234
+controls = 21
+
+[Form_ctrl1]
+class = "TabControl"
+caption = "Tab1,Tab2,Tab3"
+geom = "10 215 195 85"
+style = 0
+value = 0
+id = "IDC_TABCONTROL1020"
+
+[Form_ctrl2]
+class = "PushButton"
+caption = "PushButton1"
+geom = "10 15 100 25"
+style = 0
+value = 0
+id = "IDC_PUSHBUTTON1001"
+
+[Form_ctrl3]
+class = "ImageButton"
+caption = "ImageButton2"
+geom = "120 15 90 60"
+style = 0
+value = 0
+id = "IDC_IMAGEBUTTON1002"
+
+[Form_ctrl4]
+class = "InvisibleArea"
+caption = "InvisibleArea3"
+geom = "220 15 70 60"
+style = 0
+value = 0
+id = "IDC_INVISIBLEAREA1003"
+
+[Form_ctrl5]
+class = "CheckBox"
+caption = "CheckBox4"
+geom = "300 20 120 15"
+style = 0
+value = 0
+id = "IDC_CHECKBOX1004"
+
+[Form_ctrl6]
+class = "RadioButton"
+caption = "RadioButton5"
+geom = "300 40 120 15"
+style = 0
+value = 0
+id = "IDC_RADIOBUTTON1005"
+
+[Form_ctrl7]
+class = "HyperLink"
+caption = "HyperLink6"
+geom = "405 25 165 15"
+style = 2176
+value = 12582912
+id = "IDC_HYPERLINK1006"
+
+[Form_ctrl8]
+class = "Label"
+caption = "Label7"
+geom = "10 50 100 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl9]
+class = "EditBox"
+caption = "EditBox8"
+geom = "220 225 200 20"
+style = 0
+value = 0
+id = "IDC_EDITBOX1008"
+
+[Form_ctrl10]
+class = "RTFEditBox"
+caption = "RTFEditBox9"
+geom = "300 65 120 140"
+style = 0
+value = 0
+id = "IDC_RTFEDITBOX1009"
+
+[Form_ctrl11]
+class = "Frame"
+caption = "Frame10"
+geom = "10 75 280 130"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl12]
+class = "ListBox"
+caption = "ListBox11"
+geom = "25 95 120 95"
+style = 0
+value = 0
+id = "IDC_LISTBOX1011"
+
+[Form_ctrl13]
+class = "ComboBox"
+caption = "ComboBox12"
+geom = "155 95 120 95"
+style = 0
+value = 0
+id = "IDC_COMBOBOX1013"
+
+[Form_ctrl14]
+class = "Spinner"
+caption = "Spinner13"
+geom = "440 410 20 20"
+style = 0
+value = 0
+id = "IDC_SPINNER1014"
+
+[Form_ctrl15]
+class = "ScrollBar"
+caption = "ScrollBar14"
+geom = "435 305 140 20"
+style = 0
+value = 0
+id = "IDC_SCROLLBAR1015"
+
+[Form_ctrl16]
+class = "Slider"
+caption = "Slider15"
+geom = "430 380 145 20"
+style = 0
+value = 50
+id = "IDC_SLIDER1016"
+
+[Form_ctrl17]
+class = "Gauge"
+caption = "Gauge16"
+geom = "435 345 140 20"
+style = 0
+value = 50
+id = "IDC_GAUGE1017"
+
+[Form_ctrl18]
+class = "Calendar"
+caption = "Calendar17"
+geom = "220 263 200 167"
+style = 8
+value = 0
+id = "IDC_CALENDAR1018"
+
+[Form_ctrl19]
+class = "HTMLControl"
+caption = "HTMLControl18"
+geom = "435 215 140 80"
+style = 8
+value = 0
+id = "IDC_HTMLCONTROL1019"
+
+[Form_ctrl20]
+class = "TreeView"
+caption = "TreeView20"
+geom = "425 55 150 150"
+style = 0
+value = 0
+id = "IDC_TREEVIEW1021"
+
+[Form_ctrl21]
+class = "ListView"
+caption = "Field 1,Field 2,Field3"
+geom = "10 310 195 120"
+style = 0
+value = 0
+id = "IDC_LISTVIEW1022"

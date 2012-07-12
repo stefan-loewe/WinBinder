@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Spinner class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+Classes
+Classes,Spinner
+Spinners-->
+<h2>Spinner class</h2>
+<p>A <i>spinner</i> is a control made of two buttons with up/down arrows to store,
+increment and decrement
+a value. A spinner normally work in conjunction with an <a href="editbox.html">EditBox</a> (the &quot;buddy&quot;).
+If the spinner control is created immediately after the edit box, they will
+operate together automatically if you include the <span class="code">WBC_GROUP</span> 
+style. In this case the value stored in the spinner will always be
+shown in the edit box. The edit box can also be used for entering numbers
+manually. To create a spinner, use the function <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a>
+passing <code>Spinner</code> as the parameter <i>cclass</i>.</p>
+<p>The default range when a spinner is created is 0 to 100. To change the spinner
+range, use the <b><a href="../functions/wb_set_value.html">wb_set_value()</a></b>
+function.</p>
+<p>In the <a href="../overviews/callback_functions.html">windows handler</a>,
+    you should always process the edit box which is attached to the spinner,
+not the spinner itself.
+    If you try to process the spinner control you will receive the messages
+    twice. Similarly, you should always get or set the value of the edit box instead of trying to
+    get/set the value of the spinner directly.
+If you do the latter, you may miss any changes made
+manually on the edit box.</p>
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Create the edit box first<br><br>wb_create_control($mainwin,
+            EditBox, &quot;0&quot;, 340, 45, 35, 21, IDC_EDITBOX, WBC_VISIBLE
+            | WBC_ENABLED | WBC_NUMBER);<br><br>// Then create the spinner.
+            This is enough to make they work together<br><br>wb_create_control($mainwin,
+            Spinner, &quot;&quot;, &nbsp;378, 45, 16, 21, IDC_SPINNER, WBC_VISIBLE
+            | WBC_ENABLED | WBC_GROUP);<br><br>// Set the spinner range<br><br>wb_set_value(wb_get_control($mainwin,
+            IDC_SPINNER),&nbsp;null, -50, 50);&nbsp;</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br><a href="../functions/wb_set_value.html">wb_set_value</a><br></b><a href="../reference/classes_control.html">Control
+classes</a></p>
+<p class="code"><b>&nbsp;</b></p>
+</body>
+
+</html>

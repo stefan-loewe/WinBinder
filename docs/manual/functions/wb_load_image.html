@@ -1,0 +1,36 @@
+<html>
+
+<head>
+<title>wb_load_image</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_load_image
+-->
+<h2>wb_load_image</h2>
+<p>int <b>wb_load_image </b>(string filename [, int index [, int param]])</p>
+<p>Loads the image, icon or cursor file&nbsp;<i>filename</i> from disk and returns a handle
+to it.&nbsp;If <i>filename</i>
+is an icon library, <i>index</i> specifies the index of the image inside the file. Default index is 0.</p>
+
+<p>If <i>source</i> is an icon or a cursor, if <i>param</i> is 0 (the default), the 
+function returns a large icon or cursor; if <i>param</i> is 1, it returns a small icon 
+    or cursor; 
+if <i>param</i> is -1, the function returns the default icon or cursor.</p>
+<p><font color="#CC6600"><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE: The resulting image must be destroyed by a
+call to </b></font><a href="wb_destroy_image.html"><b>wb_destroy_image()</b></a><font color="#CC6600"><b>.</b></font></p>
+<h1><b>See also</b></h1>
+<p><a href="wb_create_image.html"><b>wb_create_image</b></a><b><br></b><a href="wb_destroy_image.html"><b>wb_destroy_image</b></a><b><br></b><a href="../reference/functions_category.html#image">Image functions</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

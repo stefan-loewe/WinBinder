@@ -1,0 +1,85 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Moving a custom control
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"A movable control");
+define("ID_MOVE",	201);
+define("ID_USE",	202);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window and controls
+
+$mainwin = wb_create_window(NULL, PopupWindow, APPNAME,
+  WBC_CENTER, WBC_CENTER, 400, 300, WBC_NOTIFY, WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_MOUSEMOVE);
+
+wb_create_control($mainwin, RadioButton, "Move control", 10, 5,  85, 32, ID_MOVE, 0, true);
+wb_create_control($mainwin, RadioButton, "Use control", 100, 5, 120, 32, ID_USE,  0, false);
+
+// Create a control
+
+$btn  = wb_create_control($mainwin, PushButton, "Move me", 10, 40, 80, 26, 1001);
+wb_set_enabled($btn, false);
+
+wb_set_handler($mainwin, "process_main");
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function process_main($window, $id, $ctrl=0, $lparam1=0, $lparam2=0)
+{
+	global $btn;
+	static $moving = true;
+
+	switch($id) {
+
+		case ID_MOVE:
+		case ID_USE:
+			$moving = wb_get_value(wb_get_control($window, ID_MOVE));
+			wb_set_enabled($btn, !$moving);
+			wb_set_text($btn, $moving ? "Move me" : "Use me" );
+			break;
+
+		case IDDEFAULT:
+
+			if($moving && ($lparam1 & WBC_LBUTTON)) {
+
+				// Move the control
+
+				$xpos = $lparam2 & 0xFFFF;
+				$ypos = max(50, ($lparam2 & 0xFFFF0000) >> 16);
+				wb_set_position($btn, $xpos - 40, $ypos - 13);
+			}
+			break;
+
+		case IDCLOSE:
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

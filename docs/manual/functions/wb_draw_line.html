@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<title>wb_draw_line</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body>
+<!--KW:
+wb_draw_line
+Line styles-->
+<h2>wb_draw_line</h2>
+<p>bool <b>wb_draw_line</b> (int target, int x0, int y0, int x1, int y1, int
+color [, int linewidth [, linestyle]])</p>
+<p>Draws a straight line. The first parameter, <i>target</i>,&nbsp;may be a WinBinder
+object, a window handle, a drawing surface or a bitmap.</p>
+<p>The start and end points of the line are (<i>x0</i>,
+<i>y0</i>) and (<i>x1</i>, <i>y1</i>) respectively, in pixels. <i>color</i> is a RGB color value
+and <i>linewidth</i> is the width of the line, in pixels. A <i>linewidth</i>
+of zero sets the width to 1 pixel. Parameter <i>linestyle</i> accepts the values 
+specified in the table below.</p>
+<p> Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1><a name="linestyles"></a>Line styles</h1>
+<p>Refer to the following table.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="437">
+    <tr>
+        <th width="83">            <p><i>linestyle</i></p>
+        </th>
+        <th width="344">            <p>Style</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="83">
+            <p>0</p>
+        </td>
+        <td width="344">
+<p>Solid line (the default style)</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="83">
+            <p>1</p>
+        </td>
+        <td width="344">
+<p>Dotted line</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="83">
+            <p>2-7</p>
+        </td>
+        <td width="344">
+<p>Dashed lines with increasing lengths</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="83">
+            <p>8</p>
+        </td>
+        <td width="344">
+            <p>Line with alternating dashes and dots</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="83">
+            <p>9</p>
+        </td>
+        <td width="344">
+            <p>Line with alternating dashes and double dots</p>
+        </td>
+    </tr>
+</table>
+<p><font color="#CC6600"><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE:</b></font> Some line styles may not supported or may display improperly 
+in Windows 98.</p>
+<h1><b>See also</b></h1>
+<p><a href="wb_get_pixel.html"><b>wb_get_pixel</b></a><b><br></b><a href="wb_draw_rect.html"><b>wb_draw_rect</b></a><b><br></b><a href="wb_draw_ellipse.html"><b>wb_draw_ellipse</b></a><b><br></b><a href="../reference/functions_category.html#drawing">Drawing functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

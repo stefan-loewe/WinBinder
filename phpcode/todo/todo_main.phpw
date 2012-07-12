@@ -1,0 +1,559 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Simple ToDo application
+
+*******************************************************************************/
+
+/* TODO:
+
+- Create a decent way to edit categories (currently it's really awkward, don't try it!)
+. Fix TreeView hack (in WB). See comment in update_items()
+- Prevent users from creating duplicate categories, priorities and severities
+- Prevent the creation of items without names
+- Maintain treeview collapsed / expanded state (in WB)
+- "Show All" button, export buttons and other interface goodies
+- Variable ListView height
+
+*/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+define("APPNAME",		"ToDo");
+define("APPVERSION",	"0.20");
+define("WB_DATABASE",	"SQLITE");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+include PATH_INC . "db\\db_common.inc.php";
+
+include "todo_dlg_item.inc.php";
+include "todo_dlg_cat.inc.php";
+include "todo_dlg_prior.inc.php";
+include "todo_dlg_sever.inc.php";
+include "todo_import_export.inc.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+// Control identifiers
+
+define("ID_ABOUT", 			8011);
+define("ID_CLOSE", 			8012);
+define("ID_CONFIG",			8013);
+define("ID_EXPORT",			8015);
+define("ID_PREVIEW", 		8010);
+define("ID_PRINT", 			8020);
+define("ID_SAVE", 			8022);
+define("ID_SAVEAS",			8023);
+define("ID_SEND",			8024);
+define("ID_STATUSBAR",		8025);
+define("ID_WEBSITE",		8026);
+
+define("ID_EDITCAT",		8102);
+define("ID_EDITPRIOR",		8103);
+define("ID_EDITSEVER",		8104);
+
+define("ID_NEWITEM",		8201);
+define("ID_DELETEITEM",		8203);
+define("ID_DUPITEM",		8204);
+define("ID_EDITITEM",		8205);
+define("ID_EXPORTHTML",		8206);
+define("ID_EXPORTTXT",		8207);
+define("ID_EXPORTCSV",		8208);
+define("ID_IMPORTCSV",		8209);
+
+// Other constants
+
+define("SYS_INIFILE",		PATH_SCRIPT . "todo.ini");	// Configuration file
+define("DEF_DATABASE", 		"todo");		// Name of database file
+define("ID_INDEX",			0);				// Index of id field on table 'item'
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+create_main_window();
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function create_main_window()
+{
+	global $mainwin, $itemlist, $settings, $toolbar, $mainmenu, $statusbar, $show_all;
+
+	// Read data from INI file
+
+	$settings = parse_ini(file_get_contents(SYS_INIFILE));
+	$show_all = true;
+
+	// Create main window
+
+	// Remove the line below while not under development
+
+	file_put_contents("todo_main.rc.php", "<?php\n\n" . parse_rc(file_get_contents(PATH_DATA . "todo_main.rc"), '$mainwin',
+	  null, 'AppWindow', null, WBC_CENTER, WBC_CENTER, WBC_CENTER, WBC_CENTER,
+	  WBC_INVISIBLE | WBC_NOTIFY, WBC_DBLCLICK) . "\n?>");
+
+	include("todo_main.rc.php");
+
+	wb_set_handler($mainwin, "process_main");
+
+	$tree = wb_get_control($mainwin, ID_TREE);
+	wb_set_image($tree, PATH_RES . "treeview.bmp", GREEN, 0, 10);
+
+	// Create main menu
+
+	$mainmenu = wb_create_control($mainwin, Menu, array(
+
+		array(ID_FILTER, "", 0, "", "ctrl+enter"),	// Hidden, just to create accelerator
+
+		"&File",
+			array(ID_SAVE,		"&Save layout",				NULL, PATH_RES . "menu_save.bmp"),
+			null,
+			array(ID_IMPORTCSV,	"&Import items from CSV..."),
+			array(ID_EXPORTCSV,	"&Export items to CSV..."),
+			null,
+			array(ID_EXPORTTXT,	"Export item list as a &text..."),
+			array(ID_EXPORTHTML,"Export item list as &HTML..."),
+			null,
+			array(IDCLOSE,		"E&xit\tAlt+F4",			NULL, PATH_RES . "menu_exit.bmp"),
+
+		"&Item",
+			array(ID_NEWITEM,	"&New item...\tCtrl+N",		NULL, PATH_RES . "menu_new.bmp","Ctrl+N"),
+			array(ID_EDITITEM,	"&Edit item...\tF2",		NULL, "",						"F2"),
+			array(ID_DELETEITEM,"&Delete item...\tDel",		NULL, "",						"Shift+Delete"),
+			array(ID_DUPITEM,	"Du&plicate item"),
+			null,
+			array(ID_MOVEUP,	"Move &up"),
+			array(ID_MOVEDOWN,	"Move do&wn"),
+
+		"&Tables",
+			array(ID_EDITCAT,	"Edit &categories..."),
+			array(ID_EDITSEVER,	"Edit &severity levels..."),
+			array(ID_EDITPRIOR,	"Edit &priorities..."),
+
+		"&Help",
+			array(ID_ABOUT,		"&About...\tF1",			NULL, PATH_RES . "menu_help.bmp", "F1")
+
+	), $mainwin);
+
+	// Create toolbar
+
+	$toolbar = wb_create_control($mainwin, ToolBar, array(
+	  	null,
+		array(ID_SAVE,			NULL, "Save layout",	2),
+	  	null,
+		array(ID_NEWITEM,		NULL, "New item", 		15),
+		array(ID_EDITITEM,		NULL, "Edit item", 		19),
+		array(ID_DELETEITEM,	NULL, "Delete item", 	12),
+		array(ID_DUPITEM,		NULL, "Duplicate item", 23),
+		null,
+	  	array(ID_ABOUT,			NULL, "About " . APPNAME, 13)
+	), 0, 0, 16, 15, 0, 0, PATH_RES . "toolbar.bmp");
+
+	// Create status bar
+
+	$statusbar = wb_create_control($mainwin, StatusBar, APPNAME, $mainwin, 0, 0, ID_STATUSBAR);
+
+	// Open database
+
+	$itemlist = wb_get_control($mainwin, ID_ITEMLIST);
+	wb_set_text($itemlist, array("id", "name","cat", "priority", "severity"));
+
+	$database = DEF_DATABASE;
+	db_open_database($database, PATH_DATA);
+
+	// Fill up combo boxes for filtering
+
+	wb_set_text(wb_get_control($mainwin, ID_FIELD), db_list_table_fields("item"));
+	wb_set_text(wb_get_control($mainwin, ID_FILTERTYPE), array(
+		"is equal to",
+		"contains",
+		"does not contain",
+		"is different from",
+		"is less than",
+		"is greater than",
+		"is less or equal to",
+		"is greater or equal to",
+	));
+
+	// Fill up list with item categories
+
+	$cat_data = db_get_data("cat", null, "name");
+
+	// Almost done
+
+	update_items($mainwin);
+	update_controls($mainwin);		// Reset controls to default state
+	update_tree($mainwin);
+	wb_sort($itemlist, true, 1);
+
+	wb_set_visible($mainwin, true);
+}
+
+/* Main window processing */
+
+function process_main($window, $id, $ctrl=0, $lparam=0)
+{
+	global $itemlist, $mainwin, $project_data, $mainwin, $mainmenu, $statusbar;
+	global $data_array, $items_included, $project_file, $show_all;
+	global $MASK;
+	static $table = "item";
+			static $lastnode = -1;
+
+	switch($id) {
+
+		case ID_TREE:
+			$show_all = false;
+			wb_set_selected($itemlist, null);
+			update_items($window);
+			break;
+
+		case ID_ITEMLIST:
+			if($lparam == WBC_DBLCLICK)
+				process_main($window, ID_EDITITEM, 0);
+			else
+				update_controls($window);
+			break;
+
+		case ID_FIELD:
+			update_controls($window);
+			break;
+
+		case ID_NEWITEM:
+			create_edit_dlg($window, 0, get_selected_tree_item_id($window));
+			break;
+
+		case ID_FILTER:
+			$show_all = true;
+			update_items($window);
+			$tree = wb_get_control($window, ID_TREE);
+			wb_set_selected($tree, -1);
+			break;
+
+		case ID_EDITCAT:
+			create_cat_dlg($window);
+			break;
+
+		case ID_EDITPRIOR:
+			create_prior_dlg($window);
+			break;
+
+		case ID_EDITSEVER:
+			create_sever_dlg($window);
+			break;
+
+		case ID_SAVE:
+			save_columns("item", $itemlist);
+			wb_set_text($statusbar, "Column positions saved.");
+			break;
+
+		case ID_IMPORTCSV:
+			if(import_csv($window))
+				update_items($mainwin);
+			break;
+
+		case ID_EXPORTCSV:
+			export_csv($window);
+			break;
+
+		case ID_EXPORTHTML:
+			export_html($window);
+			break;
+
+		case ID_EXPORTTXT:
+			export_txt($window);
+			break;
+
+		case ID_EDITITEM:
+			$selected = wb_get_selected($itemlist);
+			if(count($selected) == 1) {
+				$text = wb_get_text($itemlist);
+				// TODO: Should fetch $id from database instead of from the listview
+				$id = $text[0][ID_INDEX];
+				create_edit_dlg($window, $id);
+			}
+			break;
+
+		case ID_DELETEITEM:
+			$selected = wb_get_selected($itemlist);
+			if(count($selected)) {
+				$msg = "Are you sure you want to delete the selected " . ($selected == 1 ? "record" : "records") . "?";
+				if(wb_message_box($window, $msg, APPNAME, WBC_YESNO)) {
+					$text = wb_get_text($itemlist);
+					foreach($text as $record) {
+						$idlist[] = $record[ID_INDEX];
+					}
+					db_delete_records($table, $idlist);
+					update_items($window);
+				}
+			}
+			break;
+
+        case ID_ABOUT:
+            wb_message_box($window, APPNAME . " version " . APPVERSION . "\nWinBinder version " .
+              WBC_VERSION . "\nPHP version " . PHP_VERSION .  "\n" .
+              db_get_info("version") . "\n" .
+              wb_get_system_info("osversion"),
+              "About " . APPNAME);
+            break;
+
+		case ID_MOVEUP:										// by Hans
+			$selected = wb_get_selected($itemlist);
+			$record = wb_get_text($itemlist);
+			wb_set_selected($itemlist, $selected[0], FALSE);
+			wb_set_selected($itemlist, $selected[0] - 1);
+
+			$otherid = wb_get_text($itemlist, $selected[0] - 1, ID_INDEX);
+			db_swap_records($table, $record[0][ID_INDEX], $otherid);
+			update_items($window);
+			wb_set_selected($itemlist, null, false);
+			wb_set_selected($itemlist, $selected[0] - 1);
+			break;
+
+		case ID_MOVEDOWN:									// by Hans
+			$selected = wb_get_selected($itemlist);
+			$record = wb_get_text($itemlist);
+			wb_set_selected($itemlist, $selected[0], FALSE);
+			wb_set_selected($itemlist, $selected[0] + 1);
+
+			$otherid = wb_get_text($itemlist, $selected[0] + 1, ID_INDEX);
+			db_swap_records($table, $record[0][ID_INDEX], $otherid);
+			update_items($window);
+			wb_set_selected($itemlist, null, false);
+			wb_set_selected($itemlist, $selected[0] + 1);
+			break;
+
+		case ID_DUPITEM:
+/*			$sel = count(wb_get_selected($itemlist));
+			if($sel == 1 || wb_message_box($window, "Do you want to duplicate duplicar $sel records?", APPNAME, WBC_YESNO) == IDYES) {
+				$text = wb_get_text($itemlist);
+				$newitem = $text;
+				for($rec = 0; $rec < count($text); $rec++) {
+					$idnew = wb_create_record($table, null, $text[$rec]);
+					$newitem[$rec][ID_INDEX] = $idnew;
+				}
+				wb_set_selected($itemlist, NULL, FALSE);
+				wb_set_selected($itemlist, wb_create_items($itemlist, $newitem));
+				//**** TODO: select the newly created record(s)
+			}*/
+			break;
+
+		case IDCLOSE:
+			//save_columns("item", $itemlist);
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+function update_controls($window)
+{
+	global $toolbar, $mainmenu;
+	static $last_field;
+
+	$itemlist = wb_get_control($window, ID_ITEMLIST);
+	$selected = wb_get_selected($itemlist);
+
+	// Show item description
+
+	if(count($selected) == 1) {
+		$text = wb_get_text($itemlist);
+		// TODO: Should fetch $id from database instead of from listview
+		$id = $text[0][ID_INDEX];
+		$data = db_get_data("item", $id, null, "", FETCH_ASSOC);
+		$data = $data[0];
+		wb_set_text(wb_get_control($window, ID_DESCRIPTION), $data["description"]);
+	} else if(count($selected) == 0) {
+		wb_set_text(wb_get_control($window, ID_DESCRIPTION), "(No item selected)");
+	} else {
+		wb_set_text(wb_get_control($window, ID_DESCRIPTION), "(Several items selected)");
+	}
+
+	// Enable/disable various controls and menu items
+
+	// Main window
+	wb_set_enabled(wb_get_control($window, ID_MOVEUP), count($selected) == 1 && !in_array(0, $selected));
+	wb_set_enabled(wb_get_control($window, ID_MOVEDOWN), count($selected) == 1 && !in_array(wb_get_item_count($itemlist) - 1, $selected));
+	// Toolbar
+	wb_set_enabled(wb_get_control($toolbar, ID_DELETEITEM), count($selected));
+	wb_set_enabled(wb_get_control($toolbar, ID_DUPITEM), count($selected));
+	wb_set_enabled(wb_get_control($toolbar, ID_MOVEUP), count($selected) == 1 && !in_array(0, $selected));
+	wb_set_enabled(wb_get_control($toolbar, ID_MOVEDOWN), count($selected) == 1 && !in_array(wb_get_item_count($itemlist) - 1, $selected));
+	wb_set_enabled(wb_get_control($toolbar, ID_EDITITEM), count($selected) == 1);
+	// Main menu
+	wb_set_enabled(wb_get_control($mainmenu, ID_DELETEITEM), count($selected));
+	wb_set_enabled(wb_get_control($mainmenu, ID_DUPITEM), count($selected));
+	wb_set_enabled(wb_get_control($mainmenu, ID_MOVEUP), count($selected) == 1 && !in_array(0, $selected));
+	wb_set_enabled(wb_get_control($mainmenu, ID_MOVEDOWN), count($selected) == 1 && !in_array(wb_get_item_count($itemlist) - 1, $selected));
+	wb_set_enabled(wb_get_control($mainmenu, ID_EDITITEM), count($selected) == 1);
+
+	// Display filter edit box or combo with presets according to ID_FIELD
+
+	$curr_field = wb_get_text(wb_get_control($window, ID_FIELD));
+
+	switch($curr_field) {
+
+		case "id":
+		case "name":			// These are string fields
+		case "description":
+			wb_set_visible(wb_get_control($window, ID_FILTERPRESETS), false);
+			wb_set_visible(wb_get_control($window, ID_FILTERTEXT), true);
+			break;
+
+		case "cat":
+		case "priority":		// These are indexed fields
+		case "severity":
+			if($last_field != $curr_field)
+				wb_set_text(wb_get_control($window, ID_FILTERPRESETS),
+				  db_get_data($curr_field, null, "name"));
+			wb_set_visible(wb_get_control($window, ID_FILTERPRESETS), true);
+			wb_set_visible(wb_get_control($window, ID_FILTERTEXT), false);
+			$last_field = $curr_field;
+			break;
+	}
+}
+
+function save_columns($table, $list)
+{
+	global $settings;
+
+	if(!$table)
+		return;
+
+	$widths = wb_get_size($list, true);
+	$settings["Columns"][$table] = implode(" ", $widths);
+
+	// Save INI file
+
+	$contents = generate_ini($settings, "; INI File for DBEDIT (saved automatically)\n");
+	file_put_contents(SYS_INIFILE, $contents);
+}
+
+/* Update item list */
+
+function update_items($window)
+{
+	global $settings, $statusbar, $show_all;
+	static $table = "item";
+
+	// Build the "where" clause
+
+	if($show_all) {
+
+		// Get the filter index
+
+		$val = null;
+		$curr_field = wb_get_text(wb_get_control($window, ID_FIELD));
+
+//		echo $curr_field . "\n";
+		switch($curr_field) {
+
+			case "id":
+			case "name":
+			case "description":
+				$val = wb_get_text(wb_get_control($window, ID_FILTERTEXT));
+				break;
+
+			case "cat":
+			case "priority":
+			case "severity":
+				$preset = wb_get_control($window, ID_FILTERPRESETS);
+				$val = db_get_id($curr_field, wb_get_selected($preset));
+				break;
+		}
+
+		if($val) {
+			$sel = wb_get_selected(wb_get_control($window, ID_FILTERTYPE));
+			switch($sel) {
+				case 0:
+					$op = " = ";
+					break;
+				case 1:
+					$op = " LIKE ";
+					$val = "%$val%";
+					break;
+				case 2:
+					$op = " NOT LIKE ";
+					$val = "%$val%";
+					break;
+				case 3:
+					$op = " <> ";
+					break;
+				case 4:
+					$op = " < ";
+					break;
+				case 5:
+					$op = " > ";
+					break;
+				case 6:
+					$op = " <= ";
+					break;
+				case 7:
+					$op = " >= ";
+					break;
+			}
+			$where = wb_get_text(wb_get_control($window, ID_FIELD)) . " $op '$val'";
+		} else {
+			$where = "";
+		}
+
+	} else {
+		$tree = wb_get_control($window, ID_TREE);
+		$sel_index = wb_get_value($tree);
+		if($sel_index != null) {
+			$cat_data = db_get_data("cat", null, "id");
+			$where = "cat = " . $cat_data[$sel_index];
+		} else
+			$where = "(no)";
+	}
+
+	if($where != '(no)') {
+
+		// Display the items that belong the selected category
+
+		$itemlist = wb_get_control($window, ID_ITEMLIST);
+		$item_data = db_get_data($table, null, array("id","name","cat", "priority", "severity"), $where);
+		wb_create_items($itemlist, $item_data, true);
+
+		wb_set_text($statusbar, count($item_data) . " items displayed");
+
+		// Set column widths
+
+		$widths = explode(" ", $settings["Columns"][$table]);
+		wb_set_size($itemlist, $widths);
+	}
+}
+
+function update_tree($window)
+{
+	// Fill up treeview with item categories
+
+	$tree = wb_get_control($window, ID_TREE);
+	$cat_data = db_get_data("cat", null, "id,name,level", "", FETCH_ASSOC);
+
+	$items = array();
+	for($i = 0; $i < count($cat_data); $i++) {
+		$name = $cat_data[$i]["name"];
+		$level = $cat_data[$i]["level"];
+		if($level == 0)
+			$items[] = array($name, $i, $level, 0, 1);
+		else
+			$items[] = array($name, $i, $level, 4, 5);
+	}
+
+	wb_create_items($tree, $items, true);
+}
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

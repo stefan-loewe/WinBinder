@@ -1,0 +1,47 @@
+<html>
+
+<head>
+
+<title>db_delete_records</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_delete_records-->
+<h2>db_delete_records</h2>
+		<p>bool <b>db_delete_records </b>(string tablename, idarray [, idfield])</p>
+<p>Deletes records in a table.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of the table that will be affected. If it is
+<i>null</i>, the function affects the last accessed table.<br><i>idarray</i> holds the ids of the records to be deleted.<br>
+			<i>idfield</i> is the name of identifier field (column). Default is &quot;id&quot;.<br></p>
+		<p><b>Result</b></p>
+		<p>The function returns TRUE if successful or FALSE otherwise.</p>
+
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Deletes 3 records with the id 1,3,5<br>
+							<br>$idarray = array(1,3,5); <br>
+							$result = db_delete_records(&quot;mytable&quot;,$idarray); <br>
+							if $result {<br>
+							 echo &quot;records deleted&quot;;<br>
+
+						}
+						</code></p>
+				</td></tr>
+</table><br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+</body>
+
+</html>

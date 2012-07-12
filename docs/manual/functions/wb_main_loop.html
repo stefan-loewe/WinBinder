@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<title>wb_main_loop</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_main_loop
+-->
+<h2>wb_main_loop</h2>
+<p>int <b>wb_main_loop</b> (void)</p>
+<p>Enters the Windows main loop. This function must be
+called if the application has a window. The call to <b>wb_main_loop()</b> must
+be the last executable statement of the PHP script: All statements after it
+will be ignored. The return value is used for debugging purposes only and may
+be ignored.</p>
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// A Windows application with only three lines</code></p>
+            <p><code>include(&quot;../include/winbinder.php&quot;); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+            Include WinBinder library<br>wb_create_window(NULL, PopupWindow,
+            &quot;Hello world!&quot;, 480, 320); &nbsp;// Create application
+            window<br>wb_main_loop(); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+            Enter message loop</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+    <p><a href="../reference/functions_category.html#system">System functions</a><br><a href="../overviews/callback_functions.html">Callback functions and window handlers</a><br><a href="../overviews/window_messages.html">Window messages and events</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

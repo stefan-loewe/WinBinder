@@ -1,0 +1,146 @@
+<?php
+
+include_once('wbEvents.php');
+include_once('WinAPI.php');
+include_once('cStruct.php');
+
+cStruct::define('POINT', "	
+		LONG x;
+		LONG y;
+");
+
+cStruct::define('RECT', "
+	LONG left;
+	LONG top;
+	LONG right;
+	LONG bottom;
+");
+
+cStruct::define('AREA', "
+	LONG width;
+	LONG height;
+");
+
+cStruct::define('wbObject',"
+		HWND hwnd;					// Control or window handle
+		UINT id;					// Control identifier
+		UINT uClass;				// Object class
+		int item;					// Item index
+		int subitem;				// Sub-item index
+		DWORD style;				// WinBinder style
+		struct _wbo *parent;		// Parent window
+		LPTSTR pszCallBackFn;		// Callback function
+		LPTSTR pszCallBackObj;		// Object for callback method
+		LPARAM lparam;				// User-defined parameter
+		LONG lparams[8];			// General-purpose parameter array
+		RECT rcTitle;				// Title area
+		AREA arMin;					// Minimum window area
+		AREA arMax;					// Maximum window area
+		HBITMAP pbuffer;			// Screen buffer for container windows
+");
+
+define ('OFN_PATHMUSTEXIST', 0x800);
+define ('OFN_FILEMUSTEXIST', 0x1000);
+
+cStruct::define('OPENFILENAME', '
+  DWORD         lStructSize;
+  HWND          hwndOwner;
+  HINSTANCE     hInstance;
+  LPCTSTR       lpstrFilter;
+  LPTSTR        lpstrCustomFilter;
+  DWORD         nMaxCustFilter;
+  DWORD         nFilterIndex;
+  LPTSTR        lpstrFile;
+  DWORD         nMaxFile;
+  LPTSTR        lpstrFileTitle;
+  DWORD         nMaxFileTitle;
+  LPCTSTR       lpstrInitialDir;
+  LPCTSTR       lpstrTitle;
+  DWORD         Flags;
+  WORD          nFileOffset; 
+  WORD          nFileExtension;
+  LPCTSTR       lpstrDefExt;
+  LPARAM        lCustData;
+  POINTER		 lpfnHook;  // all "lp" aka long pointers are POINTER
+  LPCTSTR       lpTemplateName;
+  void 			*pvReserved; // likewise void * are also pointers
+  DWORD         dwReserved;
+  DWORD         FlagsEx;
+');
+
+
+class MainWindow
+{
+   private static $window, $wbo;
+
+   public static function init()
+   {
+
+      wbEventHandler::createWindowEvent(
+      	'MainWindow::windowHandler',
+         self::$window = wb_create_window(
+         	NULL, 
+         	AppWindow, 
+         	"Right click on me!!", 
+         	WBC_CENTER, 
+         	WBC_CENTER, 
+         	640, 
+         	480,  
+         	WBC_GETFOCUS | WBC_NOTIFY,
+        		WBC_DBLCLICK | WBC_MOUSEDOWN | WBC_MOUSEUP 
+      	)
+      );
+
+      self::$wbo = new wbObject();
+      
+      self::$wbo->updateData(wb_peek(self::$window, wbObject::sizeOf()));
+
+      wbEventHandler::waitForEvents();
+   }
+
+   public static function windowHandler($params)
+   {  
+      if($params['id'] == 8 /* ID_CLOSE */)
+      { 
+      	exit;
+      }
+
+      if((WBC_MOUSEDOWN & $params['param1']) && $params['mouse']['buttons']['RBUTTON'])
+      {  
+         $hPopupMenu = User32::CreatePopupMenu();
+         
+         User32::InsertMenu(
+         	$hPopupMenu, 
+         	0, 
+         	0x400 /*MF_BYPOSITION*/ | 0 /*MF_STRING*/, 
+         	8 /* ID_CLOSE */,
+         	"Exit"
+         );
+         
+         User32::SetForegroundWindow(self::$wbo->hwnd);
+         
+         $point = new POINT();
+         User32::GetCursorPos($point);
+         
+       
+         
+         User32::TrackPopupMenu(
+            $hPopupMenu,
+            0x0000 /*TPM_TOPALIGN*/ | 0x0000 /*TPM_LEFTALIGN*/,
+            $point->x, 
+            $point->y, 
+            0,
+            self::$wbo->hwnd,
+            NULL
+         );
+         
+         
+      }
+     
+   }
+}
+
+MainWindow::init();
+
+
+

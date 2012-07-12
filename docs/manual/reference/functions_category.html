@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>Functions by category</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+Functions
+Functions,Control
+Controls,Functions
+Controls
+Functions,by category
+Functions, Auxiliary
+Auxiliary functions
+-->
+<h2><b>Functions by category</b></h2>
+<p>This list shows&nbsp;the core WinBinder functions listed by category. These
+functions start with the prefix <b>wb_</b>. Some
+functions may appear in more than one category.</p>
+<h1>Tip</h1>
+<p><img src="../images/icon_tip.png" align="absmiddle" width="29" height="28" border="0">You
+may also consult the <a href="functions_alphabetical.html">Alphabetical list of functions</a>.
+For other functions,
+look <a href="#seealso">here</a>.</p>
+<h1>Function categories</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td bgcolor="#FFFFCC">
+<p><b><font color="black" size="2"><img src="../images/icon_warning.gif" align="absmiddle" width="32" height="32" border="0"></font><font color="black">
+WARNING: the functions marked with a stop sign&nbsp;<img src="../images/icon_stop_16.gif" align="absmiddle" width="18" height="20" border="0">below provide low-level access to the Windows API and should
+be used with great care.</font></b></p>
+</td></tr>
+</table>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#control">Control functions</a>:
+These functions are related to WinBinder controls.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#dialog">Dialog
+functions</a>: These functions are related to dialog boxes and message boxes.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#drawing">Drawing functions</a>:
+These are functions that draw pixels, shapes, lines, and text.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#lowlevel">Low-level functions</a>:
+    These functions are for direct access and low-level Windows operations.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#image">Image functions</a>:
+    These functions are related to bitmaps, icons and cursors.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#system">System functions</a>:
+These are functions related to the operating system.<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="#window">Window functions</a>:
+These are functions that work with windows. Some work with controls too.<br></p>
+<h1><a name="control"></a>Control functions</h1>
+<p>These functions are related to WinBinder controls.</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_control.html">wb_create_control</a>
+- Creates a control, menu, or accelerator<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_items.html">wb_create_items</a>
+- Creates one or more items in a control or menu<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_delete_items.html">wb_delete_items</a>
+- Deletes items from a control or menu<a href="../functions/wb_delete_items.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_destroy_control.html">wb_destroy_control</a> 
+- Destroys a control<a href="../functions/wb_destroy_window.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_class.html">wb_get_class</a> - Retrieves the class of a
+control,
+window or menu<a href="../functions/wb_get_position.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_control.html">wb_get_control</a>
+- Returns the handle to a
+child control in a dialog box or in a menu item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_enabled.html">wb_get_enabled</a>
+- Tells whether a control is enabled<a href="../functions/wb_get_id.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_focus.html">wb_get_focus</a>
+- Returns a handle to the window or control that has the keyboard focus<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_id.html">wb_get_id</a>
+- Returns the integer identifier of a control or window <br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_item_count.html">wb_get_item_count</a>
+- Returns the number of items in an object<a href="../functions/wb_get_item_list.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_item_list.html">wb_get_item_list</a>
+- Returns an array with child items or controls<a href="../functions/wb_get_item_count.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_level.html">wb_get_level</a>
+- Retrieves the level of a control item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_parent.html">wb_get_parent</a> 
+- Returns the control 
+or item parent<a href="../functions/wb_get_item_count.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_position.html">wb_get_position</a> - Retrieves the position
+of a
+control or window<a href="../functions/wb_get_class.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_selected.html">wb_get_selected</a>
+- Returns the selected state of one or more items<a href="../functions/wb_get_selected.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_size.html">wb_get_size</a> - Retrieves the size
+of a
+control or window<a href="../functions/wb_get_class.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_state.html">wb_get_state</a> - Retrieves the state 
+of a control item<a href="../functions/wb_get_class.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_text.html">wb_get_text</a>
+- Gets the text from a control, window, menu item, an item, or sub-item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_value.html">wb_get_value</a>
+- Retrieves the value of a control, item, or sub-item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_visible.html">wb_get_visible</a>
+- Tells whether an object is visible<a href="../functions/wb_get_visible.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_refresh.html">wb_refresh</a>
+- Refreshes or redraws an object<a href="../functions/wb_refresh.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_area.html">wb_set_area</a>
+- Sets a specific area in a window<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_enabled.html">wb_set_enabled</a>
+- Enables or disables a control<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_focus.html">wb_set_focus</a>
+- Assigns the focus to an object<a href="../functions/wb_set_focus.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_font.html">wb_set_font</a>
+- Sets the font of a control<a href="../functions/wb_set_enabled.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_image.html">wb_set_image</a>
+- Assigns an image to an object<a href="../functions/wb_set_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_item_image.html">wb_set_item_image</a>
+- Assigns a portion of an image to a control item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_location.html">wb_set_location</a> 
+- Sets the location of an HTML control or sends a special command to it<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_position.html">wb_set_position</a>
+- Moves an object<a href="../functions/wb_set_position.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_selected.html">wb_set_selected</a>
+- Selects one or more items of a control<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_size.html">wb_set_size</a>
+- Sets the size of an object<a href="../functions/wb_set_size.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_state.html">wb_set_state</a> 
+- Sets the state of a treeview node<a href="../functions/wb_set_state.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_style.html">wb_set_style</a>
+- Sets or resets the style of an object<a href="../functions/wb_set_style.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_text.html">wb_set_text</a>
+- Sets the text of an object<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_value.html">wb_set_value</a>&nbsp;-
+Sets the value(s) and/or the minimum and maximum range of a control<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_visible.html">wb_set_visible</a>
+- Shows or hides an object<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_sort.html">wb_sort</a>&nbsp;-
+Sorts the contents of a control</p>
+<h1><a name="dialog"></a>Dialog functions</h1>
+<p>These functions are related to standard dialog boxes and message boxes.</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_message_box.html">wb_message_box</a> - Displays a message box<a href="../functions/wb_message_box.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_sys_dlg_color.html">wb_sys_dlg_color</a>
+-&nbsp;Displays the standard Select Color dialog box<a href="../functions/wb_sys_dlg_color.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_sys_dlg_open.html">wb_sys_dlg_open</a>
+- Displays the standard Open dialog box<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_sys_dlg_path.html">wb_sys_dlg_path</a>
+- Displays the standard Select Path dialog box<a href="../functions/wb_sys_dlg_path.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_sys_dlg_save.html">wb_sys_dlg_save</a>
+- Displays the standard Save As dialog box</p>
+<h1><a name="drawing"></a>Drawing functions<br></h1>
+    <p>These are functions that draw pixels, shapes, lines, and text.</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_rect.html">wb_draw_ellipse</a>
+- Draws a filled or hollow ellipse<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_image.html">wb_draw_image</a> - Draws an opaque
+or transparent bitmap<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_line.html">wb_draw_line</a> - Draws a straight line<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_point.html">wb_draw_point</a> - Draws 
+a point of color<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_rect.html">wb_draw_rect</a>
+- Draws a filled or hollow rectangle<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_draw_text.html">wb_draw_text</a>
+- Draws a text string<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_pixel.html">wb_get_pixel</a> - Returns the RGB color value of a
+pixel<br></p>
+<h1><a name="image"></a>Image functions</h1>
+<p>These functions are related to images (bitmaps, icons and cursors).</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_image.html">wb_create_image</a> - Creates an
+image<a href="../functions/wb_create_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_mask.html">wb_create_mask</a>
+- Creates a masked (transparent) image<a href="../functions/wb_create_mask.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_destroy_image.html">wb_destroy_image</a>
+- Destroys an image<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_load_image.html">wb_load_image</a>
+- Loads an image file&nbsp;from disk and returns a handle
+to it<a href="../functions/wb_load_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_image_data.html">wb_get_image_data</a>
+- Returns the internal true-color representation of an image<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_size.html">wb_get_size</a> - Gets
+the dimensions of an image<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_save_image.html">wb_save_image</a>
+- Saves an image to disk<a href="../functions/wb_save_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_image.html">wb_set_image</a>
+- Assigns an image to an object<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_item_image.html">wb_set_item_image</a>
+- Assigns a portion of an image to a control item<br></p>
+<h1><a name="lowlevel"></a>Low-level functions</h1>
+<p>These functions are for direct access to the Windows API and other low-level operations.</p>
+<p><b><font color="red"><img src="../images/icon_stop_16.gif" align="top" width="18" height="20" border="0"></font></b><a href="../functions/wb_call_function.html">wb_call_function</a> - Calls a
+DLL function<br><b><font color="red"><img src="../images/icon_stop_16.gif" align="top" width="18" height="20" border="0"></font></b><a href="../functions/wb_create_image.html">wb_create_image</a> - Creates an
+image with DIB parameters<a href="../functions/wb_create_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_load_library.html">wb_load_library</a> - Loads
+a DLL into memory<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_address.html">wb_get_address</a> - Returns the
+address of a
+variable<a href="../functions/wb_get_address.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_function_address.html">wb_get_function_address</a> - Retrieves
+the address of a library function<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_image_data.html">wb_get_image_data</a>
+- Returns the internal true-color representation of an image<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_peek.html">wb_peek</a>
+- Gets the contents of a memory area<a href="../functions/wb_peek.html"><br></a><b><font color="red"><img src="../images/icon_stop_16.gif" align="top" width="18" height="20" border="0"></font></b><a href="../functions/wb_poke.html">wb_poke</a>
+- Sets the contents of a memory area<a href="../functions/wb_poke.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_release_library.html">wb_release_library</a> - Releases a
+DLL from memory<br><b><font color="red"><img src="../images/icon_stop_16.gif" align="top" width="18" height="20" border="0"></font></b><a href="../functions/wb_send_message.html">wb_send_message</a>
+- Sends a Windows message to an object<a href="../functions/wb_refresh.html"><br></a></p>
+<h1><a name="system"></a>System functions</h1>
+    <p>These are functions related to the OS or functions that simply did not
+fit in any other category.</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_exec.html">wb_exec</a> - Opens or executes a command<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_font.html">wb_create_font</a>
+- Creates a font<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_timer.html">wb_create_timer</a>
+- Creates a timer<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_destroy_font.html">wb_destroy_font</a>
+- Destroys a font<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_destroy_timer.html">wb_destroy_timer</a>
+- Destroys&nbsp;a timer<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_find_file.html">wb_find_file</a>
+- Looks  for a file in the Windows and System directories<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_instance.html">wb_get_instance</a>
+- Detects a running instance of a WinBinder&nbsp;application<a href="../functions/wb_get_enabled.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_registry_key.html">wb_get_registry_key</a>
+- Returns the value of a registry entry<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_system_info.html">wb_get_system_info</a>
+- Returns various data about the current system<a href="../functions/wb_get_system_info.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_main_loop.html">wb_main_loop</a>
+- Enters the Windows main loop<a href="../functions/wb_main_loop.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_play_sound.html">wb_play_sound</a>
+- Loads and plays a sound file or system sound<a href="../functions/wb_play_sound.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_cursor.html">wb_set_cursor</a>
+- Set or change the mouse cursor shape<a href="../functions/wb_set_enabled.html"><br></a><b><font color="red"><img src="../images/icon_stop_16.gif" align="top" width="18" height="20" border="0"></font></b><a href="../functions/wb_set_registry_key.html">wb_set_registry_key</a>
+- Sets the value of a registry entry<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_stop_sound.html">wb_stop_sound</a>
+- Stops one or more sounds<a href="../functions/wb_play_sound.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_wait.html">wb_wait</a>
+- Verifies mouse and keyboard status, create a delay</p>
+<h1><a name="window"></a>Window functions</h1>
+<p>These functions are related to windows and dialog boxes.</p>
+<p><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_create_window.html">wb_create_window</a> - Creates
+a window<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_destroy_window.html">wb_destroy_window</a>
+- Destroys a window<a href="../functions/wb_destroy_window.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_class.html">wb_get_class</a> - Retrieves the class of a
+control,
+window or menu<a href="../functions/wb_get_position.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_focus.html">wb_get_focus</a>
+- Returns a handle to the window or control that has the keyboard focus<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_id.html">wb_get_id</a>
+- Returns the integer identifier of a control or window <br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_item_count.html">wb_get_item_count</a>
+- Returns the number of items in an object<a href="../functions/wb_get_item_list.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_item_list.html">wb_get_item_list</a>
+- Returns an array with child items or controls<a href="../functions/wb_get_item_count.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_parent.html">wb_get_parent</a> 
+- Returns the control 
+or item parent<a href="../functions/wb_get_item_count.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_position.html">wb_get_position</a> - Retrieves the position
+of a
+control or window<a href="../functions/wb_get_class.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_size.html">wb_get_size</a> - Retrieves the size
+of a
+control or window<a href="../functions/wb_get_class.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_text.html">wb_get_text</a>
+- Gets the text from a control, window, menu item, an item, or sub-item<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_get_visible.html">wb_get_visible</a>
+- Tells whether an object is visible<a href="../functions/wb_get_visible.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_refresh.html">wb_refresh</a>
+- Refreshes or redraws an object<a href="../functions/wb_refresh.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_focus.html">wb_set_focus</a>
+- Assigns the focus to an object<a href="../functions/wb_set_focus.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_handler.html">wb_set_handler</a>
+- Assigns a callback function to a window<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_image.html">wb_set_image</a>
+- Assigns an image to an object<a href="../functions/wb_set_image.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_position.html">wb_set_position</a>
+- Moves an object<a href="../functions/wb_set_position.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_area.html">wb_set_area</a>
+- Sets a specific area in a window<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_size.html">wb_set_size</a>
+- Sets the size of an object<a href="../functions/wb_set_size.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_style.html">wb_set_style</a>
+- Sets or resets the style of an object<a href="../functions/wb_set_style.html"><br></a><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_text.html">wb_set_text</a>
+- Sets the text of an object<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_set_visible.html">wb_set_visible</a>
+- Shows or hides an object<br><img src="../images/pixel_white_1.png" width="18" height="20" border="0" align="top"><a href="../functions/wb_wait.html">wb_wait</a>
+- Verifies mouse and keyboard status, create a delay&nbsp;
+</p>
+<h1><a name="seealso"></a>See also</h1>
+<p><a href="functions_alphabetical.html">Alphabetical list of functions</a><br><a href="functions_aux.html">Auxiliary functions</a><br><a href="functions_database.html">Database functions</a></p>
+<p>&nbsp;</p>
+</body>
+
+</html>

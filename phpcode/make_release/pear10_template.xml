@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package version="1.0" packagerversion="1.4.5">
+   <name>WinBinder</name>
+   <summary>A Native Windows binding for PHP</summary>
+   <description>WinBinder is a new extension that allows PHP programmers to build native Windows applications. It wraps the Windows API in a lightweight, easy-to-use library so that program creation is quick and straightforward.</description>
+   <maintainers>
+      <maintainer>
+         <user>rubs</user>
+         <name>Rubem Pechansky</name>
+         <email>rubem@winbinder.org</email>
+         <role>lead</role>
+      </maintainer>
+      <maintainer>
+         <user>sfrausch</user>
+         <name>Stefano F. Rausch</name>
+         <email>stefano@rausch-e.net</email>
+         <role>lead</role>
+      </maintainer>
+   </maintainers>
+   <release>
+      <version>%version%</version>
+      <date>%date%</date>
+      <license>BSD</license>
+      <state>%state%</state>
+      <notes>
+%notes%
+      </notes>
+      <filelist>
+%filelist%
+      </filelist>
+   </release>
+</package>

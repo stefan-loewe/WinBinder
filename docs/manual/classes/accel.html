@@ -1,0 +1,79 @@
+<html>
+
+<head>
+<title>Accel class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+Classes
+Classes,Accel
+Accelerators
+-->
+<h2>Accel class</h2>
+<p>This class creates keyboard accelerators. Keyboard accelerators, or just accelerators, are key combinations that can
+generate commands to be processed by a <a href="../overviews/callback_functions.html">callback function</a>. The function <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a>&nbsp;will 
+create and apply an accelerator table to the application.
+</p>
+
+<h1><b>Accelerator strings</b></h1>
+<p>ASCII character codes, numbers, letters and non-alphabetic characters (like
+    <b>$</b>&nbsp;or <b>%</b>) are accepted. The following special keys
+are also accepted (between quotes):</p>
+<ul>
+    <li><font size="1">F1 to F12</font></li>
+    <li><font size="1">ENTER</font></li>
+    <li><font size="1">ESCAPE or ESC</font></li>
+    <li><font size="1">TAB</font></li>
+    <li><font size="1">BACKSPACE</font></li>
+    <li><font size="1">SPACE</font></li>
+    <li><font size="1">LEFT</font></li>
+    <li><font size="1">UP</font></li>
+    <li><font size="1">RIGHT</font></li>
+    <li><font size="1">DOWN</font></li>
+    <li><font size="1">PAGEDOWN or PGDN</font></li>
+    <li><font size="1">PAGEUP or PGUP</font></li>
+    <li><font size="1">HOME</font></li>
+    <li><font size="1">END</font></li>
+    <li><font size="1">INSERT or INS</font></li>
+    <li><font size="1">DELETE or DEL</font></li>
+    <li><font size="1">PLUS</font></li>
+</ul>
+<p>Strings can be preceded by one or more of the modifiers CTRL, SHIFT and ALT,
+followed by a plus sign (<b>+</b>). Strings are not case-sensitive.</p>
+<p><b><font color="#CC6600"><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE: </font></b>To create an accelerator with the Plus key, use the &quot;PLUS&quot; 
+string instead&nbsp;of &quot;+&quot;. Example: &quot;Ctrl+Plus&quot;.
+</p>
+
+<h1>Example</h1>
+<p>Keyboard accelerators can be created in two ways:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5">
+<tr><td><pre>// Create menus with accelerators 
+ 
+$menu = wb_create_control($mainwin, Menu, array(  
+   &quot;&amp;File&quot;,  
+       array(ID_NEW,   &quot;&amp;New\tCtrl+N&quot;,     &quot;&quot;, PATH_RES . &quot;menu_new.bmp&quot;,  &quot;Ctrl+N&quot;), 
+       array(ID_OPEN,  &quot;&amp;Open...\tCtrl+O&quot;, &quot;&quot;, PATH_RES . &quot;menu_open.bmp&quot;, &quot;Ctrl+O&quot;), 
+       array(ID_HELP,  &quot;&amp;Save\tF1&quot;,        &quot;&quot;, PATH_RES . &quot;menu_save.bmp&quot;, &quot;F1&quot;), 
+       array(IDCLOSE,		&quot;E&amp;xit\tAlt+F4&quot;,	   &quot;&quot;, PATH_RES . &quot;menu_exit.bmp&quot;),	// Not an accelerator 
+));
+ 
+// Create accelerators using the Accel class 
+ 
+wb_create_control($mainwin, Accel, array( 
+    array(ID_NEW,   &quot;Ctrl+N&quot;), 
+    array(ID_OPEN,  &quot;Ctrl+O&quot;), 
+    array(ID_HELP,  &quot;F1&quot;) 
+));</pre></td></tr>
+</table>
+<p>In both cases, the parameter <i>caption</i> of <b>wb_create_control()</b>&nbsp;is an array of arrays, where each second-level
+array includes an identifier and a string that identifies the accelerator.</p>
+<h1><b>See also</b></h1>
+    <p><a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br></b><a href="../overviews/callback_functions.html">Callback functions and window handlers</a><br><a href="../reference/classes_control.html">Control
+classes</a></p>
+<p>&nbsp;&nbsp;</p>
+</body>
+
+</html>

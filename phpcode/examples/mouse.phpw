@@ -1,0 +1,97 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Mouse message processing
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"Draw on screen!");
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window and controls
+
+$mainwin = wb_create_window(NULL, PopupWindow, APPNAME,
+  WBC_CENTER, WBC_CENTER, 300, 200, WBC_NOTIFY,
+  WBC_DBLCLICK | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_MOUSEMOVE);
+
+wb_set_handler($mainwin, "process_main");
+
+$statusbar = wb_create_control($mainwin, StatusBar, "");
+
+wb_main_loop();
+
+function process_main($window, $id, $ctrl=0, $lparam=0, $lparam2=0)
+{
+	global $statusbar;
+
+	switch($id) {
+
+		case IDDEFAULT:			// This is the main window
+
+			$str = "";
+			if($lparam & WBC_LBUTTON)
+				$str .= "WBC_LBUTTON ";
+			if($lparam & WBC_RBUTTON)
+				$str .= "WBC_RBUTTON ";
+			if($lparam & WBC_ALT)
+				$str .= "WBC_ALT ";
+			if($lparam & WBC_CONTROL)
+				$str .= "WBC_CONTROL ";
+			if($lparam & WBC_SHIFT)
+				$str .= "WBC_SHIFT ";
+			if($lparam & WBC_DBLCLICK)
+				$str .= "WBC_DBLCLICK ";
+			if($lparam & WBC_MOUSEDOWN)
+				$str .= "WBC_MOUSEDOWN ";
+			if($lparam & WBC_MOUSEUP)
+				$str .= "WBC_MOUSEUP ";
+			$x = $lparam2 & 0xFFFF;
+			$y = ($lparam2 & 0xFFFF0000) >> 16;
+
+			wb_set_text($statusbar, sprintf("(%04d, %04d): Parm %04X (%s)\n",
+			  $x, $y, $lparam, $str));
+
+			$color = BLACK;
+			if(($lparam & WBC_LBUTTON))
+				$color = DARKGREEN;
+			if(($lparam & WBC_RBUTTON))
+				$color |= DARKRED;
+
+			if(($lparam & (WBC_LBUTTON | WBC_RBUTTON))) {
+				wb_draw_rect($window, $x - 2, $y - 2, 5, 5, $color, TRUE);
+				wb_draw_point($window, $x, $y, WHITE);
+				wb_set_cursor($window, 'none');
+			} else
+				wb_set_cursor($window, 'cross');
+			break;
+
+		case ID_EXIT:
+		case IDCLOSE:
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

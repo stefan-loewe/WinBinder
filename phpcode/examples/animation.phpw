@@ -1,0 +1,85 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Simple "scrolling images" animation
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define('PATH_SCRIPT',	dirname(__FILE__) . '/');
+define('PATH_DATA',		PATH_SCRIPT);
+define('PATH_INC',		PATH_SCRIPT . '../include/');
+define('PATH_RES',		PATH_SCRIPT . '../resources/');
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . 'winbinder.php';
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define('APPNAME',			'Animation demo');
+define('ID_MASTERTIMER',	3101);
+define('ANIMATION_SPEED',	10);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+create_main_window();
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function create_main_window()
+{
+	global $image;
+
+	$mainwin = wb_create_window(NULL, AppWindow, APPNAME,
+	  WBC_CENTER, WBC_CENTER, 320, 240, 0, WBC_REDRAW | WBC_MOUSEMOVE);
+
+	$image = wb_load_image(PATH_RES . 'states.bmp');
+	wb_set_handler($mainwin, 'process_main');
+	wb_create_timer($mainwin, ID_MASTERTIMER, 10);	// Create a fast timer
+}
+
+/* Process main window commands */
+
+function process_main($window, $id, $ctrl, $lparam1=0, $lparam2=0, $lparam3=0)
+{
+	global $image;
+	static $img = 0, $imgpos = 0;
+
+    switch($id) {
+
+		case ID_MASTERTIMER:
+
+			if($img >= ANIMATION_SPEED) {
+				$img = 0;
+				for($i = 0; $i < 8; $i++)
+					wb_draw_image($window, $image,
+					  30 + 32 * $i, 80, 32, 32, GREEN, (($imgpos + $i) % 4) * 32, 0);
+				$imgpos = ($imgpos + 1) % 4;
+			} else
+				$img++;
+
+			// Draw text showing memory usage
+
+			wb_draw_rect($window, 20, 20, 270, 20, WHITE, TRUE);
+			wb_draw_text($window, ' Memory usage: ' . number_format(wb_get_system_info('appmemory')) . ' bytes', 20, 20, 200, 20);
+
+			break;
+
+        case IDCLOSE:
+            wb_destroy_window($window);
+            break;
+    }
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

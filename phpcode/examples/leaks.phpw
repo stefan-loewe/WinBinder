@@ -1,0 +1,109 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Code sample: Monitors memory leaks
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+define("TIMER", 300);
+define("GRACE", 1);
+
+// Create main window, then assign a procedure to it
+
+$mainwin = wb_create_window(NULL, PopupWindow, "WB leak monitor", 420, 260);
+$label = wb_create_control($mainwin, Label, "", 10, 10, 400, 160, 0);
+//$test = wb_create_control($mainwin, PushButton, "Test", 10, 200, 120, 22, 201);
+wb_create_control($mainwin, PushButton, "Reset", 140, 200, 120, 22, 202);
+wb_set_handler($mainwin, "process_main");
+wb_create_timer($mainwin, 201, TIMER);
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+/* Process main window commands */
+
+function process_main($window, $id)
+{
+	global $starttime, $startapp, $label;
+	static $count = 0;
+
+	switch($id) {
+
+		case 201:
+
+			if($count == GRACE / TIMER) {
+
+				$starttime = time();
+				$startapp = wb_get_system_info("appmemory") / 1024;
+
+			} elseif($count > GRACE / TIMER) {
+
+				$appmem = wb_get_system_info("appmemory") / (float)1024;
+				$totalmem = wb_get_system_info("totalmemory");
+				$freemem = wb_get_system_info("freememory");
+				$memdiff = $appmem - $startapp;
+				$timediff = time() - $starttime;
+
+				if(time() != $starttime)
+					$rate = $memdiff / $timediff;
+				else
+					$rate = 0;
+
+				$text = sprintf(
+					"Initial application memory: %d kB used\n" .
+					"App: %d kB used. Total leakage: %d kB, %s sec elapsed\n" .
+					"%d calls. Rate is %.2f kB per call (%.1f kB/s)\n" .
+					"System: %.2f MB total, %.2f MB available",
+					$startapp,
+					$appmem,
+					$memdiff,
+					date("i:s", $timediff),
+					$count,
+					$memdiff / $count,
+					$rate,
+					$totalmem / (1024 * 1024),
+					$freemem / (1024 * 1024)
+				);
+
+				wb_set_text($label, $text);
+
+			} else
+				wb_set_text($label, "Please wait...");
+			$count++;
+			break;
+
+		case 202:
+			$starttime = time();
+			$startapp = wb_get_system_info("appmemory") / 1024;
+			$count = 0;
+			break;
+
+		case IDCLOSE:
+
+			wb_destroy_window($window);
+			break;
+    }
+}
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

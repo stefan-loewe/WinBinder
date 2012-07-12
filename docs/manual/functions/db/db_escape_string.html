@@ -1,0 +1,46 @@
+<html>
+
+<head>
+
+<title>db_escape_string</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_escape_string-->
+<h2>db_escape_string</h2>
+		<p>string <b>db_escape_string </b>(string str)</p>
+<p>Escapes a string so it is ready to be used as a SQL query. Specifically,
+this function will double single quotes (') or prepend a backslash (\) to them.</p>
+<p><b><font color="#CC6600"><img src="../../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+</font></b><font color="#CC6600"><b>NOTE: This is a SQL function. See </b></font><a href="../../overviews/database_support.html"><b><font color="#CC6600">Database
+Support</font></b></a><font color="#CC6600"><b> for more information.</b></font></p>
+<p><b>Arguments</b></p>
+<p><i>str</i> is the string to be escaped.</p>
+<p>	<b>Result</b></p>
+		<p>The function returns the escaped string.</p>
+
+		<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Remove quotes from string</code></p>
+<code>$item
+= db_escape_string(&quot;That's all&quot;);<BR>$res = db_query($item);</code></td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

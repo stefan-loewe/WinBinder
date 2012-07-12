@@ -1,0 +1,101 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Code sample: A custom-drawn window
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"A resizable custom-drawn window");	// Application name
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+create_main_window();
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+// Create main window
+
+function create_main_window()
+{
+	global $settings, $wb, $ctrl_list;
+
+	// Create main window (invisible) and controls
+
+	$wb->mainwin = wb_create_window(NULL, ResizableWindow, APPNAME, WBC_CENTER, WBC_CENTER,
+	  589, 468, WBC_INVISIBLE | WBC_NOTIFY | WBC_CUSTOMDRAW, WBC_REDRAW);
+
+	// Size, move and show main window
+
+	wb_set_handler($wb->mainwin, "process_main");
+	wb_set_visible($wb->mainwin, true);
+}
+
+function process_main($window, $id, $ctrl, $lparam1=0, $lparam2=0)
+{
+	switch($id) {
+
+		case IDDEFAULT:
+
+			if($lparam1 & WBC_REDRAW) {
+
+				// Set some variables
+
+				$xoffset = 20;
+				$yoffset = 20;
+				$buffer = $lparam2;
+				$dim = wb_get_size($window, true);
+				$winwidth = $dim[0];
+				$winheight = $dim[1];
+
+				// Draw a flat background (remove the line below if you want the default window color)
+
+				wb_draw_rect($buffer, 0, 0, $winwidth, $winheight, 0x838F80);
+
+ 				// Draw a grid
+
+				for($y = $yoffset + 0; $y < $winheight - 20; $y += 20)
+					wb_draw_line($buffer, $xoffset + 0, $y, $winwidth - 20, $y, 0xE8D8D8);
+				for($x = $xoffset + 0; $x < $winwidth - 20; $x += 20)
+					wb_draw_line($buffer, $x, $yoffset, $x, $winheight - 20, 0xE8D8D8);
+
+				// Draw a decorative string
+
+				$font = wb_create_font("Arial", 25, BLACK, FTA_BOLD);
+				wb_draw_text($buffer, "WinBinder", $winwidth - 188, 24, $font);
+				wb_destroy_font($font);
+				$font = wb_create_font("Arial", 25, WHITE, FTA_BOLD);
+				wb_draw_text($buffer, "WinBinder", $winwidth - 190, 22, $font);
+				wb_destroy_font($font);
+
+			}
+			break;
+
+		case IDCLOSE:		// IDCLOSE is predefined
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

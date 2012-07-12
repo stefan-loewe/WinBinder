@@ -1,0 +1,69 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Invisible buttons
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"Invisible controls");
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window and controls
+
+$mainwin = wb_create_window(NULL, PopupWindow, APPNAME, WBC_CENTER, WBC_CENTER, 200, 200);
+
+$statusbar = wb_create_control($mainwin, StatusBar, "Click the screen");
+
+wb_set_cursor(ImageButton, 'finger');
+
+wb_create_control($mainwin, ImageButton, "",   0,   0, 100, 100, 101);
+wb_create_control($mainwin, ImageButton, "", 100,   0, 100, 100, 102);
+wb_create_control($mainwin, ImageButton, "",   0, 100, 100, 100, 103);
+wb_create_control($mainwin, ImageButton, "", 100, 100, 100, 100, 104);
+
+wb_set_handler($mainwin, "process_main");
+wb_main_loop();
+
+function process_main($window, $id, $ctrl=0, $lparam=0, $lparam2=0)
+{
+	global $statusbar;
+
+	switch($id) {
+
+		case IDCLOSE:
+			wb_destroy_window($window);
+			break;
+
+		case IDDEFAULT:
+			break;
+
+		default:
+			wb_play_sound(WBC_BEEP);
+			wb_set_text($statusbar, "Control $id was clicked.");
+			break;
+	}
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

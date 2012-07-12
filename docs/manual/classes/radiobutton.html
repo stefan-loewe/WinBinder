@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<title>RadioButton class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body>
+<!--KW:
+Classes
+Classes,RadioButton
+Radio buttons
+-->
+<h2>RadioButton class</h2>
+<p>A radio button is a control used for making a choice. It is typically used 
+in groups so the user may select one from several options.</p>
+
+To create a radio button use the <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a> function using 
+<span class="code">RadioButton</span> as the 
+<i>class</i> parameter.
+<h1>Using radio buttons</h1>
+<ul>
+    <li>Radio buttons are designed to work in groups. You may use a radio button 
+    alone, but this is not considered standard practice.</li>
+    <li>Only one radio button from within a given group can be checked each 
+    time.</li>
+    <li>The radio button that starts each 
+group must include <span class="code">WBC_GROUP</span> in the <i>style </i>argument 
+of <b>wb_create_control</b>.</li>
+    <li>It is not necessary to create a <a href="frame.html">Frame</a> to group radio buttons, 
+except for cosmetics.</li>
+    <li>Radio buttons that are stored on different <a href="tabcontrol.html">tab 
+pages</a> are 
+always grouped separately.</li>
+    <li>To create a radio button that is already checked, set the <i>param</i> argument 
+of <b>wb_create_control</b> to 1.</li>
+</ul>
+<h1>Creating radio buttons</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+// Create two radio button groups<br><br>// Group A
+
+wb_create_control($mainwin, Frame,       &quot;Group A&quot;,   10,  6, 85, 89);                    // For cosmetics only
+wb_create_control($mainwin, RadioButton, &quot;Option A1&quot;, 20, 24, 70, 14, 101, WBC_GROUP, 0); // Group start
+wb_create_control($mainwin, RadioButton, &quot;Option A2&quot;, 20, 48, 70, 14, 102, 0,         1); // Checked
+wb_create_control($mainwin, RadioButton, &quot;Option A3&quot;, 20, 73, 70, 14, 103  0,         0);
+
+// Group B
+
+wb_create_control($mainwin, Frame,       &quot;Group B&quot;,   110,  6, 85, 89);                    // For cosmetics only
+wb_create_control($mainwin, RadioButton, &quot;Option B1&quot;, 120, 24, 70, 14, 201, WBC_GROUP, 1); // Group start, checked<br>wb_create_control($mainwin, RadioButton, &quot;Option B2&quot;, 120, 48, 70, 14, 202, 0,         0);<br>wb_create_control($mainwin, RadioButton, &quot;Option B3&quot;, 120, 73, 70, 14, 203, 0,         0);
+</pre>
+</td></tr></table>
+
+<h1>Retrieving the selected state of a radio button</h1>
+<p>To retrieve currently selected state of a radio button, call <b><a href="../functions/wb_get_selected.html">wb_get_selected()</a></b> 
+or <b><a href="../functions/wb_get_value.html">wb_get_value()</a></b>.</p>
+<h1><b>See also</b></h1>
+<a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br></b><a href="../reference/classes_control.html">Control
+classes</a><p>&nbsp;</p>
+
+</body>
+
+</html>

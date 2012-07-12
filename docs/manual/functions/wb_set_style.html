@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<title>wb_set_style</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_style
+Styles-->
+<h2>wb_set_style</h2>
+<p>bool <b>wb_set_style</b> (int wbobject,  int style [, bool set])</p>
+<p>Sets or resets one or more styles of the WinBinder object <i>wbobject</i>. Only
+a limited set of styles is supported due to Windows limitations.</p>
+<h1><b>What it does</b></h1>
+<p>The following
+styles can be set or reset:</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="118">            <p>Class</p>
+        </th>
+        <th width="171">            <p>Value of <i>style</i></p>
+        </th>
+        <th width="552">            <p>Description (when style is set)</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="118">
+            <p>AppWindow<br>ResizableWindow<br>PopupWindow<br>NakedWindow&nbsp;</p>
+        </td>
+        <td width="171">
+            <p class="code">WBC_TOP</p>
+        </td>
+        <td width="552">
+            <p>Make the window a topmost window.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="118" rowspan="2">
+            <p>ListView</p>
+        </td>
+        <td width="171">
+            <p class="code">WBC_LINES</p>
+        </td>
+        <td width="552">
+            <p>Display grid lines around items</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="171">
+            <p class="code">WBC_CHECKBOXES</p>
+        </td>
+        <td width="552">
+            <p>Display check boxes in the first column of all items</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="118">
+            <p>Slider</p>
+        </td>
+        <td width="171">
+            <p class="code">WBC_LINES</p>
+        </td>
+        <td width="552">
+            <p>Show tick marks. The control must be created with the <code><font size="2">WBC_LINES</font></code> 
+            style</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="118">
+            <p>TreeView</p>
+        </td>
+        <td width="171">
+            <p class="code">WBC_LINES</p>
+        </td>
+        <td width="552">
+            <p>Draw dotted lines linking children objects to their parents</p>
+        </td>
+    </tr>
+</table>
+<p> Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1><b>See also</b></h1>
+    <p><a href="../reference/functions_category.html#control">Control functions</a><br><a href="../reference/functions_category.html#window">Window functions</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>ListBox class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body>
+<!--KW:
+Classes
+Classes,ListBox
+List boxes
+-->
+<h2>ListBox class</h2>
+<p>A ListBox is a simple list of selectable items.</p>
+
+To create a list box use the <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a> function using 
+<span class="code">ListBox</span> as the 
+<i>class</i> parameter.<h1>Creating list boxes</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+// Create an empty list box
+
+wb_create_item($window, ListBox, &quot;&quot;, 10, 10, 100, 90, ID_LIST);
+</pre></td></tr></table>
+
+<p>After creating the list box, you can assign values to the control in several ways:</p>
+<p>1) By creating an array to store the item names and using <a href="../functions/wb_set_text.html"><b>wb_set_text()</b></a> 
+to assign them to the control:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+$a_list = array(&quot;Line1&quot;, &quot;Line2&quot;, &quot;Line3&quot;, &quot;Line4&quot;);
+
+// Assign values to list box control<br>wb_set_text(wb_get_control($window, ID_LIST), $a_list);
+</pre></td></tr></table>
+
+<p>2) By assigning it a string with items separated by a line break (<b>\n</b>) 
+or line feed/line break sequence: (<b>\r\n</b>):</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+$s_list = &quot;Line1\nLine2\nLine3&quot;;       \\ Or &quot;Line1\r\nLine2\r\nLine3&quot;<br><br>// Assign values to list box control<br>wb_set_text(wb_get_control($window, ID_LIST), $s_list);
+</pre></td></tr></table>
+
+<p>3) By including the desired items when creating a control:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+wb_create_item($window, ListBox, &quot;Line1\nLine2\nLine3&quot;, 10, 10, 100, 90, ID_LIST);
+</pre></td></tr></table>
+
+<h1>Setting and retrieving information</h1>
+<p>To associate an integer value with&nbsp;a given item, use <b><a href="../functions/wb_set_value.html">wb_set_value()</a></b>. 
+Set <i>item</i> to the desired item index, or leave it blank (or set it to -1) 
+to associate the value to the currently selected item.</p>
+<p>To retrieve the index of
+the currently selected item, call <b><a href="../functions/wb_get_selected.html">wb_get_selected()</a></b>. 
+Use <b><a href="../functions/wb_get_value.html">wb_get_value()</a> </b>to retrieve 
+the integer value associated to the specified <i>item</i>, or leave <i>item</i> 
+empty&nbsp;(or set it to -1) to retrieve the value of the currently selected item.</p>
+<h1><b>See also</b></h1>
+<a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br><a href="../functions/wb_get_selected.html">wb_get_selected</a><br><a href="../functions/wb_get_value.html">wb_get_value</a><br></b><a href="../functions/wb_set_text.html"><b>wb_set_text</b></a><b><br></b><a href="../functions/wb_set_value.html"><b>wb_set_value</b></a><b><br></b><a href="combobox.html">ComboBox 
+class</a><br><a href="../reference/classes_control.html">Control
+classes</a><p>&nbsp;</p>
+</body>
+</html>

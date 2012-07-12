@@ -1,0 +1,119 @@
+<html>
+<head>
+<link rel="stylesheet" href="../help.css">
+<title>Running WinBinder applications</title>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+Running applications
+PHPW extension
+Console window
+Code editor
+Editor
+Text editor
+Syntax highlighting
+Reserved words
+Keywords
+PHP-->
+<h2>Running WinBinder applications</h2>
+<h1>Associating the PHPW extension with WinBinder</h1>
+<p>To run WinBinder scripts for Windows Explorer you have to associate .phpw files with php-win.exe.
+You can accomplish this in several ways.</p>
+<p><b>Option 1: automatic installation</b></p>
+<p>If you use the WinBinder installer (available at the web site), this will be done automatically
+for you. To run a WinBinder script, just double-click the respective .phpw file.</p>
+<p><b>Option 2: manual association</b></p>
+<p>To manually associate the .phpw extension to php-win.exe, follow the steps 
+outlined in the Windows Help under the topic &quot;associating extensions with 
+file types&quot;. Be sure to create an action named <i>open</i> and associate 
+it with php-win.exe followed by&nbsp;<i>&quot;%1&quot;</i>
+(with quotes). Example: <i>C:\WinBinder\PHP\PHP4\php-win.exe &quot;%1&quot;. 
+</i>Alternatively, in Windows 2000
+or Windows XP you can right-click or the .phpw file and select &quot;Open With...&quot; 
+to perform the same action. Now you may execute a
+PHPW script just by double-clicking it.</p>
+<p><b>Option 3: Windows Registry</b></p>
+<p>You may also add entries in the Windows registry. This procedure, however, 
+is recommended for advanced users only and is beyond the scope of this documentation.</p>
+<h1>Running WinBinder without a console window</h1>
+<p>The console (DOS) window is quite useful to display debug information while 
+you are developing an application. For distribution or for regular use, however,&nbsp;you 
+may prefer to disable it. Follow the steps below:</p>
+<ol type="1">
+    <li>Use php-win.exe instead of php.exe.</li>
+    <li>Optionally associate .phpw files with php-win.exe (see above).</li>
+    <li>Suppress all your output: remove all occurrences of <b>echo()</b>, <b>print()</b>, <b>printf()</b>,
+    <b>print_r()</b>&nbsp;and other such functions from your scripts. If you do not do that, your script
+    may not run at all. You may include an early call to&nbsp;<b>ob_start()</b> 
+    instead as a handy way of suppressing all output.</li>
+    <li>Suppress errors: use <i>error_reporting = 0</i>&nbsp;in PHP.INI. If
+    you do not do that, your script may not run at all with php-win.exe.</li>
+    <li>Optionally use <i>display_errors = Off</i>&nbsp;in PHP.INI. If you set
+    <i>error_reporting = 0</i> this is not necessary.</li>
+</ol>
+<h1>Running scripts from your favorite code editor</h1>
+<p>In addition to using your favorite code editor to edit WinBinder scripts, 
+you may want to use it to run them. The descriptions below apply to two widely 
+used text editors, but the procedure should be similar to most others. Consult 
+your editor documentation for details.</p>
+<ol type="1">
+    <li>The first step is to create a new setting for running PHP scripts. In 
+    <a href="http://www.textpad.com/" target="_blank"><b>TextPad</b></a>, you 
+    must open the Configure / Preferences / Tools and add a new Program. In 
+    <a href="http://www.pspad.com/en/" target="_blank"><b>PSPad</b></a>, you 
+    must create a new project, save it, and go to Projects / Project Settings 
+    / Compiler.</li>
+    <li>The new setting&nbsp;must contain the complete path to php.exe (or php-win.exe 
+    if you do not want a console).&nbsp;For example, <i>C:\WinBinder\PHP\PHP4\php.exe</i>.</li>
+    <li>You must also include the script name as a parameter. It is the <i>$FileName</i>&nbsp;variable 
+    in <b>TextPad</b> and <i>%File%</i> in <b>PSPad</b>. Consult the editor 
+    documentation if you have a different editor. Also be sure to include the 
+    file path (<i>$Filedir</i> and <i>%Dir%</i> respectively).</li>
+    <li>Now assign a keyboard shortcut to the newly created tool. <b>PSPad</b> 
+    assigns Ctrl+F9 automatically, but you may change the shortcut to your liking 
+    in Settings / Program Settings / Key Map / File / Compile. In <b>TextPad</b>, 
+    go to Preferences / Keyboard / Tools category, click the command you have 
+    just created, then enter the key combination you want in the shortcut edit 
+    field. Now you can run a PHP script simply by pressing the shortcut.</li>
+</ol>
+<h1>Syntax highlighting</h1>
+<p>To syntax highlight the PHP files and include the WinBinder function names 
+and other keywords:</p>
+<ol type="1">
+    <li>In <b>TextPad</b>, copy the file tools\textpad\php_winbinder.syn from 
+    the WinBinder installation directory to C:\Program Files\TextPad\Samples. 
+    In <b>PSPad</b>, copy the file tools\pspad\winbinder.ini from the WinBinder 
+    installation directory to C:\Program Files\PSPad\Syntax.</li>
+    <li>In <b>TextPad</b>, go to Configure / Preferences / Document Classes 
+    / PHP, add the .phpw extension to the list,&nbsp;select Syntax in the tree 
+    view and set the syntax definition file to php_winbinder.syn. In PSPad, 
+    go to&nbsp;Settings / Highlighters Settings, add a new User Highlighter 
+    called WinBinder and assign the .phpw extension to it. In <b>PSPad</b>, 
+    go to&nbsp;Settings / Highlighters Settings, add a new User Highlighter 
+    called WinBinder and assign the .phpw extension to it.</li>
+</ol>
+<h1>Showing help for PHP and WinBinder words from within your&nbsp;text editor</h1>
+<p>You may also want to show help for PHP and WinBinder keywords and other reserved 
+words directly from within your&nbsp;text editor.</p>
+<ol type="1">
+    <li>In <b>PSPad</b>, go to Settings / Highlighters Settings / PHP and type 
+    the full path to the PHP manual (e.g. <i>C:\PHP\php_manual_en.chm</i>). 
+    The hotkey Alt+F1 will call the PHP help. In <b>TextPad</b>, go to Configure 
+    / Preferences / Tools / and add a new Online Help File for&nbsp;php_manual_en.chm.</li>
+    <li>To add support for WinBinder keywords in <b>PSPad</b>, configure an 
+    external application in the Project Settings dialog: <i>hh C:\WinBinder\docs\winbinder.chm::manual/functions/%Word%.html</i>. 
+    Now you can position the text cursor over a WinBinder function and press 
+    F9 for instant help. In <b>TextPad</b>, go to Configure / Preferences / 
+    Tools / and add a new Online Help File to winbinder.chm.</li>
+</ol>
+<h1>Creating executables</h1>
+<p>Please go to the <a href="http://www.hypervisual.com/winbinder/forum/" target="_blank">WinBinder 
+Forum</a> for information on how to transform a WinBinder program into an executable 
+(.exe).</p>
+<h1>See also</h1>
+    <p><a href="applications.html">Creating WinBinder applications</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

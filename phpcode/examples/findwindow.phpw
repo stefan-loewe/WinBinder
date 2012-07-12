@@ -1,0 +1,74 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ How send a message to an open top-level window
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Load User library
+
+$USER = wb_load_library("USER");
+
+// Find the desired window
+
+$hwnd = FindWindow('SciCalc', 'Calculator');
+
+if($hwnd) {
+	SetWindowText($hwnd, "Gotcha!");
+	SetDlgItemText($hwnd, 403, (string)rand(0,90000));
+} else {
+	wb_message_box(null, 'Window not found.', '', WBC_INFO);
+}
+
+//------------------------------------------------ FOREIGN FUNCTION DECLARATIONS
+
+function FindWindow($class, $title)
+{
+	global $USER;
+	static $pfn = null;
+
+	if($pfn === null)
+		$pfn = wb_get_function_address("FindWindow", $USER);
+	return wb_call_function($pfn, array($class, $title));
+}
+
+function SetWindowText($hwnd, $title)
+{
+	global $USER;
+	static $pfn = null;
+
+	if($pfn === null)
+		$pfn = wb_get_function_address("SetWindowText", $USER);
+	return wb_call_function($pfn, array($hwnd, $title));
+}
+
+function SetDlgItemText($hwnd, $id, $text)
+{
+	global $USER;
+	static $pfn = null;
+
+	if($pfn === null)
+		$pfn = wb_get_function_address("SendDlgItemMessage", $USER);
+	return wb_call_function($pfn, array($hwnd, $id, 12 /* WM_SET_TEXT */, 0, wb_get_address($text)));
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

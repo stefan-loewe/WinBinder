@@ -1,0 +1,280 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$wb->mainwin"
+parent = "null"
+prefix = "IDC_"
+startval = 1000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = 19
+
+[Form]
+caption = "WinBinder Form Editor"
+geom = "WBC_CENTER WBC_CENTER 185 525"
+controls = 31
+class = "ResizableWindow"
+style = 1
+value = 0
+
+[Form_ctrl1]
+class = "Frame"
+caption = ""
+geom = "5 30 2048 8"
+id = ""
+style = 0
+value = 0
+
+[Form_ctrl2]
+class = "Frame"
+caption = ""
+geom = "5 65 165 8"
+id = ""
+style = 0
+value = 0
+
+[Form_ctrl3]
+class = "Frame"
+caption = ""
+geom = "5 435 165 2"
+id = ""
+style = 0
+value = 0
+
+[Form_ctrl4]
+class = "Frame"
+caption = ""
+geom = "5 490 165 8"
+id = ""
+style = 0
+value = 0
+
+[Form_ctrl5]
+class = "Label"
+caption = "Class:"
+geom = "5 235 40 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl6]
+class = "Label"
+caption = "Caption:"
+geom = "0 260 45 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl7]
+class = "Label"
+caption = "&Id:"
+geom = "5 285 40 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl8]
+class = "Label"
+caption = "&Left:"
+geom = "0 440 30 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl9]
+class = "Label"
+caption = "&Width:"
+geom = "80 440 40 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl10]
+class = "Label"
+caption = "&Top:"
+geom = "0 465 30 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl11]
+class = "Label"
+caption = "&Height:"
+geom = "80 465 40 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl12]
+class = "Label"
+caption = "&Value:"
+geom = "5 310 40 20"
+id = ""
+style = 32
+value = 0
+
+[Form_ctrl13]
+class = "CheckBox"
+caption = "&Wireframe"
+geom = "100 40 69 15"
+id = "IDC_WIREFRAME"
+style = 0
+value = 0
+
+[Form_ctrl14]
+class = "CheckBox"
+caption = "Snap to &grid"
+geom = "5 40 90 15"
+id = "IDC_GRID"
+style = 0
+value = 0
+
+[Form_ctrl15]
+class = "TreeView"
+caption = ""
+geom = "5 75 165 155"
+id = "IDC_CONTROLS"
+style = 0
+value = 0
+
+[Form_ctrl16]
+class = "ListView"
+caption = ""
+geom = "5 335 165 90"
+id = "IDC_STYLES"
+style = 0
+value = 0
+
+[Form_ctrl17]
+class = "ComboBox"
+caption = ""
+geom = "50 235 120 250"
+id = "IDC_CLASSES"
+style = 64
+value = 0
+
+[Form_ctrl18]
+class = "EditBox"
+caption = ""
+geom = "50 235 120 20"
+id = "IDC_CLASS"
+style = 64
+value = 0
+
+[Form_ctrl19]
+class = "EditBox"
+caption = ""
+geom = "50 260 120 20"
+id = "IDC_CAPTION"
+style = 0
+value = 0
+
+[Form_ctrl20]
+class = "EditBox"
+caption = ""
+geom = "50 285 120 20"
+id = "IDC_ID"
+style = 0
+value = 0
+
+[Form_ctrl21]
+class = "EditBox"
+caption = ""
+geom = "30 440 35 20"
+style = 1024
+value = 0
+id = "IDC_LEFT"
+
+[Form_ctrl22]
+class = "Spinner"
+caption = ""
+geom = "65 440 15 20"
+style = 524288
+value = 0
+id = "IDC_LEFTSPINNER"
+
+[Form_ctrl23]
+class = "EditBox"
+caption = ""
+geom = "30 465 35 20"
+id = "IDC_TOP"
+style = 1024
+value = 0
+
+[Form_ctrl24]
+class = "Spinner"
+caption = ""
+geom = "65 465 15 20"
+id = "IDC_TOPSPINNER"
+style = 524288
+value = 0
+
+[Form_ctrl25]
+class = "EditBox"
+caption = ""
+geom = "120 440 35 20"
+id = "IDC_WIDTH"
+style = 1024
+value = 0
+
+[Form_ctrl26]
+class = "Spinner"
+caption = ""
+geom = "155 440 15 20"
+id = "IDC_WIDTHSPINNER"
+style = 524288
+value = 0
+
+[Form_ctrl27]
+class = "EditBox"
+caption = ""
+geom = "120 465 35 20"
+id = "IDC_HEIGHT"
+style = 1024
+value = 0
+
+[Form_ctrl28]
+class = "Spinner"
+caption = ""
+geom = "155 465 15 20"
+id = "IDC_HEIGHTSPINNER"
+style = 524288
+value = 0
+
+[Form_ctrl29]
+class = "EditBox"
+caption = ""
+geom = "50 310 105 20"
+id = "IDC_VALUE"
+style = 0
+value = 0
+
+[Form_ctrl30]
+class = "EditBox"
+caption = ""
+geom = "5 305 20 10"
+style = 1025
+value = 0
+id = "IDC_VALUEAUX"
+
+[Form_ctrl31]
+class = "Spinner"
+caption = ""
+geom = "155 310 15 20"
+style = 524288
+value = 0
+id = "IDC_VALUESPINNER"

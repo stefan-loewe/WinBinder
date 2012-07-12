@@ -1,0 +1,75 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ How to get the dimensions of a text in pixels
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define('PATH_SCRIPT',	dirname(__FILE__) . '/');
+define('PATH_DATA',		PATH_SCRIPT);
+define('PATH_INC',		PATH_SCRIPT . '../include/');
+define('PATH_RES',		PATH_SCRIPT . '../resources/');
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . 'winbinder.php';
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define('APPNAME',			'Text size measurement');
+
+define('ID_TEXT',			101);
+define('ID_SIZE',			102);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+create_main_window();
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function create_main_window()
+{
+	global $font, $size;
+
+	$mainwin = wb_create_window(NULL, AppWindow, APPNAME,
+	  WBC_CENTER, WBC_CENTER, 300, 140, 0, WBC_REDRAW | WBC_MOUSEMOVE);
+
+	$font = wb_create_font("Arial", 12, BLACK, FTA_BOLD);
+	$text = wb_create_control($mainwin, EditBox, "Edit me!", 20, 20, 220, 26, ID_TEXT);
+	wb_create_control($mainwin, Label, "0 pixels wide", 20, 80, 120, 24, ID_SIZE);
+	wb_set_font($text, $font);
+
+	wb_set_handler($mainwin, 'process_main');
+}
+
+/* Process main window commands */
+
+function process_main($window, $id, $ctrl, $lparam1=0, $lparam2=0, $lparam3=0)
+{
+	global $font;
+
+    switch($id) {
+
+		case ID_TEXT:
+			$size = wb_get_size(wb_get_text($ctrl), $font);
+			wb_set_text(wb_get_control($window, ID_SIZE), "$size[0] pixels wide");
+			break;
+
+        case IDCLOSE:
+            wb_destroy_window($window);
+            break;
+    }
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

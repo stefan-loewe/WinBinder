@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>WinBinder</name>
+ <channel>pecl.php.net</channel>
+ <summary>A Native Windows binding for PHP</summary>
+ <description>WinBinder is a new extension that allows PHP programmers to build native Windows applications. It wraps the Windows API in a lightweight, easy-to-use library so that program creation is quick and straightforward.</description>
+ <lead>
+  <name>Rubem Pechansky</name>
+  <user>rubs</user>
+  <email>rubem@winbinder.org</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Stefano F. Rausch</name>
+  <user>sfrausch</user>
+  <email>stefano@rausch-e.net</email>
+  <active>yes</active>
+ </lead>
+ <date>%date%</date>
+ <time>%time%</time>
+ <version>
+  <release>%version%</release>
+  <api>%version%</api>
+ </version>
+ <stability>
+  <release>%stability%</release>
+  <api>%stability%</api>
+ </stability>
+ <license uri="http://winbinder.org/doc/license.txt">WinBinder License</license>
+ <notes>
+ %notes%
+ </notes>
+ <contents>
+%contents%
+ </contents>
+ <dependencies>
+ </dependencies>
+ <phprelease />
+</package>

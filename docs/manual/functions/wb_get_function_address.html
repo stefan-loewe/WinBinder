@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>wb_get_function_address</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+wb_get_function_address
+DLLs
+Dynamic link libraries
+Windows
+-->
+<h2>wb_get_function_address</h2>
+<p>int <b>wb_get_function_address</b> (string fname [, int idlib])</p>
+<p>Returns the address of a library function. <i>fname</i> is the function name
+and <i>idlib</i> identifies a library already loaded. The&nbsp;<i>idlib</i>
+identifier must have been obtained with a call to <a href="wb_load_library.html"><b>wb_load_library()</b></a>.
+If <i>idlib</i> is not set or is set to NULL, the last library sent to the
+function will be used.</p>
+<h1><b>Name expansion</b></h1>
+<p>The function prepends and appends some special characters to the function name until it finds
+the function name, then it returns the function address or NULL if the
+function was not found. These special characters are the most common ones encountered
+in various types of&nbsp;libraries. For example, if <i>fname</i> is set to &quot;MyFunction&quot;, <b>wb_get_function_address()</b>
+looks for the following function names, in order:</p>
+<ol type="1">
+    <li>MyFunction</li>
+    <li>MyFunctionA</li>
+    <li>MyFunctionW</li>
+    <li>_MyFunction</li>
+    <li>_MyFunctionA</li>
+    <li>_MyFunctionW</li>
+    <li>MyFunction@0, MyFunction@4, MyFunction@8... until MyFunction@80</li>
+    <li>_MyFunction@0, _MyFunction@4, _MyFunction@8... until MyFunction@80</li>
+</ol>
+<p>The last two expansion options include a '@' character&nbsp;followed by the
+number of parameters times 4, which is a standard way to store function names
+inside DLLs. The loop starts from zero (&quot;@0&quot;) and ends when it reaches
+20 parameters (&quot;@80&quot;).</p>
+<p><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+<font color="#CC6600"><b>NOTE:</b></font><b> </b>Function names, including the expansion characters, are limited to 255 characters.</p>
+<h1><b>Examples</b><br>
+</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Returns the number of seconds elapsed since the computer
+            started.</code></p>
+            <p><code>function get_ticks()<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;static
+            $KERNEL = null;<br>&nbsp;&nbsp;&nbsp;&nbsp;static $GetTickCount
+            = null;<br>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;if($KERNEL === null)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$KERNEL
+            = wb_load_library(&quot;KERNEL&quot;);<br>&nbsp;&nbsp;&nbsp;&nbsp;if($GetTickCount
+            === null)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$GetTickCount
+            = wb_get_function_address(&quot;GetTickCount&quot;, $KERNEL);<br>&nbsp;&nbsp;&nbsp;&nbsp;return
+            (int)(wb_call_function($GetTickCount) / 1000);<br>}</code></p>
+</td></tr>
+</table>
+<br>The mini-program below shows how to call a Windows function in a single
+PHP&nbsp;line.<br><br><table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>&lt;?<br>// Shows the current ANSI code-page identifier for the
+            operating system.<br><br>include &quot;../include/winbinder.php&quot;;<br><br>wb_message_box(0, &quot;ANSI code-page identifier: &quot;
+            . wb_call_function(wb_get_function_address(&quot;GetACP&quot;, wb_load_library(&quot;KERNEL&quot;))));</code></p>
+            <p><code>?&gt;</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_call_function.html"><b>wb_call_function</b></a><b><br></b><a href="wb_load_library.html"><b>wb_load_library</b></a><b><br></b><a href="../reference/functions_category.html#lowlevel">Low-level functions</a></p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ How to declare and use foreign functions in WinBinder
+
+*******************************************************************************/
+
+include "../include/winbinder.php";				// Location of WinBinder library
+
+// STEP 1: Load the DLL that contains the function
+
+$KERNEL = wb_load_library("KERNEL");
+
+// STEP 2: Get function address
+
+$fgms = wb_get_function_address("GlobalMemoryStatus", $KERNEL);
+
+// STEP 3: Declare constants for all structures
+
+define("MEMORYSTATUS",        "Vlen/Vmemload/Vphys/Vavailphys/Vpagefile/Vavailpagefile/Vvirtual/Vavailvirtual");
+define("MEMORYSTATUS_RAW",    "V8");
+define("MEMORYSTATUS_SIZE",   8 * 4);
+
+// STEP 4: Create PHP function that uses foreign function
+
+function GlobalMemoryStatus()
+{
+    global $KERNEL, $fgms;
+
+    $val = pack(MEMORYSTATUS_RAW, MEMORYSTATUS_SIZE,0,0,0,0,0,0,0);
+    wb_call_function($fgms, array($val));
+    return unpack(MEMORYSTATUS, $val);
+}
+
+// STEP 5: Call the newly declared PHP function as any other regular PHP function
+
+$mem = GlobalMemoryStatus();
+$report =  "Total RAM is " . sprintf("%.2f", ($mem["phys"] / (1024 * 1024))) . " MB, " . $mem["memload"] . "% used";
+wb_message_box(null, $report);
+
+//-------------------------------------------------------------------------- END
+
+?>

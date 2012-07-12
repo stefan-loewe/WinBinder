@@ -1,0 +1,63 @@
+<?php
+
+// port of http://msdn.microsoft.com/en-us/library/ms682623%28v=VS.85%29.aspx
+
+include "WinAPI.php";
+include "cStruct.php";
+
+define ('PROCESS_QUERY_INFORMATION', 0x0400);
+define ('PROCESS_VM_READ',0x0010);
+
+define ('MAX_PATH', 260);
+
+cStruct::define('PROCESS_ARRAY','
+	DWORD aProcesses[1024];
+');
+
+function PrintProcessNameAndID( $processID )
+{
+	$szProcessName = "<unknown>";
+	$szProcessName = str_pad($szProcessName, MAX_PATH, "\0");
+	
+	$hProcess = Kernel32::OpenProcess (PROCESS_QUERY_INFORMATION |        
+	                                   PROCESS_VM_READ, 
+	                                   false, $processID );
+	                                   
+	if ( null != $hProcess )
+	{
+		$hMod = 0;
+		$cbNeeded = 0;
+		
+		if (Psapi::EnumProcessModules( $hProcess, wb_get_address($hMod), 
+				\cStruct\HMODULE::sizeOf(), wb_get_address($cbNeeded) )
+		)
+		{
+			Psapi::GetModuleBaseName( $hProcess, $hMod, $szProcessName,
+												strlen($szProcessName));
+		}
+		
+		$szProcessName = \cStruct\rtrim($szProcessName);
+		
+		echo "$szProcessName  (PID: $processID)\n";
+	}
+}
+
+
+$aProcesses = new PROCESS_ARRAY();
+$cbNeeded = 0;
+
+if (! Psapi::EnumProcesses( $aProcesses, $aProcesses->sizeOf(), wb_get_address($cbNeeded)))
+{
+	echo "Enum Processes failed";
+	exit;
+}
+
+$cProcesses = $cbNeeded / \cStruct\DWORD::sizeOf();  // use DWORD in the cStruct namespace to get the size of
+
+for ($i = 0; $i < $cProcesses; $i++)
+{
+	if( $aProcesses->aProcesses[$i] != 0)
+	{
+		PrintProcessNameAndID( $aProcesses->aProcesses[$i] )	;
+	}
+}

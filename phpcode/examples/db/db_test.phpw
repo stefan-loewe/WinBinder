@@ -1,0 +1,321 @@
+<?php
+//debugbreak();
+/**
+ *
+ * @version $Id: db_test.phpw 45 2006-05-25 18:55:51Z stefanorausch $
+ * @copyright 2004-2006
+ */
+
+/*
+
+
+To use with SQLite just run it, on my box it takes about 4 sec to give you the result!
+
+To use it with mySQL you have to edit the db_test.phpw file:
+
+- uncomment line 33
+- uncomment line ~ 85 and edit for your server
+- make sure you have setup libmysql.dll in the extension_dir = "ext/" of PHP.ini
+
+Other notes:
+
+- Tested the wrapper with SQLite and mySQL, with PHP4 and PHP5
+- Mind you, in mySQL all returned names will be lowercase in Windows!!
+- Tested the wrapper against ToDo.phpw, which worked ( SQLite )
+- It takes quite a time , for me about 4 sec, to finish the SQLite tests. mySQL takes only half the time.
+- In line 157 this is a negative test, it should and does give that notice.
+- I tried to create a field without giving an attribute, which is a programming error!? In version 2b we could make a default for STRING.
+
+
+*/
+
+
+//define("DB_DATABASE", "mySQL"); // for test with SQLite comment this line
+if (!defined("DB_DATABASE")) define("DB_DATABASE", "SQLite");
+
+define("PATH_DATA",		"./");
+define("PATH_INC",		"../../include/");
+define("PATH_DB",		PATH_INC . "db/");
+define("PATH_RES",		"../resources/");
+define("APPPREFIX",		"myDB_");
+
+// ----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+include PATH_DB . "db_common.inc.php";
+
+if (DB_DATABASE == "SQLite") {
+    $database = "dbg2";
+} else {
+    $database = "test"; //db_open_database($filename);
+}
+// Samples of possible db_open_database params
+// db_open_database($filename);
+// db_open_database($database, $server = "localhost", $username = "root", $password = "");
+// db_open_database($database, $server = "localhost", $username = "root", $password = "mysql");
+// db_open_database($database, $server = "192.168.168.133", $username = "root", $password = "");
+$db1 = "db_check"; // checks
+$db2 = "dbg2"; // only read
+
+$tch = "tbcheck";
+$ttes = "test";
+
+$fieldnames = array("f1", "f2", "NAME", "long_field_name_for_the_database_test_with_more_then_50_max_64", "int_id");
+$fieldtypes = array("TEXT", "text", "varchar(15)", "VARCHAR(100)", "INTEGER NOT NULL");
+$fieldvals = array(1, 2, "just a name", "some TEXT", 22);
+$valarray[] = $fieldvals;
+
+$errors = 0;
+$errstr = "\n";
+// delete Database for check
+$fdb = DB_DATABASE . "_" . $db1 . ".db";
+if (file_exists($fdb)) {
+    unlink($fdb);
+}
+
+/**
+ * Case --- 01 with database no tables----
+ *
+ * db_list_table, create table, table exists
+ */
+if (DB_DATABASE == "SQLite") {
+    $dbhnd = db_open_database($db1, PATH_DATA);
+} else {
+//   $dbhnd = db_open_database($database, $server = "localhost", $username = "root", $password = "mysql");// mysql4.1.7
+    $dbhnd = db_open_database($database, $server = "192.168.168.133", $username = "root", $password = "");
+}
+
+if (!is_resource($dbhnd)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , not created $db1\n";
+}
+
+$result = db_table_exists($tch);
+if ($result) {
+    $result = db_delete_table($tch);
+}
+$result = db_list_database_tables();
+if ($result !== FALSE) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , list tables in empty db\n";
+}
+$result = db_create_table($tch, null, null);
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not create table with only id field in db\n";
+} else $result = db_delete_table($tch);
+$result = db_create_table($tch, $fieldnames, null);
+if ($result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could create table without fieldtypes in db\n";
+    $result = db_delete_table($tch);
+}
+$result = db_create_table($tch, $fieldnames, $fieldtypes);
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not create table in db\n";
+}
+$result = db_list_database_tables();
+if (($result[0] != $tch)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , no list $tch in db\n";
+}
+$result = db_rename_table($tch, "dummy");
+$result = db_list_database_tables();
+if (($result[0] != "dummy")) {
+    $result = db_delete_table($tch);
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , $result[0] not renamed in db\n";
+} else {
+    $result = db_delete_table('dummy');
+}
+$result = db_list_database_tables();
+if ($result !== FALSE) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , table 'dummy' was not deleted in db\n";
+}
+
+/**
+ * Case --- 02 with database with tables no records----
+ *
+ * db_fields and values
+ */
+
+$result = db_create_table($tch, $fieldnames, $fieldtypes); // no records
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , not created table in empty db\n";
+}
+
+$result = db_list_table_fields($tch);
+if (!is_array($result)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not list fields in table with no records\n";
+}
+$result = db_create_field($tch, "newfield", null);
+if ($result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could create field with type = NULL in table with no records\n";
+    $result = db_delete_field($tch, "newfield");
+}
+
+$result = db_create_field($tch, "newfield", "TEXT");
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not create field with type = TEXT in table with no records\n";
+}
+$result = db_list_table_fields($tch, true); // true for type of fields
+if (!(stristr($result[6], "TEXT"))) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not find 'newfield' in table with no records\n";
+}
+$result = db_table_exists($tch);
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , list table in empty db\n";
+} else {
+    $result = db_delete_table($tch);
+}
+// now the same tests with 1 record
+$result = db_create_table($tch, $fieldnames, $fieldtypes, "id", $valarray); // with 1 record
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , not created table with 1 record\n";
+}
+
+$result = db_list_table_fields($tch);
+if (!is_array($result)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not list fields in table with 1 record\n";
+}
+$result = db_create_field($tch, "test", ""); // beware of reserved Words as fields ( eg check )
+if ($result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could create field with type = '' in table with 1 record\n";
+    $result = db_delete_field($tch, "test"); // beware of reserved Words as fields ( eg check )
+}
+$newfield = "testfield";
+$result = db_create_field($tch, $newfield, "TEXT");
+
+$result = db_list_table_fields($tch);
+if (($result[count($result)-1] !== $newfield)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not find $newfield in table with 1 record\n";
+}
+$result = db_create_field($tch, $tch, "TEXT");
+
+$result = db_list_table_fields($tch);
+if (($result[count($result)-1] !== $tch)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not find $tch in table $tch with 1 record\n";
+}
+
+$fieldtype = "VARCHAR(25)";
+
+$result = db_edit_field($tch, $newfield, $fieldtype);
+
+$result = db_list_table_fields($tch);
+$tablefields = array_flip($result);
+$result = db_list_table_fields($tch, true);
+$actfid = $tablefields[$newfield];
+$newfieldtype = $result[$actfid];
+if (!(stristr($fieldtype, $newfieldtype))) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not edit $newfield in table $tch with 1 record\n";
+}
+
+$result = db_rename_field($tch, $newfield, $newfield . "_ren", "text");
+
+$result = db_list_table_fields($tch);
+if (($result[$actfid] !== $newfield . "_ren")) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not rename $newfield in table $tch with 1 record\n";
+}
+$result = db_delete_field($tch, $newfield . "_ren");
+
+$result = db_list_table_fields($tch);
+if (in_array("'" . $newfield . "_ren'", $result)) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not delete $newfield in table $tch with 1 record\n";
+}
+$result = db_delete_table($tch);
+// now the tests for records
+$result = db_create_table($tch, $fieldnames, $fieldtypes, "id", $valarray); // with 1 record
+if (!$result) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , not created table with 1 record\n";
+}
+
+$result = db_edit_record($tch,1, $fieldnames, $valarray[0]); // 1. record names and vals given
+if ($result != 1) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not edit 1. record ( names/vals) \n";
+}
+$result = db_edit_record($tch,1,null , $valarray[0]); // 1. record
+if ($result != 1) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not edit 1. record ( no names/vals) \n";
+}
+$result = db_edit_record($tch,1, $fieldnames, null); // 1. record
+if ($result != 1) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " ,  could not edit 1. record ( names/no vals) \n";
+}
+$result = db_edit_record($tch,1,null,null); // 1. record
+if ($result != 1) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not edit 1. record ( no names/no vals) \n";
+}
+
+$result = db_create_record($tch, $fieldnames, $valarray[0]); // 2. record
+if ($result != 2) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not create 2 record with next_id = 2\n";
+}
+
+$result = db_get_next_free_id($tch);
+if ($result !== 3) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , should get id = 3\n";
+}
+$valarray[] = array(2, 2, "just a name2", "some TEXT", 33);
+$valarray[] = array(3, 2, "just a name3", "some TEXT", 44);
+$valarray[] = array(4, 2, "just a name4", "some TEXT", 55);
+$result = db_create_record($tch, $fieldnames, $valarray[1]);
+$result = db_create_record($tch, $fieldnames, $valarray[2]);
+$result = db_create_record($tch, $fieldnames, $valarray[3]); // + 3 records
+$result = db_create_record($tch, $fieldnames, null); // + 3 records
+$result = db_create_record($tch, null, $valarray[3]); // + 3 records
+$result = db_create_record($tch, null, null); // + 3 records
+if ($result != 8) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not add 3 records with next_id = 5\n";
+}
+
+$result = db_edit_record($tch, 4, 'NAME', 'Name4'); // 4. record
+if ($result != 4) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not edit 4.record with id = 4\n";
+}
+$result = db_delete_records($tch, 8); // 5. record delete
+
+$result = db_get_next_free_id($tch);
+if ($result != 8) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not delete 5.record with next_id = 5\n";
+}
+$result = db_swap_records($tch, 4, 1); // swap 4 and 1
+
+$result = db_get_data($tch);
+if ($result[0][5] != 44) {
+    $errors++;
+    $errstr .= "Line " . __LINE__ . " , could not swap 1.record with 4.\n";
+}
+            wb_message_box(null,db_get_info("version").
+			"\nErrors: $errors \n$errstr\n\nWinBinder version " . WBC_VERSION .
+              "\nPHP version " . PHP_VERSION .  "\n" .
+              wb_get_system_info("osversion"), "Test results");
+
+$result = db_close_database();
+
+?>

@@ -1,0 +1,48 @@
+<?php
+
+include_once('WinAPI.php');
+include_once('cStruct.php');
+
+define('MAXPNAMELEN', 32);
+
+cStruct::define('MMVERSION', 'UINT');
+
+cStruct::define('MIDIINCAPS', '
+  WORD      wMid;
+  WORD      wPid;
+  MMVERSION vDriverVersion;
+  TCHAR     szPname[MAXPNAMELEN];
+  DWORD     dwSupport;
+'); 
+
+cStruct::define('WAVEINCAPS','
+	WORD      wMid;
+	WORD      wPid;
+	MMVERSION vDriverVersion;
+	TCHAR     szPname[MAXPNAMELEN];
+	DWORD     dwFormats;
+	WORD      wChannels;
+	WORD      wReserved1;
+');
+
+
+cStruct::define('WAVEOUTCAPS','
+  WORD      wMid;
+  WORD      wPid;
+  MMVERSION vDriverVersion;
+  TCHAR     szPname[MAXPNAMELEN];
+  DWORD     dwFormats;
+  WORD      wChannels;
+  WORD      wReserved1;
+  DWORD     dwSupport;
+');
+
+		
+
+
+$caps = new WAVEOUTCAPS();
+//print_r($caps);
+//echo strlen($caps->getData());
+Winmm::waveOutGetDevCaps(0, $caps, WAVEOUTCAPS::sizeOf());
+print_r($caps);
+//echo " ".$caps->szPname. strlen($caps->getData());

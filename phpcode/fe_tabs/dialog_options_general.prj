@@ -1,0 +1,48 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$maintab"
+parent = "$maintab"
+prefix = "IDC_"
+startval = 1200
+localize = ""
+locprefix = "LANG_"
+istabpage = 1
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+currentindex = 4
+
+[Form]
+class = "ModalDialog"
+caption = "General tab"
+geom = "WBC_CENTER WBC_CENTER 313 326"
+style = 0
+value = 0
+controls = 2
+
+[Form_ctrl1]
+class = "Label"
+caption = "&Welcome text:"
+geom = "20 15 245 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "EditBox"
+caption = ""
+geom = "15 45 275 210"
+style = 192
+value = 0
+id = "IDC_WELCOMETEXT"

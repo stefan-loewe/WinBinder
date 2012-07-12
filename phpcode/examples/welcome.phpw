@@ -1,0 +1,223 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ "Welcome" application
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+define("PATH_DOC",		PATH_SCRIPT . "../../docs/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+// Control identifiers
+
+define("ID_TIMER",		100);
+
+define("ID_LABEL",		101);
+define("ID_ABOUT",		102);
+
+define("ID_HELP",		103);
+define("ID_WEBSITE",	104);
+define("ID_WHATIS",		105);
+define("ID_RELNOTES",	106);
+define("ID_CHANGELOG",	107);
+define("ID_SOURCE",		108);
+define("ID_FIRSTAPP",	109);
+define("ID_FORUM",		110);
+define("ID_PHPDOC",		111);
+define("ID_PHPVER",		112);
+define("ID_PHPDL",		113);
+define("ID_FEDITOR",	114);
+
+define("APPNAME",		"Welcome to WinBinder");			// Application name
+define("HELP_FILE",		PATH_DOC . "winbinder.chm");		// Help file
+define("WEB_ERROR",		"Problem reading web page. Please try again later.");
+define("WELCOME_TEXT",	"Welcome to WinBinder!\r\n\r\nFor more information, click one of the buttons below, use the toolbar or the menu.");
+define('PHP_DOWNLOAD_URL', 'http://www.php.net/downloads.php');
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window, then assign a procedure and an icon to it
+
+$mainwin = wb_create_window(NULL, AppWindow, APPNAME . " " . WBC_VERSION, 0, 0, 10, 10, WBC_INVISIBLE | WBC_TOP);
+wb_set_handler($mainwin, "process_main");
+wb_set_image($mainwin, PATH_RES . "hyper.ico");
+
+// Create menu
+
+wb_create_control($mainwin, Menu, array(
+	"&File",
+		array(ID_WEBSITE,	"&Web site"),
+		array(IDCLOSE,		"E&xit\tAlt+F4",			null, PATH_RES . "menu_exit.bmp"),
+	"&Help",
+		array(ID_RELNOTES,	"&Release notes",			null, PATH_RES . "menu_doc.bmp"),
+		array(ID_CHANGELOG,	"&Changelog",				null, PATH_RES . "menu_doc.bmp"),
+		null,
+		array(ID_HELP,		"&Help topics\tF1",			null, PATH_RES . "menu_help.bmp",	"F1"),
+		null,
+		array(ID_ABOUT,		"&About this application",	null, PATH_RES . "menu_help.bmp"),
+));
+
+// Create toolbar
+
+wb_create_control($mainwin, ToolBar, array(
+	null,
+	array(ID_RELNOTES,	NULL, "&Release notes",			0),
+	array(ID_CHANGELOG,	NULL, "&Changelog",				23),
+	null,
+	array(ID_HELP,		NULL, "WinBinder manual ", 		13),
+	array(ID_WEBSITE,	NULL, "Web site", 				11),
+	null,
+	array(ID_ABOUT, 	NULL, "About this application",	19),
+), 0, 0, 16, 15, 0, 0, PATH_RES . "toolbar.bmp");
+
+wb_create_control($mainwin, Frame, "", 0, 28, 320, 2);
+
+// Create label
+
+wb_create_control($mainwin, Label, WELCOME_TEXT, 15, 40, 290, 80, ID_LABEL, WBC_LEFT | WBC_MULTILINE);
+wb_set_font(wb_get_control($mainwin, ID_LABEL), wb_create_font("Verdana", 9, null, FTA_NORMAL));
+
+// Create buttons
+
+$buttons = array(
+	array(ID_WHATIS,	"What is WinBinder?"),
+	array(ID_HELP,		"WinBinder Manual"),
+	array(ID_FIRSTAPP,	"My first application"),
+	array(ID_SOURCE,	"This source code"),
+	array(ID_FORUM,		"WinBinder Forum"),
+	array(ID_PHPDOC,	"PHP documentation"),
+	array(ID_PHPVER,	"Check PHP version"),
+	array(ID_PHPDL,		"PHP download page"),
+	array(ID_FEDITOR,	"Form Editor (FE)")
+);
+
+$nbuttons = count($buttons);
+
+for($i = 0; $i < $nbuttons; $i++) {
+	wb_create_control($mainwin, PushButton, $buttons[$i][1], 80, 115 + 25 * $i, 150, 22, $buttons[$i][0]);
+}
+
+wb_set_size($mainwin, 320, 180 + 25 * $nbuttons);
+wb_set_position($mainwin, WBC_CENTER, WBC_CENTER);
+
+// Enter application loop
+
+wb_create_timer($mainwin, ID_TIMER, 4000);
+wb_set_visible($mainwin, true);
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+/* Process main window commands */
+
+function process_main($window, $id)
+{
+	switch($id) {
+
+		case ID_TIMER:
+			wb_set_style($window, WBC_TOP, false);
+			wb_destroy_timer($window, ID_TIMER);
+			break;
+
+		case ID_WHATIS:
+			wb_exec(wb_find_file("hh.exe"), HELP_FILE . "::manual/what_is.html");
+			break;
+
+		case ID_RELNOTES:
+			wb_exec(PATH_DOC . "release_notes.txt");
+			break;
+
+		case ID_CHANGELOG:
+			wb_exec(PATH_DOC . "changelog.txt");
+			break;
+
+		case ID_SOURCE:
+			wb_exec(wb_find_file("notepad.exe"), __FILE__);
+			break;
+
+		case ID_FIRSTAPP:
+			wb_exec(wb_find_file("hh.exe"), HELP_FILE . "::manual/overviews/applications.html");
+			break;
+
+		case ID_FORUM:
+			if(!wb_exec("http://winbinder.org/forum/"))
+				wb_message_box($window, WEB_ERROR);
+			break;
+
+		case ID_PHPDOC:
+			if(!wb_exec("http://www.php.net/manual/en/"))
+				wb_message_box($window, WEB_ERROR);
+			break;
+
+		case ID_HELP:
+			wb_exec(HELP_FILE);
+			break;
+
+		case ID_WEBSITE:
+			if(!wb_exec("http://winbinder.org/"))
+				wb_message_box($window, WEB_ERROR);
+			break;
+
+		case ID_PHPVER:
+
+			// Thanks to Stefano for the code below
+
+			$file = PHP_VERSION > '4.4.2' ? file_get_contents(PHP_DOWNLOAD_URL) : 'PHP 4.4.2 zip package';
+
+			if(preg_match('/PHP (' . substr(PHP_VERSION, 0, 2) . '\d\.\d) zip package/', $file, $match)) {
+				if($match[1] > PHP_VERSION)
+					wb_message_box($window, "There is a new PHP version available (PHP {$match[1]}). You may download it from " .
+					  PHP_EOL . PHP_DOWNLOAD_URL . ".", null, WBC_WARNING);
+				elseif($match[1] <= PHP_VERSION)
+					wb_message_box($window, "You are already using the latest PHP version available (PHP {$match[1]}).",
+					  null, WBC_INFO);
+			}
+			break;
+
+		case ID_PHPDL:
+			if(!wb_exec(PHP_DOWNLOAD_URL))
+				wb_message_box($window, WEB_ERROR);
+			break;
+
+		case ID_FEDITOR:
+			$formEditor = realpath(PATH_SCRIPT . '../form_editor/fe_main.phpw');
+//			if(!wb_exec(PATH_BIN . 'php-win.exe', $formEditor))
+//				wb_message_box($window, "The Form Editor (FE) can not be launched." . PHP_EOL
+//					. "Please check your WinBinder installation.", null, WBC_WARNING);
+			if(!wb_exec($formEditor))
+				wb_message_box($window, "The Form Editor (FE) can not be launched." . PHP_EOL
+					. "Please check your WinBinder installation.", null, WBC_WARNING);
+			break;
+
+		case ID_ABOUT:
+			wb_message_box($window, "WinBinder version " . WBC_VERSION .
+				"\nPHP version " . PHP_VERSION .	"\n" .
+				wb_get_system_info("osversion"), "About " . APPNAME);
+			break;
+
+		case IDCLOSE:		// IDCLOSE is predefined
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

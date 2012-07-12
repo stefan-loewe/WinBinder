@@ -1,0 +1,159 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$wb->winoptions"
+parent = "$wb->mainwin"
+prefix = "IDC_"
+startval = 2000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+staticnullid = 1
+
+[Form]
+class = "ModalDialog"
+caption = "Options"
+geom = "WBC_CENTER WBC_CENTER 363 384"
+style = 1
+value = 0
+controls = 16
+
+[Form_ctrl1]
+class = "Label"
+caption = "The settings below apply to all projects."
+geom = "20 10 325 20"
+style = 128
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "Frame"
+caption = "General options"
+geom = "10 30 335 45"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl3]
+class = "Frame"
+caption = "Display options"
+geom = "10 80 335 147"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl4]
+class = "Frame"
+caption = "Default path for project files"
+geom = "10 235 335 82"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl5]
+class = "CheckBox"
+caption = "&Export PHP code automatically when saving"
+geom = "20 50 325 15"
+style = 0
+value = 0
+id = "IDC_AUTOPHP"
+
+[Form_ctrl6]
+class = "CheckBox"
+caption = "&Wireframe display"
+geom = "20 100 315 15"
+style = 0
+value = 0
+id = "IDC_WIREFRAME"
+
+[Form_ctrl7]
+class = "CheckBox"
+caption = "Sho&w grid"
+geom = "20 120 315 15"
+style = 0
+value = 0
+id = "IDC_SHOWGRID"
+
+[Form_ctrl8]
+class = "CheckBox"
+caption = "Snap to &grid"
+geom = "20 140 315 15"
+style = 0
+value = 0
+id = "IDC_GRID"
+
+[Form_ctrl9]
+class = "CheckBox"
+caption = "Show &construction lines in some classes"
+geom = "20 160 315 15"
+style = 0
+value = 0
+id = "IDC_CONSTRUCTIONLINES"
+
+[Form_ctrl10]
+class = "CheckBox"
+caption = "&Leave \"ghost\" while moving controls"
+geom = "20 180 315 15"
+style = 0
+value = 0
+id = "IDC_GHOST"
+
+[Form_ctrl11]
+class = "CheckBox"
+caption = "Display control values in &hexadecimal"
+geom = "20 200 315 15"
+style = 0
+value = 0
+id = "IDC_SHOWHEX"
+
+[Form_ctrl12]
+class = "EditBox"
+caption = ""
+geom = "20 280 275 20"
+style = 0
+value = 0
+id = "IDC_FILEPATH"
+
+[Form_ctrl13]
+class = "PushButton"
+caption = "..."
+geom = "305 280 30 20"
+style = 0
+value = 0
+id = "IDC_BROWSE"
+
+[Form_ctrl14]
+class = "CheckBox"
+caption = "&Update path automatically when opening or saving"
+geom = "20 255 315 15"
+style = 0
+value = 0
+id = "IDC_AUTOPATH"
+
+[Form_ctrl15]
+class = "PushButton"
+caption = "OK"
+geom = "80 325 90 25"
+style = 0
+value = 0
+id = "IDOK"
+
+[Form_ctrl16]
+class = "PushButton"
+caption = "Cancel"
+geom = "180 325 90 25"
+style = 0
+value = 0
+id = "IDCANCEL"

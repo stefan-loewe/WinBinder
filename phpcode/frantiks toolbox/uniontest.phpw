@@ -1,0 +1,38 @@
+<?php
+
+include_once('WinAPI.php');
+include_once('cStruct.php');
+
+cStruct::define('MMTIME','
+	UINT    wType;
+	union {
+		DWORD ms;
+		DWORD sample;
+		DWORD cb;
+		DWORD ticks;
+		struct {
+			BYTE hour;
+			BYTE min;
+			BYTE sec;
+			BYTE frame;
+			BYTE fps;
+			BYTE dummy;
+			BYTE pad[2];
+		} smpte;
+		struct {
+			DWORD songptrpos;
+		} midi;
+	} u;
+');
+
+$mm = new MMTIME();
+
+
+
+print_r($mm);
+print_r(MMTIME::getTypeDef());
+echo MMTIME::getByteLen();
+
+
+
+?>

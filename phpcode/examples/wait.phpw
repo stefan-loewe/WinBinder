@@ -1,0 +1,105 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ How to use the wb_wait() function
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME", 	"wb_wait() demonstration");
+define("ID_USEIT",		201);
+define("ID_START",		202);
+define("ID_CHAR",		203);
+define("ID_INTERVAL",	204);
+define("ID_STATUSBAR",	101);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window and controls
+
+$mainwin = wb_create_window(NULL, PopupWindow, APPNAME,
+  WBC_CENTER, WBC_CENTER, 200, 200, 0, 0);
+
+wb_create_control($mainwin, StatusBar, "", 0,0,0,0,ID_STATUSBAR);
+wb_create_control($mainwin, PushButton, "Start", 10, 10, 80, 40, ID_START);
+wb_create_control($mainwin, Label, "Interval:", 120, 10, 165, 15);
+wb_create_control($mainwin, EditBox, "", 120, 30, 40, 18, ID_INTERVAL, WBC_NUMBER);
+wb_create_control($mainwin, Spinner, "", 162, 30, 20, 18, 0, WBC_GROUP);
+wb_create_control($mainwin, CheckBox, "Use wb_wait()", 10, 60, 100, 24, ID_USEIT);
+wb_create_control($mainwin, Label, "!", 10, 90, 165, 40, ID_CHAR, WBC_CENTER);
+
+wb_set_value(wb_get_control($mainwin, ID_USEIT), true);
+wb_set_value(wb_get_control($mainwin, ID_INTERVAL), 20, 1, 5000);
+wb_set_font(wb_get_control($mainwin, ID_CHAR), wb_create_font("Arial", 24, BLACK, FTA_BOLD));
+
+wb_set_handler($mainwin, "process_main");
+wb_main_loop();
+
+function start_action($window)
+{
+	$charcmd = wb_get_control($window, ID_CHAR);
+	$interval = wb_get_value(wb_get_control($window, ID_INTERVAL));
+	$statusbar = wb_get_control($window, ID_STATUSBAR);
+	$useit = wb_get_value(wb_get_control($window, ID_USEIT));
+
+	wb_set_text($statusbar, "Looping. Press ESC to stop.");
+
+	// Action loop
+
+	for($char = 33; $char < 127; $char++) {
+
+		wb_set_text($charcmd, chr($char));
+
+		if($useit) {
+			if(wb_wait(null, $interval, WBC_KEYDOWN) == 27) {		// Check for ESC key
+				wb_set_text($statusbar, "ESC key pressed.");
+				break;
+			}
+		} else {
+			for($i = 0; $i < 50 * $interval; $i++)
+				wb_refresh($charcmd);
+		}
+	}
+
+	wb_set_text($statusbar, "Done.");
+}
+
+function process_main($window, $id, $ctrl=0, $lparam=0, $lparam2=0)
+{
+	switch($id) {
+
+		case ID_START:
+			start_action($window);
+			break;
+
+		case ID_USEIT:
+
+			break;
+
+		case IDCLOSE:
+			wb_destroy_window($window);
+			break;
+	}
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

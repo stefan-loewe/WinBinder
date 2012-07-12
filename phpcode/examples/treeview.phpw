@@ -1,0 +1,235 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Code sample: Working with TreeViews
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("ID_TREE",			100);
+define("ID_LEVEL1",			101);
+define("ID_LEVEL2",			102);
+define("ID_LEVEL3",			103);
+define("ID_INSERTCHILD",	104);
+define("ID_INSERTSIBLING",	105);
+define("ID_DELETE",			106);
+define("ID_CLEAR",			107);
+define("ID_COLLAPSE",		108);
+define("ID_LINES",			109);
+define("ID_ICONS",			110);
+define("ID_TEXT",			111);
+define("ID_VALUE",			112);
+define("ID_PARENT",			113);
+define("ID_ROOT",			114);
+define("ID_SWAP",			115);
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+// Create main window
+
+$mainwin = wb_create_window(NULL, ResizableWindow, "TreeView tests", WBC_CENTER, WBC_CENTER, 410, 460,
+  WBC_NOTIFY, WBC_RESIZE);
+wb_set_area($mainwin, WBC_MINSIZE, 0, 0, 350, 440);
+
+// Create treeview and assing an array of images to it
+
+$tree = wb_create_control($mainwin, TreeView, '', 150, 20, 240, 380, ID_TREE, WBC_LINES);
+wb_set_image($tree, PATH_RES . "treeview.bmp", GREEN, 0, 10);
+
+// Create other controls
+
+wb_create_control($mainwin, PushButton, 'Insert item at root',	10,  20, 130, 24, ID_LEVEL1);
+wb_create_control($mainwin, PushButton, 'Insert sibling',		10,  50, 130, 24, ID_INSERTSIBLING);
+wb_create_control($mainwin, PushButton, 'Insert child',			10,  80, 130, 24, ID_INSERTCHILD);
+wb_create_control($mainwin, PushButton, 'Change icons',			10, 110, 130, 24, ID_ICONS);
+wb_create_control($mainwin, PushButton, 'Change text',			10, 140, 130, 24, ID_TEXT);
+wb_create_control($mainwin, PushButton, 'Change value',			10, 170, 130, 24, ID_VALUE);
+wb_create_control($mainwin, PushButton, 'Swap items',			10, 200, 130, 24, ID_SWAP);
+wb_create_control($mainwin, PushButton, 'Select parent',		10, 230, 130, 24, ID_PARENT);
+wb_create_control($mainwin, PushButton, 'Select root',			10, 260, 130, 24, ID_ROOT);
+wb_create_control($mainwin, PushButton, 'Expand / collapse',	10, 290, 130, 24, ID_COLLAPSE);
+wb_create_control($mainwin, PushButton, 'Delete selection',		10, 320, 130, 24, ID_DELETE);
+wb_create_control($mainwin, PushButton, 'Clear treeview',		10, 350, 130, 24, ID_CLEAR);
+wb_create_control($mainwin, CheckBox,   'Display dotted lines',	10, 380, 130, 24, ID_LINES, 0, true);
+
+$statusbar = wb_create_control($mainwin, StatusBar, "");
+
+// Create several items in a treeview by specifying the insertion level
+
+// Array is: caption, value, where, image, selectedimage, insertiontype
+
+// Insertiontype:
+// 	0: $where is the insertion level
+// 	1: $where is a sibling of the new node
+// 	2: $where is the parent of the new node
+
+$items = wb_create_items($tree, array(
+	array("Root0",  2001),				// Default insertion level is 0
+	array("Child1", 2002, 1),
+	array("Child2", 2003, 1),
+	array("Root1",  2004),
+	array("Child3", 2005, 2),
+	array("Child4", 2006, 2),
+	array("Child5", 2007, 3),
+	array("Child6", 2008, 4),
+	array("Root2",  2009),
+	array("Root3",  2010),
+));
+
+// Create items with using parent-child-sibling relationships
+
+$node1 = wb_create_items($tree, array(array("Root4",  3001, 0,      0, 1, 0))); // At root
+$node2 = wb_create_items($tree, array(array("Child7", 3002, $node1, 4, 5, 2))); // Child
+$node3 = wb_create_items($tree, array(array("Child8", 3003, $node2, 4, 5, 1))); // Sibling
+
+wb_set_state($tree, $items[0], true);
+
+// Start
+
+wb_set_handler($mainwin, "process_main");
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function process_main($window, $id, $ctrl=0, $lparam=0)
+{
+	global $tree, $statusbar;
+	static $item_number = 0;
+
+	switch($id) {
+
+		case IDDEFAULT:
+			if($lparam == WBC_RESIZE) {
+
+				// Set ListBox size
+
+				$dim = wb_get_size($window, true);
+				$winwidth = $dim[0];
+				$winheight = $dim[1];
+				wb_set_size($tree, $winwidth - 162, $winheight - 48);
+			}
+			break;
+
+		case ID_TREE:
+			$selnode = wb_get_selected($tree);
+			wb_set_text($statusbar,
+				"Selected item: " . wb_get_text($tree, $selnode) .
+				" / Value: " . wb_get_value($tree) .
+				" / Parent: " . wb_get_parent($tree, $selnode) .
+				" / Level: " . wb_get_level($tree, $selnode) .
+				" / State: " . (wb_get_state($tree, $selnode) ? "expanded" : "collapsed")
+			);
+			break;
+
+		case ID_LINES:
+			wb_set_style($tree, WBC_LINES, wb_get_value($ctrl));
+			break;
+
+		case ID_LEVEL1:
+			$node = wb_create_items($tree, array(
+				array("Item" . $item_number++, rand(100, 199), 0, 2, 3)		// Icon indices
+			));
+			wb_set_selected($tree, $node);
+			break;
+
+		case ID_INSERTSIBLING:
+			$original = wb_get_selected($tree);
+			$node = wb_create_items($tree, array(
+				array("Item" . $item_number++, strtoupper(substr(md5(rand(0, 100)), 0, 10)), $original, -1, -1, 1)
+			));
+			wb_set_selected($tree, $node);
+			break;
+
+		case ID_SWAP:
+			$selnode = wb_get_selected($tree);
+			$text = wb_get_text($tree, $selnode);
+			$value = wb_get_value($tree);
+			wb_delete_items($tree, wb_get_selected($tree));
+			$original = wb_get_selected($tree);
+			$node = wb_create_items($tree, array(
+				array($text, $value, $original, -1, -1, 1)
+			));
+			wb_set_selected($tree, $node);
+			break;
+
+		case ID_INSERTCHILD:
+			$parent = wb_get_selected($tree);
+			$node = wb_create_items($tree, array(
+				array("Item" . $item_number++, rand(0, 100) / 7.23, $parent, -1, -1, 2)
+			));
+			wb_set_selected($tree, $node);
+			break;
+
+		case ID_TEXT:
+			wb_set_text($tree, ucfirst(substr(md5(rand(0, 100)), 0, 10)), wb_get_selected($tree));
+			process_main($window, ID_TREE);
+			break;
+
+		case ID_VALUE:
+			wb_set_value($tree, rand(1000, 10000), wb_get_selected($tree));
+			process_main($window, ID_TREE);
+			break;
+
+		case ID_ICONS:
+			wb_set_item_image($tree, array(8, 9), wb_get_selected($tree));
+			wb_refresh($tree);
+			break;
+
+		case ID_PARENT:
+			$sel = wb_get_parent($tree, wb_get_selected($tree));
+			if($sel) {
+				wb_set_selected($tree, $sel);
+				wb_set_focus($tree);
+			} else
+				wb_set_selected($tree, null);
+			break;
+
+		case ID_ROOT:
+			wb_set_selected($tree, 0);
+			wb_set_focus($tree);
+			break;
+
+		case ID_COLLAPSE:
+			$node = wb_get_selected($tree);
+			wb_set_state($tree, $node,
+				!wb_get_state($tree, $node));
+			wb_set_focus($tree);
+			process_main($window, ID_TREE);
+			break;
+
+		case ID_DELETE:
+			wb_delete_items($tree, wb_get_selected($tree));
+			break;
+
+		case ID_CLEAR:
+			wb_create_items($tree, null, true);
+			$item_number = 0;
+			wb_set_text($statusbar, "");
+			break;
+
+		case IDCLOSE:
+			wb_destroy_window($window);
+	}
+}
+
+//------------------------------------------------------------------ END OF FILE
+
+?>

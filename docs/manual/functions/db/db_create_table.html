@@ -1,0 +1,55 @@
+<html>
+
+<head>
+
+<title>db_create_table</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_create_table-->
+<h2>db_create_table</h2>
+		<p>bool <b>db_create_table </b>(string tablename, mixed fieldnames, mixed fieldattrib
+[, string idfield [, mixed valarray]])</p>
+<p>Creates a table in the current database.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of the table to be created.<i><br>fieldnames</i> is a set of identifiers that may be an array or a CSV string
+(without the &quot;id&quot; field).<br><i>fieldattrib</i> is a set of fieldtypes that may be an array or a CSV string
+(without the &quot;id&quot; field).<br><i>idfield</i>  is the name of identifier field (column). <i>idfield</i>
+is also the auto-incrementing primary key. Default is &quot;id&quot;.<br><i>valarray </i>is a string with the values of the records desired. It may be an array or a CSV string.<br></p>
+		<p></p>
+		<p><b>Result</b></p>
+		<p>The result will be TRUE if the table was created or FALSE if  the table already exists, could not be created or the records not be created.</p>
+
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Create table<br>
+							<br>
+							echo &quot;We create mytable with 2 records&quot;;<br>
+							$fn = array(&quot;name&quot;, &quot;what&quot;, &quot;OK&quot;); // fieldnames <br>
+							$fv[] = array(&quot;villa&quot;, &quot; would like to live in&quot;, &quot;0&quot;); // valarray <br>
+							$fv[] = array(&quot;appartmenthouse&quot;, &quot; there we are&quot;, &quot;true&quot;); <br>
+							$fa = array(&quot;text&quot;, &quot;longtext&quot;, &quot;bool&quot;); // fieldattributs <br>
+							$res = db_create_table(&quot;mytable&quot;, $fn, $fa, &quot;id&quot;, $fv); <br>
+							if ($res)<br>
+							 { echo &quot;mytable created with 2 records&quot;; } </code></p>
+</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="db_delete_table.html"><b>db_delete_table</b></a><b><br></b><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

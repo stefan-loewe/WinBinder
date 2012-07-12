@@ -1,0 +1,127 @@
+<?php
+
+/*******************************************************************************
+
+ WINBINDER - The native Windows binding for PHP for PHP
+
+ Copyright © Hypervisual - see LICENSE.TXT for details
+ Author: Rubem Pechansky (http://winbinder.org/contact.php)
+
+ Working with tooltips
+
+*******************************************************************************/
+
+//------------------------------------------------------------ SYSTEM PARAMETERS
+
+define("PATH_SCRIPT",	dirname(__FILE__) . "/");
+define("PATH_DATA",		PATH_SCRIPT);
+define("PATH_INC",		PATH_SCRIPT . "../include/");
+define("PATH_RES",		PATH_SCRIPT . "../resources/");
+
+//----------------------------------------------------------------- DEPENDENCIES
+
+include PATH_INC . "winbinder.php";
+
+//-------------------------------------------------------------------- CONSTANTS
+
+define("APPNAME",	"Tooltips demo");
+
+//-------------------------------------------------------------- EXECUTABLE CODE
+
+define('MSG_TOOLTIP',		"This is the tooltip for this control.\nIt was created with wb_create_control().");
+
+// Control identifiers
+
+define('ID_NEW',	 		9001);
+define('ID_ABOUT', 			9002);
+define('ID_OPEN', 			9003);
+define('ID_SAVE', 			9004);
+define('ID_WEBSITE',		9023);
+
+// Create main window
+
+$mainwin = wb_create_window(NULL, AppWindow, array(APPNAME, 'Window tooltip'), WBC_CENTER, WBC_CENTER, 320, 340, WBC_INVISIBLE | WBC_NOTIFY, WBC_MOUSEMOVE);
+
+wb_set_handler($mainwin, "process_main");
+
+// Main window controls
+
+$toolbar = wb_create_control($mainwin, ToolBar, array(
+	null,
+	array(ID_NEW,			NULL, "New (Ctrl+N)",		0),
+	array(ID_OPEN,			NULL, "Open (Ctrl+O)",		1),
+	array(ID_SAVE,			NULL, "Save (Ctrl+S)",		2),
+	null,
+	array(ID_WEBSITE,		NULL, "Web site", 			11),
+
+), 0, 0, 16, 15, 0, 0, PATH_RES . "toolbar.bmp");
+
+$statusbar = wb_create_control($mainwin, StatusBar, array('This status bar also has a tooltip.', MSG_TOOLTIP));
+
+// Create tab control
+
+$maintab = wb_create_control($mainwin, TabControl, array("Tab 1\nTab 2", MSG_TOOLTIP), 5, 30, 300, 240, 100, WBC_VISIBLE);
+
+// Tab #0 controls
+
+$ctrl = wb_create_control($maintab, PushButton, array('Button', MSG_TOOLTIP), 20, 10, 120, 22, 101);
+wb_set_text($ctrl, array(null, null));
+
+$ctrl = wb_create_control($maintab, PushButton, 'This one is different!', 160, 10, 120, 22, 102);
+wb_set_text($ctrl, array(null, 'This tooltip was set with wb_set_text()'));
+
+
+$ctrl = wb_create_control($maintab, ImageButton, array('ImageButton', MSG_TOOLTIP), 160, 70, 128, 32, 101);
+wb_set_image($ctrl, wb_load_image(PATH_RES . 'states.bmp'), GREEN);
+wb_create_control($maintab, ScrollBar, array(null, MSG_TOOLTIP), 20, 70, 120, 22, 101, 0, 50);
+$ctrl = wb_create_control($maintab, HyperLink, array('www.mywebsite.com', MSG_TOOLTIP), 20, 45, 260, 16, 101, WBC_CENTER | WBC_LINES);
+wb_set_cursor($ctrl, 'finger');
+wb_create_control($maintab, EditBox, array('EditBox', MSG_TOOLTIP), 20, 110, 120, 22, 103);
+wb_create_control($maintab, Spinner, array(null, MSG_TOOLTIP), 160, 110, 120, 22, 104);
+wb_create_control($maintab, RadioButton, array('Option 1', MSG_TOOLTIP), 20, 140, 80, 22, 105, 0, 1);
+wb_create_control($maintab, RadioButton, array('Option 2', MSG_TOOLTIP), 100, 140, 80, 22, 106);
+wb_create_control($maintab, CheckBox, array('Check box', MSG_TOOLTIP), 20, 170, 80, 22, 107);
+wb_create_control($maintab, RTFEditBox, array('{\\rtf1\\b\\fs16 RFEditBox}', MSG_TOOLTIP), 160, 170, 120, 22, 103);
+
+// Tab #1 controls
+
+wb_create_control($maintab, Calendar, array('', MSG_TOOLTIP), 10, 10, 120, 120, 101, 0, 0, 2);
+wb_create_control($maintab, ListBox,  array(array('Item 1', 'Item2'), MSG_TOOLTIP), 160, 10, 120, 60, 101, 0, 0, 2);
+wb_create_control($maintab, ComboBox, array(array('Item 1', 'Item2'), MSG_TOOLTIP), 160, 70, 120, 60, 102, WBC_READONLY, 0, 2);
+wb_create_control($maintab, TreeView, array(array(array('Item 1'), array('Item 2', 0, 1), array('Item 3')), MSG_TOOLTIP), 10, 140, 120, 60, 102, 0, 0, 2);
+wb_create_control($maintab, Gauge,    array('', MSG_TOOLTIP), 160, 120, 120, 20, 102, 0, 50, 2);
+wb_create_control($maintab, Slider,   array('', MSG_TOOLTIP), 160, 170, 120, 20, 102, 0, 50, 2);
+
+
+// Show window and enter main loop
+
+wb_set_visible($mainwin, true);
+wb_main_loop();
+
+//-------------------------------------------------------------------- FUNCTIONS
+
+function process_main($window, $id, $ctrl, $lparam, $lparam2)
+{
+	global $statusbar;
+
+	switch($id) {
+		case IDDEFAULT:			// This is the main window
+
+			$x = $lparam2 & 0xFFFF;
+			$y = ($lparam2 & 0xFFFF0000) >> 16;
+
+			$msg = sprintf("Coordinates: (%03d, %03d)", $x, $y);
+			wb_set_text($statusbar, $msg);
+			wb_set_text($window, array(null, $msg));
+
+			break;
+		case IDCLOSE:
+			wb_destroy_window($window);
+			break;
+
+	}
+}
+
+//-------------------------------------------------------------------------- END
+
+?>

@@ -1,0 +1,64 @@
+<?php
+
+include_once('WinAPI.php');
+include_once('cStruct.php');
+
+define ('OFN_PATHMUSTEXIST', 0x800);
+define ('OFN_FILEMUSTEXIST', 0x1000);
+
+cStruct::define('OPENFILENAME', '
+  DWORD         lStructSize;
+  HWND          hwndOwner;
+  HINSTANCE     hInstance;
+  LPCTSTR       lpstrFilter;
+  LPTSTR        lpstrCustomFilter;
+  DWORD         nMaxCustFilter;
+  DWORD         nFilterIndex;
+  LPTSTR        lpstrFile;
+  DWORD         nMaxFile;
+  LPTSTR        lpstrFileTitle;
+  DWORD         nMaxFileTitle;
+  LPCTSTR       lpstrInitialDir;
+  LPCTSTR       lpstrTitle;
+  DWORD         Flags;
+  WORD          nFileOffset; 
+  WORD          nFileExtension;
+  LPCTSTR       lpstrDefExt;
+  LPARAM        lCustData;
+  POINTER		 lpfnHook;  // all "lp" aka long pointers are POINTER
+  LPCTSTR       lpTemplateName;
+  void 			*pvReserved; // likewise void * are also pointers
+  DWORD         dwReserved;
+  DWORD         FlagsEx;
+');
+
+$ofn = new OPENFILENAME();
+
+$ofn->lStructSize = $ofn->sizeOf();
+$ofn->hwndOwner = null;
+
+// Set lpstrFile[0] to '\0' so that GetOpenFileName does not 
+// use the contents of szFile to initialize itself.
+$strFile = str_repeat("\0", 512);
+$ofn->lpstrFile = wb_get_address($strFile);
+
+$ofn->nMaxFile = strlen($strFile);
+
+$filter = "All\0*.*\0Text\0*.TXT\0";
+$ofn->lpstrFilter = wb_get_address($filter);
+
+$ofn->nFilterIndex = 1;
+$ofn->lpstrFileTitle = NULL;
+$ofn->nMaxFileTitle = 0;
+$ofn->lpstrInitialDir = NULL;
+$ofn->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+
+Comdlg32::GetOpenFileName($ofn);
+
+// trim off extra null characters
+$strFile = rtrim($strFile, "\0");
+
+echo $strFile;
+
+

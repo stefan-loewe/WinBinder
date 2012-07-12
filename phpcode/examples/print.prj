@@ -1,0 +1,230 @@
+;*******************************************************************************
+;
+; WINBINDER - form editor project
+;
+;*******************************************************************************
+
+[Projectsettings]
+formvar = "$winmain"
+parent = "null"
+prefix = "IDC_"
+startval = 1000
+localize = ""
+locprefix = "LANG_"
+istabpage = ""
+tabnumber = 0
+filllists = ""
+fillheaders = ""
+imagenames = ""
+insertontabs = 1
+applyvalues = ""
+ctrlvar = ""
+startctrlval = 1
+
+[Form]
+class = "AppWindow"
+caption = "Print"
+geom = "WBC_CENTER WBC_CENTER 409 337"
+style = 0
+value = 0
+controls = 25
+
+[Form_ctrl1]
+class = "Frame"
+caption = "Printer"
+geom = "15 10 370 80"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl2]
+class = "Frame"
+caption = "Print range"
+geom = "15 95 180 90"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl3]
+class = "Frame"
+caption = "Paper size"
+geom = "205 95 180 90"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl4]
+class = "Frame"
+caption = "Number of copies"
+geom = "15 190 180 65"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl5]
+class = "Frame"
+caption = "Orientation"
+geom = "205 190 180 65"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl6]
+class = "ComboBox"
+caption = ""
+geom = "95 30 280 110"
+style = 64
+value = 0
+id = "IDC_PRINTERLIST"
+
+[Form_ctrl7]
+class = "Label"
+caption = "Name:"
+geom = "40 30 50 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl8]
+class = "ComboBox"
+caption = ""
+geom = "215 115 160 85"
+style = 64
+value = 0
+id = "IDC_PAPERSIZE"
+
+[Form_ctrl9]
+class = "RadioButton"
+caption = "All"
+geom = "30 125 135 15"
+style = 524288
+value = 1
+id = "IDC_PRINTALL"
+
+[Form_ctrl10]
+class = "RadioButton"
+caption = "Pages"
+geom = "30 155 50 15"
+style = 0
+value = 0
+id = "IDC_PRINTPAGES"
+
+[Form_ctrl11]
+class = "EditBox"
+caption = 1
+geom = "80 153 35 20"
+style = 1024
+value = 0
+id = "IDC_STARTPAGE"
+
+[Form_ctrl12]
+class = "Label"
+caption = "to"
+geom = "120 155 14 15"
+style = 0
+value = 0
+id = ""
+
+[Form_ctrl13]
+class = "EditBox"
+caption = 1
+geom = "135 153 35 20"
+style = 0
+value = 0
+id = "IDC_ENDPAGE"
+
+[Form_ctrl14]
+class = "Label"
+caption = "Quality:"
+geom = "35 60 55 15"
+style = 32
+value = 0
+id = ""
+
+[Form_ctrl15]
+class = "ComboBox"
+caption = ""
+geom = "95 60 135 85"
+style = 64
+value = 0
+id = "IDC_QUALITY"
+
+[Form_ctrl16]
+class = "EditBox"
+caption = ""
+geom = "215 150 55 20"
+style = 64
+value = 0
+id = "IDC_WIDTH"
+
+[Form_ctrl17]
+class = "EditBox"
+caption = ""
+geom = "295 150 55 20"
+style = 64
+value = 0
+id = "IDC_HEIGHT"
+
+[Form_ctrl18]
+class = "Label"
+caption = "x"
+geom = "277 152 11 15"
+style = 2048
+value = 0
+id = ""
+
+[Form_ctrl19]
+class = "Label"
+caption = "units"
+geom = "355 152 25 15"
+style = 0
+value = 0
+id = "IDC_UNITS"
+
+[Form_ctrl20]
+class = "EditBox"
+caption = 1
+geom = "35 215 90 20"
+style = 0
+value = 0
+id = "IDC_COPIES"
+
+[Form_ctrl21]
+class = "Spinner"
+caption = "Spinner21"
+geom = "125 215 20 20"
+style = 524288
+value = 0
+id = "IDC_SPINNER1002"
+
+[Form_ctrl22]
+class = "RadioButton"
+caption = "Portrait"
+geom = "220 210 120 15"
+style = 0
+value = 1
+id = "IDC_PORTRAIT"
+
+[Form_ctrl23]
+class = "RadioButton"
+caption = "Landscape"
+geom = "220 230 120 15"
+style = 0
+value = 0
+id = "IDC_LANDSCAPE"
+
+[Form_ctrl24]
+class = "PushButton"
+caption = "Print"
+geom = "100 270 90 25"
+style = 0
+value = 0
+id = "IDOK"
+
+[Form_ctrl25]
+class = "PushButton"
+caption = "Close"
+geom = "210 270 90 25"
+style = 0
+value = 0
+id = "IDCLOSE"
