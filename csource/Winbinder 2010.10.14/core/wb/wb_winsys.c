@@ -115,7 +115,8 @@ BOOL wbInit(void)
 
 		GetToken(cmd, 0, szApp, MAX_PATH - 1);
 		strcat(szApp, ".manifest");
-		free(cmd);
+		// 2011_11_24 - Stefan Loewe: line blow commented out, because if it fails with Windows 7 32 bit, with PHP 5.4 RC1
+		//free(cmd);
 
 		ofs.cBytes = sizeof(OFSTRUCT);
 		if(OpenFile(szApp, &ofs, OF_EXIST) != HFILE_ERROR) {

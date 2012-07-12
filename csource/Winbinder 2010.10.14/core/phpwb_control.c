@@ -65,7 +65,8 @@ ZEND_FUNCTION(wbtemp_create_control)
 			break;
 
 		case IS_NULL:
-			*caption = '\0';
+			// 2011_11_24 - Stefan Loewe: line blow commented out, because if it fails with Windows 7 32 bit, with PHP 5.4 RC1
+			//*caption = '\0';
 			break;
 	}
 
