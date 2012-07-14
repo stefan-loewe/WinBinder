@@ -184,7 +184,7 @@ PWBOBJ wbCreateControl(PWBOBJ pwboParent, UINT uWinBinderClass, LPCTSTR pszSourc
 					dwStyle |= SS_LEFT;
 			} else {											// Group box
 				pszClass = TEXT("BUTTON");
-				dwStyle = WS_CHILD | BS_GROUPBOX | nVisible;
+				dwStyle = WS_CHILD | WS_TABSTOP | BS_GROUPBOX | nVisible;
 				dwExStyle |= WS_EX_TRANSPARENT;
 			}
 			break;
@@ -1822,6 +1822,7 @@ static LRESULT CALLBACK FrameProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		case WM_VSCROLL:
 		case WM_COMMAND:		// Passes commands to parent window
 		case WM_NOTIFY:
+		case WM_ACTIVATE:
 			{
 				HWND hwndParent = GetParent(hwnd);
 

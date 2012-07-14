@@ -892,6 +892,11 @@ static LRESULT CALLBACK DefaultWBProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 			} // ~WM_NOTIFY
 			break;
 
+		// Stefan Loewe: added this case to allow tabbing thru "normal" window
+		case WM_ACTIVATE:
+			hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
+			break;
+
 		case WM_HSCROLL:		// Scroll bars, sliders
 		case WM_VSCROLL:
 
@@ -1718,23 +1723,13 @@ static LRESULT CALLBACK TabPageProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 
 		case WM_CLOSE:		// Prevents that an ESC from inside an edit box closes this page
 			return 0;
-
-		case WM_SHOWWINDOW:
-			if(wParam) {
-//				HWND hwndNext;
-
-				hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
-
-// The lines below were causing a bug with the menu (bug #399)
-
-//				hwndNext = GetNextDlgTabItem(hwnd, NULL, FALSE);
-//				if(hwndNext)
-//					SetFocus(hwndNext);
-			} else
-				hCurrentDlg = NULL;
-			break;
+		
+		default:
+			/* let Windows prcess any messages not in this switch statement	*/
+			return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 	return DefaultWBProc(hwnd, msg, wParam, lParam);
+	
 }
 
 //------------------------------------------------------------ PRIVATE FUNCTIONS
