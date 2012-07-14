@@ -1302,6 +1302,11 @@ static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 				CenterWindow(hwnd, ((LPCREATESTRUCT)lParam)->hwndParent);
 			break;
 
+		// Stefan Loewe: added this case to allow tabbing thru "normal" window
+		case WM_ACTIVATE:
+			hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
+			break;
+
 		case WM_SIZING:				// Used to set window size limits
 			{
 				PWBOBJ pwbo = wbGetWBObj(hwnd);
@@ -1662,7 +1667,9 @@ static LRESULT CALLBACK ModalWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 					PostQuitMessage(0);
 				}
 			}
-			hCurrentDlg = NULL;
+			// Stefan Loewe: do not set it to NULL, because when closing, e.g. a modal dialog, tabbing through
+			// controls no longer works for the opening window (or any other)
+			//hCurrentDlg = NULL;
 			break;
 
 // ******* OOPS -- Will DefDlgProc() (below) ever get called?

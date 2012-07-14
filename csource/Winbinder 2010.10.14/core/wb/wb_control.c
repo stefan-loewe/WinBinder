@@ -1822,7 +1822,6 @@ static LRESULT CALLBACK FrameProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		case WM_VSCROLL:
 		case WM_COMMAND:		// Passes commands to parent window
 		case WM_NOTIFY:
-		case WM_ACTIVATE:
 			{
 				HWND hwndParent = GetParent(hwnd);
 
