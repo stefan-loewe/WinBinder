@@ -1818,16 +1818,21 @@ static LRESULT CALLBACK FrameProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 {
 	switch(msg) {
 
+		case WM_SETFOCUS:
+			hCurrentDlg = hwnd;
+		break;
+
 		case WM_HSCROLL:		// For scroll bars
 		case WM_VSCROLL:
 		case WM_COMMAND:		// Passes commands to parent window
 		case WM_NOTIFY:
-		case WM_ACTIVATE:
 			{
 				HWND hwndParent = GetParent(hwnd);
 
 				if(hwndParent)
 					SendMessage(hwndParent, msg, wParam, lParam);
+
+				hCurrentDlg = hwnd;
 			}
 			break;
 	}
