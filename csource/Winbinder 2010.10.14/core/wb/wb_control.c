@@ -1819,9 +1819,6 @@ static LRESULT CALLBACK FrameProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 	switch(msg) {
 
 		case WM_SETFOCUS:
-			hCurrentDlg = hwnd;
-		break;
-
 		case WM_HSCROLL:		// For scroll bars
 		case WM_VSCROLL:
 		case WM_COMMAND:		// Passes commands to parent window
@@ -1843,7 +1840,15 @@ static LRESULT CALLBACK FrameProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 
 static LRESULT CALLBACK EditBoxProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch(msg) {
+	switch(msg) {		
+
+		case WM_SETFOCUS:
+			{
+				HWND hwndParent = GetParent(hwnd);
+				if(hwndParent)
+					SendMessage(hwndParent, WM_SETFOCUS, (WPARAM)hwnd, (LPARAM)wParam);
+			}
+			break;
 
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:

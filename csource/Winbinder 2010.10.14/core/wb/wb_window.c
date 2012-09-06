@@ -711,6 +711,10 @@ static LRESULT CALLBACK DefaultWBProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 	switch(msg) {
 
+		// to reduce flickering: works but background does not get repainted
+		/*case WM_ERASEBKGND:
+			return TRUE;
+		*/
 		//------------------------------- Notification messages
 
 		case WBWM_KEYDOWN:			// Custom WinBinder message

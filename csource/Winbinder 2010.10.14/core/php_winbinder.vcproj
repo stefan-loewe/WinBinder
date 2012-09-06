@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="php5ts.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\Program Files\PHP54\dev"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\PHP\dev&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
