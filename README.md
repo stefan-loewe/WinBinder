@@ -26,9 +26,11 @@ How to compile the WinBinder extension?
 Prerequisites:
 --------------
   - get a version of Visual Studio (this how to refers to Visual Studio 2008 Professional)
-  - get the PHP binaries you want to use with WinBinder, e.g. VC9 x86 Thread Safe 5.4
-  - get the PHP source matching the binary version from above, e.g. VC9 x86 Thread Safe 5.4
-  - get the WinBinder source code
+  - get the PHP binaries you want to use with WinBinder, e.g. PHP 5.5 VC11 x86 Thread Safe
+    - see http://windows.php.net/download/
+  - get the PHP source
+    -  see the link "Download source code" at http://windows.php.net/download/, matching the binary version from above
+  - get the WinBinder source code, which is contained in this repository under "source"
 
 Creating the Project:
 ---------------------
