@@ -711,10 +711,6 @@ static LRESULT CALLBACK DefaultWBProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 	switch(msg) {
 
-		// to reduce flickering: works but background does not get repainted
-		/*case WM_ERASEBKGND:
-			return TRUE;
-		*/
 		//------------------------------- Notification messages
 
 		case WBWM_KEYDOWN:			// Custom WinBinder message
@@ -896,7 +892,7 @@ static LRESULT CALLBACK DefaultWBProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 			} // ~WM_NOTIFY
 			break;
 
-		// Stefan Loewe: added this case to allow tabbing thru "normal" window
+		// 2011_11_24 - Stefan Loewe: added this case to allow tabbing thru "normal" window
 		case WM_ACTIVATE:
 			hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
 			break;
@@ -1311,7 +1307,7 @@ static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 				CenterWindow(hwnd, ((LPCREATESTRUCT)lParam)->hwndParent);
 			break;
 
-		// Stefan Loewe: added this case to allow tabbing thru "normal" window
+		// 2011_11_24 - Stefan Loewe: added this case to allow tabbing thru "normal" window
 		case WM_ACTIVATE:
 			hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
 			break;
@@ -1676,7 +1672,7 @@ static LRESULT CALLBACK ModalWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 					PostQuitMessage(0);
 				}
 			}
-			// Stefan Loewe: do not set it to NULL, because when closing, e.g. a modal dialog, tabbing through
+			// 2011_11_24 - Stefan Loewe: do not set it to NULL, because when closing, e.g. a modal dialog, tabbing through
 			// controls no longer works for the opening window (or any other)
 			//hCurrentDlg = NULL;
 			break;
@@ -1727,13 +1723,23 @@ static LRESULT CALLBACK TabPageProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 
 		case WM_CLOSE:		// Prevents that an ESC from inside an edit box closes this page
 			return 0;
-		
-		default:
-			/* let Windows prcess any messages not in this switch statement	*/
-			return DefWindowProc(hwnd, msg, wParam, lParam);
+
+		case WM_SHOWWINDOW:
+			if(wParam) {
+//				HWND hwndNext;
+
+				hCurrentDlg = hwnd;	// Used in IsDialogMessage() -- main loop
+
+// The lines below were causing a bug with the menu (bug #399)
+
+//				hwndNext = GetNextDlgTabItem(hwnd, NULL, FALSE);
+//				if(hwndNext)
+//					SetFocus(hwndNext);
+			} else
+				hCurrentDlg = NULL;
+			break;
 	}
 	return DefaultWBProc(hwnd, msg, wParam, lParam);
-	
 }
 
 //------------------------------------------------------------ PRIVATE FUNCTIONS
