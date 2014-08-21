@@ -25,7 +25,7 @@ How to compile the WinBinder extension?
 
 Prerequisites:
 --------------
-  1. get a version of Visual Studio (this how to refers to Visual Studio 2008 Professional)
+  1. get a version of Visual Studio (this how-to refers to Visual Studio Express 2012 [Evaluation Version], as this needs to be compiled with VC11, because PHP 5.5. is also compiled with that compiler version)
   2. get the PHP binaries you want to use with WinBinder, e.g. PHP 5.5 VC11 x86 Thread Safe
     - see http://windows.php.net/download/
   3. get the PHP source
@@ -35,10 +35,17 @@ Prerequisites:
 Creating the Project:
 ---------------------
 
-  1. create the project:
-     either create a new Visual C++ project, or import from existing source
-    - make your new project a "Win32 Project", call it php_winbinder, or pick any name you like
-    - select "DLL" as application type
+  - create the project:
+    - select "New Project ..."
+    - select "Visual C++" and "Win32 Project", and name it "winbinder" for example
+    - click "Next"
+    - select "DLL" and click "Finish"
+
+  - the editor window should now be opening/opened
+  
+  - from the menu, select "PROJECT" and "Add Existing Item" and select C:\path\to\WinBinder\source and add all files from that and the "wb" subdirectory
+
+  - again, select "PROJECT" from the menu, and then select "winbinder Properties" to change the following settings
 
   - change default C++ options:
     - right click your project and select "Properties"
@@ -105,7 +112,7 @@ Creating the Project:
             
       - You may now try to compile the extension, but you migh get ...
               
-      - fatal error C1853 or C2859: something about pre-compiled headers
+      - fatal error C1853, C1854 or C2859: something about pre-compiled headers
           - again, under "Configuration Properties" select "C/C++", and there select "Precompiled Headers"
               - set "Use Precompiled Headers" to "Do not use precompiled headers"
               
@@ -118,6 +125,11 @@ Creating the Project:
             \#define _USE\_32BIT\_TIME\_T 1  
             \#endif  
             \#define HAVE\_STDLIB\_H 1
+      
+      - You may now try to compile the extension, but you migh get ...
+      
+      - error C4996: regarding unsafe/deprecated functions
+        - again, under "Configuration Properties" select "C/C++", "General" and set SDL checks to "No"
       
       - You may now try to compile the extension, but you migh get ...
 
