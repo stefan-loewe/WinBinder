@@ -12,7 +12,7 @@ client-side applications for the Windows Platform in pure PHP.
 What is needed to start building WinBinder applications?
 ========================================================
 
-You will need PHP 5.3/5.4/5.5. plus the WinBinder extension matching your PHP version.
+You will need PHP 5.5. (or 5.4) plus the WinBinder extension matching your PHP version.
 
 How to get the WinBinder extension?
 ===================================
@@ -25,7 +25,7 @@ How to compile the WinBinder extension?
 
 Prerequisites:
 --------------
-  1. get a version of Visual Studio (this how-to refers to Visual Studio Express 2012 [Evaluation Version], as this needs to be compiled with VC11, because PHP 5.5. is also compiled with that compiler version)
+  1. get a version of Visual Studio (this how-to refers to Visual Studio Express 2012 [Evaluation Version], as this needs to be compiled with VC11, because PHP 5.5. is also compiled with that compiler version [for PHP 5.4 try Visual Studio 2008])
   2. get the PHP binaries you want to use with WinBinder, e.g. PHP 5.5 VC11 x86 Thread Safe
     - see http://windows.php.net/download/
   3. get the PHP source
@@ -148,3 +148,4 @@ Where to get further information?
 
 Be sure to check out the docs folder. There are also examples in the phpcode
 folder. Futhermore, you can go to www.winbinder.org, there is also a forum.
+Be sure to also give the Woody framework a look (https://github.com/stefan-loewe/Woody), a object-oriented layer built on top of WinBinder.
