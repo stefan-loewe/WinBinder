@@ -12,7 +12,7 @@ client-side applications for the Windows Platform in pure PHP.
 What is needed to start building WinBinder applications?
 ========================================================
 
-You will need PHP 5.5. (or 5.4) plus the WinBinder extension matching your PHP version.
+You will need PHP 5.6 (or 5.5, or 5.4) plus the WinBinder extension matching your PHP version.
 
 How to get the WinBinder extension?
 ===================================
@@ -25,8 +25,8 @@ How to compile the WinBinder extension?
 
 Prerequisites:
 --------------
-  1. get a version of Visual Studio (this how-to refers to Visual Studio Express 2012 [Evaluation Version], as this needs to be compiled with VC11, because PHP 5.5. is also compiled with that compiler version [for PHP 5.4 try Visual Studio 2008])
-  2. get the PHP binaries you want to use with WinBinder, e.g. PHP 5.5 VC11 x86 Thread Safe
+  1. get a version of Visual Studio (this how-to refers to Visual Studio Express 2012 [Evaluation Version], as this needs to be compiled with VC11, because PHP 5.6. and 5.5. is also compiled with that compiler version [for PHP 5.4 try Visual Studio 2008])
+  2. get the PHP binaries you want to use with WinBinder, e.g. PHP 5.6 VC11 x86 Thread Safe
     - see http://windows.php.net/download/
   3. get the PHP source
     - at http://windows.php.net/download/, see the link "Download source code" matching the version of the binaries from step 2
@@ -85,7 +85,7 @@ Creating the Project:
         - set "Additional Library Directories" to C:\path\to\php\binary\dev
 
     - under "Configuration Properties" select "Linker", and there select "Input"
-        - add "php5.lib" (for non-thred-safe version) or "php5ts.lib" (for thread-safe version) to "Additional Dependecies"
+        - add "php5ts.lib" (for thread-safe version) to "Additional Dependencies"
 
   - edit stdafx.h:
     - replace the contents of stdafx.h with the following, if it does not match already:  
