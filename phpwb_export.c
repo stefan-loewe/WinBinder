@@ -13,7 +13,7 @@
 
 #include "phpwb.h"
 
-#include <info.h>			// For ZEND_MINFO_FUNCTION
+#include "ext/standard/info.h"			// For ZEND_MINFO_FUNCTION
 
 //-------------------------------------------------------------------- CONSTANTS
 
