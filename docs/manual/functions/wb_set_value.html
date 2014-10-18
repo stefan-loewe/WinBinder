@@ -1,0 +1,234 @@
+<html>
+
+<head>
+<title>wb_set_value</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_value
+Values-->
+<h2>wb_set_value</h2>
+<p>bool <b>wb_set_value</b> (int control, mixed value [, int item])</p>
+<p>Sets one or more values of a control or control item. Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<p><font color="#CC6600"><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE: </b></font>Due to limitations in Windows, values are limited to 16-bit 
+values only.</p>
+<h1>What it does for each class</h1>
+<p>See the following table.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="90%">
+    <tr>
+        <th width="87">            <p>Class</p>
+        </th>
+        <th width="535">            <p>What it does</p>
+        </th>
+        <th width="63"><p>Type</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/calendar.html">Calendar</a></p>
+        </td>
+        <td width="535">
+<p>Sets the selected date of the control. The value must be a valid Unix timestamp.</p>
+        </td>
+        <td width="63">
+<p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/checkbox.html">CheckBox</a></p>
+        </td>
+        <td width="535">
+<p>Sets the checked state of the control.</p>
+        </td>
+        <td width="63">
+<p>bool</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/combobox.html">ComboBox</a></p>
+        </td>
+        <td width="535">
+            <p>Stores an integer into the specified <i>item</i> or into the 
+            selected item if <i>item</i> is empty or -1.</p>
+        </td>
+        <td width="63">
+<p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/editbox.html">EditBox</a></p>
+        </td>
+        <td width="520">
+<p>Sets the text to the integer specified.</p>
+        </td>
+        <td width="64">
+            <p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/gauge.html">Gauge</a></p>
+        </td>
+        <td width="520">
+<p>The control integer value. ¹</p>
+        </td>
+        <td width="64">
+            <p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/imagebutton.html">ImageButton</a></p>
+        </td>
+        <td width="520">
+<p>Sets the checked state of the control.&nbsp;</p>
+        </td>
+        <td width="64">
+            <p>bool</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/label.html">Label</a></p>
+        </td>
+        <td width="520">
+<p>Sets the text to the integer specified.</p>
+        </td>
+        <td width="64">
+            <p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/listbox.html">ListBox</a></p>
+        </td>
+        <td width="535">
+            <p>Stores an integer into the specified <i>item</i> or into the 
+            selected item if <i>item</i> is -1 or empty.</p>
+        </td>
+        <td width="63">
+<p>array</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/listview.html">ListView</a></p>
+        </td>
+        <td width="535">
+<p>Sets the checked state of the row (or array of rows) specified by <i>item</i>. 
+            ²</p>
+        </td>
+        <td width="63">
+<p>array</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/menu.html">Menu</a></p>
+        </td>
+        <td width="520">
+<p>Sets the checked state of the menu <i>item</i> specified. ²</p>
+        </td>
+        <td width="64">
+            <p>bool</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/pushbutton.html">PushButton</a></p>
+        </td>
+        <td width="520">
+<p>Sets the checked state of the control.</p>
+        </td>
+        <td width="64">
+            <p>bool</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/radiobutton.html">RadioButton</a></p>
+        </td>
+        <td width="535">
+<p>Sets the checked state of the control.</p>
+        </td>
+        <td width="63">
+<p>bool</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/rtfeditbox.html">RTFEditBox</a></p>
+        </td>
+        <td width="520">
+<p>Sets the text to the integer specified.&nbsp;</p>
+        </td>
+        <td width="64">
+            <p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/scrollbar.html">ScrollBar</a></p>
+        </td>
+        <td width="520">
+<p>The control position. ¹</p>
+        </td>
+        <td width="64">
+<p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/slider.html">Slider</a></p>
+        </td>
+        <td width="520">
+<p>The control position. ¹</p>
+        </td>
+        <td width="64">
+<p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="78">
+            <p><a href="../classes/spinner.html">Spinner</a></p>
+        </td>
+        <td width="520">
+<p>The control integer value. ¹</p>
+        </td>
+        <td width="64">
+<p>integer</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="87">
+            <p><a href="../classes/treeview.html">TreeView</a></p>
+        </td>
+        <td width="535">
+            <p>Stores an integer, string or float value into the specified node 
+            or into the selected node&nbsp;if <i>item</i> is empty or -1.</p>
+        </td>
+        <td width="63">
+<p>mixed</p>
+        </td>
+    </tr>
+</table>
+<p><font size="1">¹ The control range can be set using </font><b><a href="wb_set_range.html"><font size="1">wb_set_range()</font></a><font size="1">.</font></b><font size="1"><br>² Compare with </font><a href="wb_set_selected.html"><b><font size="1">wb_set_selected()</font></b></a><font size="1">.&nbsp;</font></p>
+<h1><b>See also</b></h1>
+<p><a href="wb_get_value.html"><b>wb_get_value</b></a><b><br><a href="wb_set_range.html">wb_set_range<br></a></b><a href="wb_set_selected.html"><b>wb_set_selected</b></a><a href="wb_set_range.html"><b><br></b></a><a href="../reference/functions_category.html#control">Control functions</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

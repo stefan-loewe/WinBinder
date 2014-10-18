@@ -1,0 +1,69 @@
+<html>
+
+<head>
+<title>wb_get_size</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+wb_get_size
+Bitmaps
+Icons
+Columns-->
+<h2>wb_get_size</h2>
+<p>array <b>wb_get_size </b>(mixed object [, bool param])</p>
+<p>Gets the dimensions of a control, window, image or string. The <i>image</i> 
+handle must have been obtained with <a href="wb_create_image.html"><b>wb_create_image()</b></a>, 
+<a href="wb_create_mask.html"><b>wb_create_mask()</b></a> or&nbsp;<a href="wb_load_image.html"><b>wb_load_image()</b></a>.</p>
+<p>This function generally returns an array where
+the first
+element is the width and the second is the height. Measurements are in pixels.
+If <i>param</i> is <span class="code">TRUE</span>, the area returned will not include the title bar
+and borders. Default is <code>FALSE</code>. The function will return the integer <span class="code"><code>WBC_MINIMIZED</code></span>
+instead of an
+array if the requested window is minimized, or <span class="code">NULL</span> on error.</p>
+<p>If <i>object</i> is a <a href="../classes/listview.html">ListView</a> handle
+and <i>param</i> is <code>TRUE</code>, the function returns an array with the
+widths of the column headers. If <i>param</i> is omitted or&nbsp;<code>FALSE</code>,
+the function behaves normally like described above</p>
+<p>If <i>object</i> is a text string, <i>param</i> is optionally used to pass 
+the handle to a font created with <a href="wb_create_font.html"><b>wb_create_font()</b></a>. 
+If <i>param</i> is null or not used, the default font is used.</p>
+<h1>Object types accepted</h1>
+<p><i>object</i> may be one of the following:</p>
+<ul>
+    <li>A&nbsp;control handle</li>
+    <li>A&nbsp;window handle</li>
+    <li>An icon handle</li>
+    <li>A bitmap handle</li>
+    <li>The name of a bitmap file</li>
+    <li>The name of an icon file</li>
+    <li>A text string</li>
+</ul>
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Obtain and print out various dimensions</code></p>
+            <p class="code"><code>define(&quot;PATH_RES&quot;, &quot;../resources/&quot;);<br><br>//
+            Get bitmap dimensions<br><br>print_r(wb_get_size(PATH_RES . &quot;toolbar.bmp&quot;));<br>$img
+            = wb_load_image(PATH_RES . &quot;toolbar.bmp&quot;);<br>print_r(wb_get_size($img));<br><br>//
+            Get icon dimensions<br><br>$img = wb_load_image(PATH_RES . &quot;ttf.ico&quot;);<br>print_r(wb_get_size($img));<br>print_r(wb_get_size(PATH_RES
+            . &quot;ttf.ico&quot;));<br><br>// Get window dimensions<br><br>$mainwin
+            = wb_create_window(NULL, PopupWindow, &quot;Tests&quot;, 530, 320);<br>print_r(wb_get_size($mainwin));<br><br>//
+            Get control dimensions<br><br>$label = wb_create_control($mainwin,
+            Label, &quot;&quot;, 10, 20, 120, 20);<br>print_r(wb_get_size($frame));<br><br>//
+            Get column widths of a ListView<br><br>print_r(wb_get_size($list,
+            true));<br></code></p>
+            <p class="code"><code>// Get the size of a text string, in pixels</code></p>
+            <p class="code">print_r(wb_get_size(wb_get_text(wb_get_control($window, 
+            ID_TEXT))));<code>&nbsp;</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_create_image.html"><b>wb_create_image</b></a><b><br></b><a href="wb_create_mask.html"><b>wb_create_mask</b></a><b><br></b><a href="wb_load_image.html"><b>wb_load_image</b></a><b><br></b><a href="wb_get_position.html"><b>wb_get_position</b></a><b><br></b><a href="wb_set_size.html"><b>wb_set_size</b></a><b><br></b><a href="wb_create_font.html"><b>wb_create_font</b></a><b><br></b><a href="../reference/functions_category.html#image">Image functions</a><br><a href="../reference/functions_category.html#control">Control functions</a><br><a href="../reference/functions_category.html#window">Window functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

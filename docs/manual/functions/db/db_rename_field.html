@@ -1,0 +1,45 @@
+<html>
+
+<head>
+
+<title>db_rename_field</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_rename_field-->
+<h2>db_rename_field</h2>
+		<p>bool <b>db_rename_field </b>(string tablename, string currentname, string newname)</p>
+<p>Renames a field in a table.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of the table that will be affected.<br><i>currentname</i>  is the current
+name of  the field (column).<br><i>newname</i> is the name that will be given
+to the field.<br><br>
+			<b>Result</b></p>
+		<p>The function returns TRUE if successful or FALSE otherwise.</p>
+
+		<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Edit the name of the field &quot;telefon&quot; in mytable<br>
+							<br>$result = db_rename_field(&quot;mytable&quot;, &quot;telefon&quot;, &quot;Tel./Fax&quot;);<br>
+						</code></p>
+</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

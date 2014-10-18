@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Database support</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+<link rel="stylesheet" href="../help.css">
+<script type="text/JavaScript">
+top.pageid = "manual/overviews/database_support.html";
+</script>
+
+</head>
+
+<body>
+
+<!--KW:
+Database support
+MySQL
+SQLite-->
+<h2>Database support</h2>
+<h1><b>Wrapper functions</b></h1>
+<p>WinBinder also adds a set of database wrapper functions written in PHP.</p>
+<p>These functions are simple wrappers around the SQLite and MySQL functions. They are not meant to replace the database functions, but they do&nbsp;simplify the interaction between these functions and the WinBinder controls.</p>
+<p><b><font color="#CC6600"><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE: D</font></b><font color="#CC6600"><b>atabase wrapper functions are available
+for SQLite and MySQL only.</b></font></p>
+<p>There are 3 levels of abstraction:</p>
+<ol type="1">
+    <li>Isolate the application from the database in use (here SQLite or MySQL).</li>
+    <li>Isolate the application from the unique table names in the database. In some environments (especially when sharing an existing database with other users) the wrapper prefixes a chosen signature (here called APPPREFIX) to table
+    names to ensure uniqueness.</li>
+    <li>Isolate the application from SQL for table and data manipulation so
+    you can access databases even if you are not familiar with SQL.</li>
+</ol>
+		<p>The database support functions start with the prefix <b>db_</b>.</p>
+		<p>For example, to access a record, you just call <b><a href="../functions/db/db_get_data.html">db_get_data</a></b> with the table name,
+id number, and column name. Passing NULL  as the id returns an array with the
+column values for the whole table, while passing NULL as the column returns
+the record pointed by the id. You may also pass an array of ids and columns
+and the results will be as expected. This is a very easy and intuitive way of
+accessing data. Applications that use this database layer and SQLite are
+completely standalone and don't even require a database server, so installation is a snap to the end user.</p>
+<p>The functions that access the database directly reside in the db_mysql.inc.php
+and db_sqlite.inc.php files. They all have the prefix &quot;raw_db_&quot; as
+a reminder that you will have to deal with APPPREFIX, id and SQL by yourself.
+Normally you would only use the &quot;db_&quot; functions.</p>
+<h1><b>SQL support</b></h1>
+		<p>The original functions and SQL commands are available as well and
+can be mixed freely with the wrapper library. There are&nbsp;also some wrapper
+functions (like<b> </b><a href="../functions/db/db_query.html"><b>db_query</b></a>)
+that may be used  to give direct
+access to the database using SQL. In this case, the application has to take responsibility for the id field and its attributes as well as any table prefixes.</p>
+<p>There are tasks that can nicely be solved with SQL. For example:</p>
+<ul>
+    <li>If the application depends on relations between tables that can not programmed conveniently in PHP, then a SQL
+    query will do the job.</li>
+    <li>Database administration</li>
+    <li>Import and export of tables</li>
+</ul>
+<h1><b>See also</b></h1>
+    <p><a href="../reference/functions_database.html">Database functions</a><br><b><a href="../functions/db/db_get_data.html">db_get_data</a><br></b><a href="../functions/db/db_query.html"><b>db_query</b></a></p>
+<p><b>&nbsp;</b></p>
+</body>
+
+</html>

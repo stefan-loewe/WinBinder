@@ -1,0 +1,342 @@
+<html>
+
+<head>
+<title>Window messages and events</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+Window
+Window,Events
+Window,Messages
+Events
+Messages
+-->
+<h2>Window messages and events</h2>
+<p>WinBinder simplifies the process of responding to control or object events
+by selecting the most common and intuitive Windows message or messages for each control and
+sending a call to the&nbsp;<a href="../functions/wb_set_handler.html">callback
+function</a>.</p>
+<p>Only some events (e.g. button is pressed, list selection is changed, slider 
+is moved, and
+so on) are passed to the main handler by default. These are the <b>default events</b>. 
+Other events -- like mouse
+clicks, double-clicks and&nbsp;mouse movements&nbsp;-- are called <b>additional 
+notification events</b>,
+and they will not be processed by default. To do this, you must explicitly include <span class="code">WBC_NOTIFY</span> 
+as <i>style</i> and the respective notification
+flags (e.g. <span class="code">WBC_DBLCLICK</span>, <span class="code">WBC_MOUSEMOVE</span>)&nbsp;in
+the window or dialog box <i>param</i> argument when it is created with the <a href="../functions/wb_create_window.html"><b>wb_create_window()</b></a> 
+function.</p>
+<h1>Example</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td><code>$mainwin = wb_create_window(NULL, ResizableWindow, &quot;Resize 
+            me&quot;,
+	200, 100, 410, 400, WBC_NOTIFY, WBC_RESIZE | WBC_MOUSEMOVE | WBC_MOUSEDOWN | WBC_MOUSEUP);
+</code></td></tr>
+</table>
+<h1>Control classes and events</h1>
+<p>The following table shows the default and additional events that can be generated 
+by each <a href="../reference/classes_control.html">control class</a>.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="90%">
+    <tr>
+        <th width="104">            <p>WinBinder class</p>
+        </th>
+        <th width="215">            <p>Meaning of default event</p>
+        </th>
+        <th width="537">            <p>Additional notification events &nbsp;(WBC_NOTIFY) 
+            <b>³</b></p>
+        </th>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Accel</p>
+        </td>
+        <td width="215">
+            <p>Keyboard combination was pressed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Calendar</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>CheckBox</p>
+        </td>
+        <td width="215">
+            <p>Checked state has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ComboBox</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+<p>EditBox</p>
+        </td>
+        <td width="215">
+            <p>Text has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+<p>Frame</p>
+        </td>
+        <td width="215">
+            <p>(none)</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+<p>Gauge</p>
+        </td>
+        <td width="215">
+            <p>(none)</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>HTMLControl</p>
+        </td>
+        <td width="215">
+            <p>N/A</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>HyperLink</p>
+        </td>
+        <td width="215">
+            <p>N/A</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ImageButton</p>
+        </td>
+        <td width="215">
+            <p>Control was pressed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>InvisibleArea</p>
+        </td>
+        <td width="215">
+            <p>Control was pressed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Label</p>
+        </td>
+        <td width="215">
+            <p>(none)</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ListBox</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+            <p class="code">WBC_DBLCLICK</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ListView</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+            <p class="code">WBC_DBLCLICK, <code>WBC_HEADERSEL</code></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Menu</p>
+        </td>
+        <td width="215">
+            <p>Menu item was selected</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>PushButton</p>
+        </td>
+        <td width="215">
+            <p>Control was pressed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>RadioButton</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>RTFEditBox</p>
+        </td>
+        <td width="215">
+            <p>Text has changed&nbsp;</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ScrollBar</p>
+        </td>
+        <td width="215">
+            <p>Scrolling occurred</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Slider</p>
+        </td>
+        <td width="215">
+            <p>Position has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>Spinner</p>
+        </td>
+        <td width="215">
+            <p>Position has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>StatusBar</p>
+        </td>
+        <td width="215">
+            <p>(none)</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>TabControl</p>
+        </td>
+        <td width="215">
+            <p>Selected tab has changed</p>
+        </td>
+        <td width="537">
+
+            <p class="code"><code>WBC_HEADERSEL</code>        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>ToolBar</p>
+        </td>
+        <td width="215">
+            <p>Toolbar button was pressed</p>
+        </td>
+        <td width="537">
+
+            <p class="code">&nbsp;        </td>
+    </tr>
+    <tr>
+        <td width="104">
+            <p>TreeView</p>
+        </td>
+        <td width="215">
+            <p>Selection&nbsp;has changed</p>
+        </td>
+        <td width="537">
+            <p class="code">WBC_DBLCLICK</p>
+        </td>
+    </tr>
+</table>
+<p><font size="1">¹ Additional events need the </font><span class="code"><font size="1">WBC_NOTIFY</font></span><font size="1"> 
+style flag and the respective notification
+flags (e.g. </font><span class="code"><font size="1">WBC_DBLCLICK</font></span><font size="1">, </font><span class="code"><font size="1">WBC_MOUSEMOVE</font></span><font size="1">)&nbsp;in
+the window or dialog box </font><i><font size="1">param</font></i><font size="1"> 
+argument when it is created with the </font><a href="../functions/wb_create_window.html"><b><font size="1">wb_create_window()</font></b></a><font size="1"> 
+function. For a list of notification flags, click <a href="callback_functions.html#flags">here</a>.</font></p>
+<h1><b>See also</b></h1>
+<p><a href="../functions/wb_send_message.html"><b>wb_send_message</b></a><b><br></b><a href="../functions/wb_set_handler.html"><b>wb_set_handler</b></a><b><br></b><a href="../reference/classes_control.html">Control classes</a><br><a href="../reference/constants.html#notification_flags">Notification 
+flags</a><b><br></b><a href="callback_functions.html">Callback functions and window handlers</a><br><a href="main_loop.html">The main loop</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

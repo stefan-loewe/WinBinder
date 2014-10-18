@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>generate_ini</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../../help.css">
+</head>
+<body>
+<!--KW:
+generate_ini
+INI files-->
+<h2>generate_ini</h2>
+<p>string <b>generate_ini </b>(array inidata [, string comments])</p>
+<p>Transforms the multidimensional array <i>inidata</i> in a string that can be
+saved directly as an INI file. <i>comments</i> may optionally be added to the beginning
+of the INI string. To parse an INI string into an array, use <a href="parse_ini.html"><b>parse_ini()</b></a><b>.</b></p>
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>$inifile = &quot;app.ini&quot;;<br>$config = parse_ini(file_get_contents($inifile));<br>$config[&quot;Settings&quot;][&quot;defaultpath&quot;]
+            = dirname(__FILE__);<br>$initext = generate_ini($config, &quot;;
+            Configuration&nbsp;file\r\n&quot;);<br>file_put_contents($inifile,
+            $initext);&nbsp;</code></p>
+</td></tr>
+</table><br>
+
+<p><b>See also</b></p>
+<p><a href="parse_ini.html"><b>parse_ini</b></a><b><br></b><a href="../../reference/functions_aux.html">Auxiliary functions</a></p>
+<p><b>&nbsp;</b></p>
+</body>
+
+</html>

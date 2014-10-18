@@ -1,0 +1,49 @@
+<html>
+
+<head>
+
+<title>db_list_table_fields</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_list_table_fields-->
+<h2>db_list_table_fields</h2>
+		<p>array <b>db_list_table_fields </b>(string tablename [, type])<br></p>
+<p>Returns all field names or field attributes from a table.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of the table to be examined.</p>
+<p><i>type</i> is the type of data to be returned. FALSE (the default) returns
+the field names, while TRUE (optional) returns the field attributes.</p>
+		<p><b>Result</b></p>
+		<p>Returns an array with the field names or field attributes, or NULL if no
+field is found.</p>
+
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// List table fields<br>
+							<br>$result = db_list_table_fields(&quot;mytable&quot;); <br>
+							if ($result !== NULL) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;echo &quot;$result holds the fieldnames&quot;; <br>
+							}<br>
+						</code></p>
+				</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

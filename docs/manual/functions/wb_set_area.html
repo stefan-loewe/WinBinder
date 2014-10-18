@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<title>wb_set_area</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_area
+Window,Borderless
+Window,resizable
+Window,Title area
+Window, Size
+--><h2>wb_set_area</h2>
+<p>bool <b>wb_set_area</b> (int window, type [, int x, int y, int width, int
+height])</p>
+<p>Sets a specific area in a window. Possible values for <i>type</i> are:</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="99">            <p><i>type</i></p>
+        </th>
+        <th width="518">            <p>What it does</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="99">
+<p class="code"><code>WBC_TITLE</code></p>
+        </td>
+        <td width="518">
+<p>Sets the
+area used to drag a borderless window with the mouse.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="99">
+            <p class="code">WBC_MINSIZE</p>
+        </td>
+        <td width="518">
+            <p>Sets the minimum window size in a resizable window. Parameters 
+            <i>x</i> and <i>y</i> are ignored. If <i>width</i> is zero, no minimum 
+            horizontal dimension is set; if <i>height</i> is zero, no minimum 
+            vertical dimension is set.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="99">
+            <p class="code">WBC_MAXSIZE</p>
+        </td>
+        <td width="518">
+            <p>Sets the maximum window size in a resizable window. Parameters 
+            <i>x</i> and <i>y</i> are ignored. If <i>width</i> is zero, no maximum 
+            horizontal dimension is set; if <i>height</i> is zero, no maximum 
+            vertical dimension is set.</p>
+        </td>
+    </tr>
+</table>
+<p>Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<p><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+</b><font color="#CC6600"><b>NOTE:</b></font> all four parameters <i>x</i>, <i>y</i>, 
+<i>width</i> and <i>height</i> must be supplied.</p>
+
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p class="code"><code>define(&quot;WIDTH&quot;, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;480);<br>define(&quot;HEIGHT&quot;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;320);<br><br>//
+            Example 1: Create a window and set the area that can be dragged 
+            (title area)<br><br>$win1 = wb_create_window(NULL,
+            NakedWindow, APPNAME, WIDTH, HEIGHT);<br>wb_set_area($win1, WBC_TITLE,
+            0, 0, WIDTH, 86); &nbsp;// Set title area</code></p>
+            <p class="code"><code>// Example 2: create a window that can be 
+            resized 
+            vertically, but not horizontally<br><br></code>$win2 = 
+            wb_create_window(NULL, ResizableWindow, APPNAME <code>, WIDTH, HEIGHT); 
+            // Create window<br></code>wb_set_area($win2, 
+            WBC_MINSIZE, 0, 0, WIDTH, 400); &nbsp;&nbsp;&nbsp;<code>// Set minimum 
+            width and minimum height</code><br>wb_set_area($win2, WBC_MAXSIZE, 
+            0, 0, WIDTH, 0); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// <code>Set maximum 
+            width and no height limit</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_create_window.html"><b>wb_create_window</b></a><b><br></b><a href="../reference/functions_category.html#window">Window functions</a><br><a href="../reference/classes_window.html">Window classes</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

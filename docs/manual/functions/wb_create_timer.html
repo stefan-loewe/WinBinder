@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>wb_create_timer</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+Timers
+wb_create_timer
+--><h2>wb_create_timer</h2>
+<p>bool <b>wb_create_timer</b> (int window, int id, int interval)</p>
+<p>Creates a timer in the specified <i>window</i>. The timer must be
+given an integer <i>id</i> that must be unique to all timers and controls. <i>interval</i>
+specifies the time-out value in milliseconds. Timer events are passed to and
+processed by the
+window callback function. A call to <a href="wb_destroy_timer.html"><b>wb_destroy_timer()</b></a>
+destroys the timer.</p>
+<p><b>Low resolution and high resolution timers</b></p>
+<p>This function supports both conventional (low-resolution) and multimedia 
+(high-resolution) timers. Use a <b>non-negative </b><i><b>id</b></i> to specify a <b>low-resolution</b> 
+timer or a <b>negative </b><i><b>id</b></i>&nbsp;to specify a <b>high-resolution</b> timer. Hi-res 
+timers have a 10:1 increase in speed (resolution can go down to 1 ms opposed 
+to 10 ms of a conventional timer) and much higher precision.</p>
+<p><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+</b><font color="#CC6600"><b>NOTE:</b></font> Only one high-resolution timer is 
+allowed per application and it must be on the main window.</p>
+
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// A very simple digital clock<br><br>define(&quot;ID_APP_TIMER&quot;,&nbsp;&nbsp;201);<br><br>$mainwin
+            = wb_create_window(NULL, PopupWindow, date(&quot;h:i:s A&quot;),
+            120, 0);<br>wb_set_handler($mainwin, &quot;process_main&quot;);<br>wb_create_timer($mainwin,
+            ID_APP_TIMER, 1000); &nbsp;&nbsp;&nbsp;&nbsp;// One second interval<br>wb_main_loop();<br><br>function
+            process_main($window, $id)<br>{<br>&nbsp;&nbsp;&nbsp;switch($id)
+            {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case ID_APP_TIMER:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+            Show the current time in hours, minutes and seconds<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_set_text($window,
+            date(&quot;h:i:s A&quot;));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;</code></p>
+            <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case IDCLOSE:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_destroy_window($window);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code></p>
+</td></tr>
+</table>
+<br>
+
+<h1><b>See also</b></h1>
+<p><a href="wb_destroy_timer.html"><b>wb_destroy_timer</b></a><b><br></b><a href="../reference/functions_category.html#system">System functions</a><br><a href="../overviews/callback_functions.html">Callback functions and window handlers</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

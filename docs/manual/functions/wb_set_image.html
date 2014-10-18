@@ -1,0 +1,55 @@
+<html>
+
+<head>
+<title>wb_set_image</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_image
+Icons
+Bitmaps
+DLLs-->
+<h2>wb_set_image</h2>
+<p>bool <b>wb_set_image</b> (int wbobject, mixed source [, int transparentcolor
+[, int index [, int param]]])</p>
+<p>Assigns the image <i>source</i> to the WinBinder object <i>wbobject</i>.
+Parameter <i>source</i> can be either an image, icon or cursor handle or a path to an image file 
+name. 
+If a handle, it&nbsp;must have been obtained with <a href="wb_create_image.html"><b>wb_create_image()</b></a>, 
+<a href="wb_create_mask.html"><b>wb_create_mask()</b></a> or&nbsp;<a href="wb_load_image.html"><b>wb_load_image()</b></a>. 
+The optional parameter <i>transparentcolor</i> tells the function which color 
+is to be considered transparent. The default is NOCOLOR (no transparency). <i>index</i> 
+is used to select a specific image from a multi-image file (such as a DLL or 
+executable).</p>
+
+<p>If <i>source</i> is an icon or a cursor, if <i>param</i> is 0 (the default), the 
+function sets a large icon or cursor; if <i>param</i> is 1, it sets a small icon 
+or cursor; 
+if <i>param</i> is -1, the function sets the default icon or cursor. For minimized 
+windows, this function will also change the icon that is displayed on the task 
+bar.</p>
+<p>Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1>Class-specific information</h1>
+<ul>
+    <li>In <a href="../classes/listview.html">ListView</a> and <a href="../classes/treeview.html">TreeView</a> 
+controls, <i>param</i> is the number of horizontal images contained in a multi-image 
+bitmap.</li>
+    <li>For ImageButton controls, 
+    <i>param</i> sets the number of images. Default is 1. See the topic on <a href="../classes/imagebutton.html">ImageButtons</a> 
+    for more details.</li>
+</ul>
+<h1><b>See also</b></h1>
+<p><a href="wb_create_image.html"><b>wb_create_image</b></a><b><br></b><a href="wb_create_mask.html"><b>wb_create_mask</b></a><b><br></b><a href="wb_load_image.html"><b>wb_load_image</b></a><b><br></b><a href="../classes/imagebutton.html"><b>ImageButton</b></a> class<a href="../reference/functions_category.html#control"><b><br></b>Control functions</a><br><a href="../reference/functions_category.html#image">Image functions</a><br><a href="../reference/functions_category.html#window">Window functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<html>
+
+<head>
+<title>wb_sort</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_sort
+-->
+<h2>wb_sort</h2>
+<p>bool <b>wb_sort</b> (int control [, bool ascending [, int subitem]])</p>
+<p>Sorts the contents of a control, a control&nbsp;item, a ListView column  or a sub-item. If the
+<i>ascending</i> parameter is TRUE (the default), the control or column is ordered starting
+with the lowest value or string, and vice-versa.</p>
+<p>The sorting criteria between two given items, <i>item1</i> and <i>item2</i>,
+are as follows:</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="97">            <p>Item 1</p>
+        </th>
+        <th width="111">            <p>Item 2</p>
+        </th>
+        <th width="466">            <p>Result</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="97">
+<p>String or number</p>
+        </td>
+        <td width="111">
+            <p>String</p>
+        </td>
+        <td width="466">
+            <p>Alphabetical order according to system locale</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="97">
+            <p>String or number</p>
+        </td>
+        <td width="111">
+            <p>Empty</p>
+        </td>
+        <td width="466">
+            <p>The non-empty item is always greater than the empty one</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="97">
+            <p>Number</p>
+        </td>
+        <td width="111">
+            <p>Number</p>
+        </td>
+        <td width="466">
+            <p>Numeric comparison</p>
+        </td>
+    </tr>
+</table>
+<p>In a ListView, <b>wb_sort()</b> sorts the column indexed by <i>subitem</i>.
+The index of the first column is zero.</p>
+
+<p> Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1><b>See also</b></h1>
+<p><a href="../reference/functions_category.html#control">Control functions</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

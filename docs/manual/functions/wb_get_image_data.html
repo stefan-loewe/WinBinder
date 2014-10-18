@@ -1,0 +1,57 @@
+<html>
+
+<head>
+<title>wb_get_image_data</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+wb_get_image_data
+PNG
+JPEG
+BMP
+GIF
+DIBs
+Bitmaps-->
+<h2>wb_get_image_data</h2>
+<p>string <b>wb_get_image_data </b>(int image [int compress4to3])</p>
+<p>Returns a string of data containing a copy of the internal true-color representation
+of the given <i>image</i>. The <i>image</i> handle must have been obtained with 
+<a href="wb_create_image.html"><b>wb_create_image()</b></a>, <a href="wb_create_mask.html"><b>wb_create_mask()</b></a> 
+or&nbsp;<a href="wb_load_image.html"><b>wb_load_image()</b></a>. Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<p>If <i>compress4to3</i> is TRUE, every fourth byte
+of the original 32-bit data is skipped, yielding a RGB (24-bit) data string.
+This is required for image libraries such as FreeImage&nbsp;(click <a href="wb_create_image.html#freeimage">here</a>
+for more information).</p>
+<p>This function is useful to read the image pixels directly or to convert an&nbsp;image
+to another format like PNG, JPEG, or GIF using a foreign library. For more information consult the Windows API documentation.</p>
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>&lt;?<br><br>// This example has no main window: it is
+            a console application<br><br>include_once(&quot;../include/winbinder.php&quot;);<br>include_once(&quot;../include/fi/freeimage.inc.php&quot;);<br><br>//
+            Create a true-color bitmap and draw something on it<br><br>$bmp
+            = wb_create_image(120, 20);<br>wb_draw_rect($bmp, 0, 0, 120, 20,
+            0xA0F0E0);<br>$font = wb_create_font(&quot;Arial&quot;, 8);<br>wb_draw_text($bmp,
+            &quot;This is a test image.&quot;, 0, 0, 120, 20, $font, WBC_CENTER);<br><br>//
+            Copy the bitmap color data to a DIB and save it as a PNG file<br><br>$pixeldata
+            = wb_get_image_data($bmp, true);<br>$dib = FreeImage_Allocate(120,
+            20, 24);<br>wb_poke(FreeImage_GetBits($dib), $pixeldata);<br>FreeImage_Save(FIF_PNG,
+            $dib, &quot;test.png&quot;);<br><br>// Cleanup<br><br>wb_destroy_image($bmp);<br>FreeImage_Unload($dib);<br><br>?&gt;</code></p>
+</td></tr>
+</table><br>
+
+<p><b>See also</b></p>
+<p><a href="wb_create_image.html"><b>wb_create_image</b></a><b><br></b><a href="wb_create_mask.html"><b>wb_create_mask</b></a><b><br></b><a href="wb_load_image.html"><b>wb_load_image</b></a><b><br></b><a href="../reference/functions_category.html#image">Image functions</a><br><a href="../reference/functions_category.html#lowlevel">Low-level functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<html>
+
+<head>
+<title>wb_set_size</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_size
+Minimized window
+Maximized window
+Restored window
+Window,Maximize
+Window,Minimize
+Window,Restore-->
+<h2>wb_set_size</h2>
+<p>bool <b>wb_set_size</b> (int wbobject,  mixed width [, int height])</p>
+<p>Sizes the object <i>wbobject</i> to <i>width</i> and <i>height</i> pixels.
+Parameters <i>width</i> and <i>height</i> may be used 
+as follows:</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="107">            <p><i>width</i></p>
+        </th>
+        <th width="102">            <p><i>height</i></p>
+        </th>
+        <th width="105">            <p>Applies to</p>
+        </th>
+        <th width="344">            <p>What it does</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="107">
+<p>Positive integer</p>
+        </td>
+        <td width="102">
+<p>Positive integer</p>
+        </td>
+        <td width="105">
+<p>window or control</p>
+        </td>
+        <td width="344">
+<p>Sets the
+window or control size to <i>width</i> and <i>height</i> pixels.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="107">
+<p class="code"><code>WBC_NORMAL</code></p>
+        </td>
+        <td width="102">
+            <p>(not supplied)</p>
+        </td>
+        <td width="105">
+<p>window</p>
+        </td>
+        <td width="344">
+<p>Restores the window, if it is not already.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="107">
+            <p class="code">WBC_MINIMIZED</p>
+        </td>
+        <td width="102">
+            <p>(not supplied)</p>
+        </td>
+        <td width="105">
+<p>window</p>
+        </td>
+        <td width="344">
+            <p>Minimizes the window, if it is not already.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="107">
+            <p class="code">WBC_MAXIMIZED</p>
+        </td>
+        <td width="102">
+            <p>(not supplied)</p>
+        </td>
+        <td width="105">
+<p>window</p>
+        </td>
+        <td width="344">
+            <p>Maximizes the window, if it is not already.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="107">
+            <p>Array of integers</p>
+        </td>
+        <td width="102">
+            <p>(not supplied)</p>
+        </td>
+        <td width="105">
+            <p><a href="../classes/listview.html">ListView</a></p>
+        </td>
+        <td width="344">
+            <p>Changes the column widths of&nbsp;the control.</p>
+        </td>
+    </tr>
+</table>
+<p> Returns
+<code>TRUE</code> on success or&nbsp;<code>FALSE</code> if an error occurs.</p>
+<h1>Examples</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td><pre>
+// Set the size of a control
+
+wb_set_size($ctrl, 120, 30);
+
+// Maximize a window
+
+wb_set_size($win, WBC_MAXIMIZED);
+
+// Set the column widths of a treeview.
+// First column is set to 100 pixels, second is left alone, third is set to default.
+
+wb_set_size($list, array(100, null, -1));
+</pre>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_get_size.html"><b>wb_get_size</b></a><b><br></b><a href="wb_set_position.html"><b>wb_set_position</b></a><b><br></b><a href="../reference/functions_category.html#control">Control functions</a><br><a href="../reference/functions_category.html#window">Window functions</a><br><a href="../classes/listview.html">ListView 
+class</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

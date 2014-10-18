@@ -1,0 +1,52 @@
+<html>
+
+<head>
+<title>wb_set_handler</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_set_handler
+-->
+<h2>wb_set_handler</h2>
+<p>int <b>wb_set_handler </b>(int window, mixed fn_handler)</p>
+<p>Assigns the callback function <i>fn_handler</i> to <i>window</i>. The handler
+function may be a regular PHP function or class method that is used to process events for this particular
+window. <b>wb_set_handler()</b> must be called whenever the window needs to
+process <a href="../overviews/window_messages.html">messages and events</a> from its controls.</p>
+<p>To specify a function as the handler, pass the function name in <i>fn_handler</i>.
+If the handler is a class method, <i>fn_handler</i> must be an array which first
+element is the name of the object and the second one is the method name.</p>
+<p>For additional information, see&nbsp;<a href="../overviews/callback_functions.html">callback functions and window handlers</a>.</p>
+
+<h1><b>Sample</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>$mainwin = wb_create_window(NULL, 100, &quot;&quot;, 320, 240);<br>wb_set_handler($mainwin,
+            &quot;process_main&quot;);</code></p>
+            <p><code>// Place other initialization code here</code></p>
+            <p><code>function process_main($window, $id, $ctrl=0, $param1=0,
+            $param2=0, $param3=0)<br>{<br> &nbsp;&nbsp;&nbsp;&nbsp;switch($id)
+            {<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case ID_ABOUT:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_message_box($window,
+            &quot;Test application&quot;);<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case IDCLOSE:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wb_destroy_window($window);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code></p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><b><a href="wb_create_window.html">wb_create_window</a><br></b><a href="../reference/functions_category.html#window">Window functions</a><br><a href="../overviews/callback_functions.html">Callback functions and window handlers</a><br><a href="../overviews/window_messages.html">Window messages
+and events</a><br></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

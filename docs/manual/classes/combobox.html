@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<title>ComboBox class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body>
+<!--KW:
+Classes
+Classes,ComboBox
+Combo boxes
+-->
+<h2>ComboBox class</h2>
+<p>A ComboBox is a collapsible list of selectable items.</p>
+
+To create a combo box use the <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a> function using 
+<span class="code">ComboBox</span> as the 
+<i>class</i> parameter.
+<p>A normal (read-only) combo box needs the <span class="code">WBC_READONLY</span> 
+flag. If you omit this flag the resulting combo box will have an editable field 
+just like an <a href="editbox.html">EditBox</a> control.</p>
+<p><font color="#CC6600"><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTE:</b></font> Windows does not always provide enough space for the attached 
+list box. See &quot;setting the height of a combo box&quot; below.</p>
+<h1>Creating combo boxes</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+// Create an empty combo box
+
+wb_create_item($window, ComboBox, &quot;&quot;, 10, 10, 100, 90, ID_COMBO, WBC_READONLY);
+</pre></td></tr></table>
+
+<p>After creating the combo box, you can assign values to the control in several ways:</p>
+<p>1) By creating an array to store the item names and using <a href="../functions/wb_set_text.html"><b>wb_set_text()</b></a> 
+to assign them to the control:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+$a_combo = array(&quot;Line1&quot;, &quot;Line2&quot;, &quot;Line3&quot;, &quot;Line4&quot;);
+
+// Assign values to combo box control<br>wb_set_text(wb_get_control($window, ID_COMBO, WBC_READONLY), $a_combo);
+</pre></td></tr></table>
+
+<p>2) By assigning it a string with items separated by a line break (<b>\n</b>) 
+or line feed/line break sequence: (<b>\r\n</b>):</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+$s_combo = &quot;Line1\nLine2\nLine3&quot;;       \\ Or &quot;Line1\r\nLine2\r\nLine3&quot;<br><br>// Assign values to combo box control<br>wb_set_text(wb_get_control($window, ID_COMBO, WBC_READONLY), $s_combo);
+</pre></td></tr></table>
+
+<p>3) By including the desired items when creating a control:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>
+wb_create_item($window, ComboBox, &quot;Line1\nLine2\nLine3&quot;, 10, 10, 100, 90, ID_COMBO, WBC_READONLY);
+</pre></td></tr></table>
+
+<h1>Setting the height of a combo box</h1>
+<p>In certain cases, a combo box will not appear to drop down. For an example, see 
+the code below.</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>wb_create_control($mainwin, ComboBox, &quot;&quot;, 80, 60, 130, 20, IDC_COMBO, WBC_READONLY);<br>wb_set_text($combo, &quot;Item1\r\nItem2\r\nItem3&quot;);<code>&nbsp;</code></p>
+</td></tr></table>
+<p>The code above will generate a combo box which will not drop down in Windows 2000, 
+Windows 98 or Windows Me. I<SPAN class=postbody>t seems that these versions 
+of Windows expect you to tell them the total height of the list box that is 
+included 
+in the control. To solve the problem, change the height 
+to a greater value, say, 90 pixels:</SPAN></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><pre>wb_create_control($mainwin, ComboBox, &quot;&quot;, 80, 60, 130, 90, IDC_COMBO, WBC_READONLY);<br>wb_set_text($combo, &quot;Item1\r\nItem2\r\nItem3&quot;);<code>&nbsp;</code></p>
+</td></tr></table>
+<p>This can also be done after the control is created using <b><a href="../functions/wb_set_size.html">wb_set_size()</a></b>:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5"><tr><td><p><code>$size = wb_get_size(wb_get_control($mainwin, 
+            IDC_COMBO, WBC_READONLY)); <BR>wb_set_size(wb_get_control($mainwin, IDC_COMBO), 
+            $size[0],
+90);<BR></code></p>
+
+</td></tr></table>
+<h1>Setting and retrieving information</h1>
+<p>To associate an integer value with a given item, use <b><a href="../functions/wb_set_value.html">wb_set_value()</a></b>. 
+Set <i>item</i> to the desired item index, or leave it blank (or set it to -1) 
+to associate the value to the currently selected item.</p>
+<p>To retrieve the index of
+the currently selected item, call <b><a href="../functions/wb_get_selected.html">wb_get_selected()</a></b>. 
+Use <b><a href="../functions/wb_get_value.html">wb_get_value()</a> </b>to retrieve 
+the integer value associated to the specified <i>item</i>, or leave <i>item</i> 
+empty&nbsp;(or set it to -1) to retrieve the value of the currently selected item.</p>
+<h1><b>See also</b></h1>
+<a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br><a href="../functions/wb_get_selected.html">wb_get_selected</a><br><a href="../functions/wb_get_value.html">wb_get_value</a><br></b><a href="../functions/wb_set_text.html"><b>wb_set_text</b></a><b><br></b><a href="../functions/wb_set_value.html"><b>wb_set_value</b></a><b><br></b><a href="listbox.html">ListBox 
+class</a><br><a href="../reference/classes_control.html">Control
+classes</a><p>&nbsp;</p>
+</body>
+
+</html>

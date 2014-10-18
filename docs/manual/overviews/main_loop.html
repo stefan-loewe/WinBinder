@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<title>The main loop</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<!--KW:
+Main loop
+-->
+<h2>The main loop</h2>
+<p>The Windows main loop is created by as a single function call, <b><a href="../functions/wb_main_loop.html">wb_main_loop()</a></b>,
+that must be
+called if the application has a window. This function uses the standard Windows
+approach, that is, a&nbsp;loop that uses the API function&nbsp;<b>GetMessage()</b>
+to retrieve a message from the queue and <b>DispatchMessage()</b> to send it
+to the window procedure.</p>
+<p>All the additional tasks needed to run a Windows program, including DLL loading,
+initialization, and cleanup, are done when PHP calls the WinBinder library upon
+startup.</p>
+<p>There are a few special cases where a Windows programs will not need a message
+loop, namely when the only tasks to be performed are the creation of message
+boxes or system dialog boxes. For example:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>&lt;?<br><br>// This program does not need a call to wb_main_loop()</code></p>
+            <p><code>include(&quot;../include/winbinder.php&quot;); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+            Include WinBinder library<br>if(wb_message_box(null, &quot;This
+            program has no Windows loop.\nCan you believe it?&quot;, null, WBC_YESNO))<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;wb_sys_dlg_color(NULL);<br><br>?&gt;</code></p>
+</td></tr>
+</table>
+<h1>See also</h1>
+    <p><a href="applications.html">Creating WinBinder applications</a><br><a href="window_messages.html">Window messages 
+and events</a><br><a href="../functions/wb_main_loop.html"><b>wb_main_loop</b></a></p>
+<p>&nbsp;</p>
+</body>
+
+</html>

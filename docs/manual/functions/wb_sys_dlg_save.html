@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<title>wb_sys_dlg_save</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+wb_sys_dlg_save
+Save As dialog box-->
+<h2>wb_sys_dlg_save</h2>
+<p>string <b>wb_sys_dlg_save</b> (int parent [, string title [, string filter[,
+string path[, string filename [, string default_extension]]]]])</p>
+<p>Displays the standard Save As&nbsp;dialog box. Returns
+the typed file name, if any,&nbsp;or a blank string if the dialog box was canceled. Returns 
+<span class="code">NULL</span> if not successful.</p>
+<h1><b>Parameters</b></h1>
+<p><i><b>parent</b></i> is a handle to the WinBinder object that will serve 
+as the parent for the dialog box.<br><b><i>title</i></b>
+is the optional string to be displayed as the dialog box caption.<br><b><i>filter</i></b>&nbsp;is 
+an optional two-dimensional array composed of pairs of file descriptions and valid file 
+name patterns (usually file extensions). If <i>filter</i> is <span class="code">NULL</span>, the dialog 
+box will display a default &quot;All files&quot; filter. The filter takes the 
+following generic form:</p>
+<ul>
+    <p>array(array(descr1, pat1) [, array(descr2, pat2) [, ...]])<br></p>
+</ul>
+<p><b><i>path</i></b> is an optional folder used to initialize the dialog box.<br><b><i>filename</i></b> 
+is an optional default name for the file. If parameter <i>filter</i> is <span class="code">NULL</span>, 
+the&nbsp;file extension will be used as the filter instead.<br><i><b>default_extension</b></i>&nbsp;is optional and 
+defines a default extension for the dialog box.</p>
+<h1>Example</h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p class="code">// Snippet showing how to use a standard Save As 
+            dialog box</p>
+            <p class="code">$filename = wb_sys_dlg_save($window, &quot;Save 
+            As&quot;, NULL, $path, $currentfile, 'txt');<br>if($filename) {<br> 
+            &nbsp;&nbsp;&nbsp;// Do action here<br>}</p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_sys_dlg_open.html"><b>wb_sys_dlg_open</b></a><b><br></b><a href="../reference/functions_category.html#dialog">Dialog functions</a></p>
+<p>&nbsp;</p>
+
+
+</body>
+
+</html>

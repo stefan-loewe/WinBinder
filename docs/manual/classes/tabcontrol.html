@@ -1,0 +1,90 @@
+<html>
+
+<head>
+<title>TabControl class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+Classes
+Classes,TabControl
+Tab controls
+Pages-->
+<h2>TabControl class</h2>
+            <p>A TabControl is a special kind of container window that organizes several controls in multiple pages.
+When clicked, the page displays only the controls assigned to it and hides the
+rest.</p>
+<h1><b>Creating tab controls and pages</b></h1>
+<p>You have several options to create a tab control with pages:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// To create a tab control with pages, the <i>caption</i>
+            variable must contain the page&nbsp;names separated by newlines.<br><br>$tab = wb_create_control($mainwin, TabControl,
+&quot;Page0\nPage1\nPage2'&quot;, $x, $y, $w, $h, ID_TABCONTROL, WBC_VISIBLE);<br><br>//
+            Create an empty tab control and add pages to it by passing an array
+            to wb_create_items().<br><br>$tab = wb_create_control($mainwin, TabControl,
+&quot;&quot;, $x, $y, $w, $h, ID_TABCONTROL, WBC_VISIBLE);<br>wb_create_items($tab,
+            array(&quot;Page0&quot;, &quot;Page1&quot;, &quot;Page2&quot;));<br><br>//
+            Create an empty tab control and add the pages later with several
+            calls to wb_create_items().<br><br>$tab = wb_create_control($mainwin, TabControl,
+&quot;&quot;, $x, $y, $w, $h, ID_TABCONTROL, WBC_VISIBLE);<br>wb_create_items($tab,
+            &quot;Page0&quot;);<br>wb_create_items($tab, &quot;Page1&quot;);<br>wb_create_items($tab,
+            &quot;Page2&quot;);</code></p>
+</td></tr>
+</table>
+<p>To
+create the child controls for each page, you must use the tab control as the
+parent window and set the <i>ntab</i> parameter in function <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a><b>
+</b>to the desired page number:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Add controls to the first page<br><br>wb_create_control($tab, Label, &quot;This will go to Page
+            0&quot;, $x1,
+$y1, $w1, $h1, 0, WBC_VISIBLE, 0, 0);<BR>wb_create_control($tab, Edit, &quot;This will
+go to Page 0&quot;, $x2, $y2, $w2, $h2, 0, WBC_VISIBLE, 0, 0);<br><br>// Add more
+            controls to the second page<br><BR>wb_create_control($tab,
+Label, &quot;This will go to Page 1&quot;, $x3, $y3, $w3, $h3, 0, WBC_VISIBLE,
+0, 1);<BR>wb_create_control($tab, ComboBox, &quot;This will go to Page 1&quot;, $x4, $y4, $w4, $h4,
+0, WBC_VISIBLE, 0, 1);<BR><br>// etc.</code></p>
+</td></tr>
+</table>
+<p><font color="#CC6600"><b><img src="../images/icon_note.png" align="absmiddle" width="32" height="32" border="0">
+NOTES</b></font></p>
+<ul>
+    <li>The&nbsp;maximum number of tabs in a tab control is 16.</li>
+    <li>The maximum number of controls in a tab control is 512.</li>
+    <li>It is possible to include a tab control inside a tab control (nesting).
+    If tab controls are inserted beyond one level of nesting, their respective
+    controls&nbsp;will not generate any events.</li>
+</ul>
+<h1>Detecting&nbsp;a tab change</h1>
+<p>The tab control can send a notification to its parent when the selected tab 
+has changed if you include the <span class="code">WBC_NOTIFY</span> style and 
+the <span class="code">WBC_HEADERSEL</span> flag when creating the parent window. 
+See the example below:</p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p class="code">&lt;?php <BR><BR>// This small program shows how 
+            to make a tab control send notifications of a tab change<BR><BR>include 
+&quot;../include/winbinder.php&quot;; <BR>define(&quot;MAIN_TAB1&quot;, 101); <BR><BR>// Create main 
+window with the <span class="code">WBC_NOTIFY</span> style and the <span class="code">WBC_HEADERSEL</span> 
+            flag<BR><BR>$mainwin = wb_create_window(NULL, PopupWindow, &quot;Tab control&quot;, 
+WBC_CENTER, WBC_CENTER, 320, 240, WBC_NOTIFY, WBC_HEADERSEL); 
+<BR>wb_set_handler($mainwin, &quot;process_main&quot;); <BR><BR>// Create tab control and 
+status bar <BR><BR>$maintab = wb_create_control($mainwin, TabControl, 
+&quot;Tab1\nTab2\nTab3\nTab4\nTab5&quot;, 5, 5, 305, 175, MAIN_TAB1, WBC_VISIBLE); 
+<BR>$statusbar = wb_create_control($mainwin, StatusBar); <BR><BR>wb_main_loop(); 
+<BR><BR>// Main window processing <BR><BR>function process_main($window, $id, 
+$ctrl, $lparam1=0, $lparam2=0) <BR>{ <BR>&nbsp; &nbsp;global $statusbar; <BR><BR>&nbsp; 
+&nbsp;switch($id) { <BR>&nbsp; &nbsp;&nbsp; &nbsp;case MAIN_TAB1: <BR>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if($lparam1 &amp; 
+WBC_HEADERSEL) <BR>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;wb_set_text($statusbar, &quot;Tab $lparam2 
+selected.&quot;); <BR>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;break;<BR>&nbsp; &nbsp;} <BR>} <BR><BR>?&gt; </td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="../functions/wb_create_items.html"><b>wb_create_control<br>wb_create_items</b></a><b><br></b><a href="../reference/classes_control.html">Control
+classes</a></p>
+<p><b>&nbsp;</b></p>
+</body>
+
+</html>

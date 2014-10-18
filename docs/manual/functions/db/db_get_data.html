@@ -1,0 +1,178 @@
+<html>
+
+<head>
+
+<title>db_get_data</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_get_data-->
+<h2>db_get_data</h2>
+<p>mixed <b>db_get_data </b>(string tablename [, mixed id [, mixed col [, string
+where [, int type [, string idfield [, string orderby]]]]]])</p>
+		<p>Reads data from a table.</p>
+<p><i>tablename</i> is the name of the table that will be examined. If it is
+NULL, the function uses the most recently used table (the one used in the last non-NULL
+function
+call).<br><i>id</i> is a record&nbsp;identifier key or a set of identifiers that
+may be an array or a CSV string. <br><i>col</i> is a string with the name(s) of
+the columns(s) desired. It may be an array or a CSV string. <br><i>where</i> is
+an optional &quot;WHERE&quot; SQL clause. <br><i>type </i>defines the kind of data
+returned. Accepted values are <code>FETCH_BOTH</code>, <code>FETCH_NUM</code>
+(the default) and <code>FETCH_ASSOC</code>.<br><i>idfield</i> is the name of identifier field (column). Default is &quot;id&quot;. <br><i>orderby</i> is an optional &quot;ORDER BY&quot; SQL clause.</p>
+		<p><b>Keys and columns</b></p>
+		<p>The table below summarizes the options for <i>id</i> and <i>col</i>.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="121" height="17">            <p>id</p>
+        </th>
+        <th width="121" height="17">            <p>col</p>
+        </th>
+        <th width="432" height="17">            <p>Data returned</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer</p>
+        </td>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="432">
+            <p>Array with the whole record <i>id</i></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer</p>
+        </td>
+        <td width="121">
+            <p>string</p>
+        </td>
+        <td width="432">
+            <p>The value of column <i>col</i> of record <i>id</i></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer</p>
+        </td>
+        <td width="121">
+            <p>string array</p>
+        </td>
+        <td width="432">
+            <p>Array with column values in array <i>col</i> of record <i>id</i></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer array</p>
+        </td>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="432">
+            <p>Array of arrays with values from all columns of the <i>id</i>
+            records</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer array</p>
+        </td>
+        <td width="121">
+            <p>string</p>
+        </td>
+        <td width="432">
+            <p>Array with the values of column <i>col</i> from the <i>id</i>
+            records</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>integer array</p>
+        </td>
+        <td width="121">
+            <p>string array</p>
+        </td>
+        <td width="432">
+            <p>Two-dimensional&nbsp;array with the values of columns <i>col</i>
+            from the <i>id</i> records</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="432">
+            <p>Array of arrays with the whole table</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="121">
+            <p>string</p>
+        </td>
+        <td width="432">
+            <p>Array with values of the <i>col</i> column from the whole table</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="121">
+            <p>null</p>
+        </td>
+        <td width="121">
+            <p>string array</p>
+        </td>
+        <td width="432">
+            <p>Array of arrays with the values of the columns <i>col</i> from
+            the whole table</p>
+        </td>
+    </tr>
+</table>
+<p><b>Result</b></p>
+<p>The result type specifies which type of data  you want to return. There are
+three possible types:</p>
+<ul>
+    <li><code>FETCH_BOTH</code> returns an associative and numeric array.</li>
+    <li><code>FETCH_NUM</code>&nbsp;returns a numeric array. This is the default.</li>
+    <li><code>FETCH_ASSOC</code> returns an associative array.</li>
+</ul><br>
+
+<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Open database<br><br>db_open_database(&quot;sample.db&quot;);<br><br>// Read
+            data from user whose identifier is 53<br><br>wb_set_text(wb_get_control($mainwin,
+            ID_USER), db_get_data(&quot;user&quot;, 53));<br><br>// Fill up
+            a list box with all user names<br><br>wb_set_text(wb_get_control($mainwin,
+            ID_USERS), db_get_data(&quot;user&quot;, null, &quot;name&quot;));</code></p>
+            <p><code>// Display all users that are over 18 in a ListView<br><br>$itemlist
+            = wb_get_control($window, ID_USERLIST);<br>$fields = array(&quot;id&quot;,&quot;name&quot;,&quot;phone&quot;,&quot;address&quot;);<br>$item_data
+            = db_get_data(&quot;user&quot;, null, $fields, &quot;age &gt; 18&quot;);<br>wb_set_text($itemlist,
+            $fields);<br>wb_create_items($itemlist, $item_data, true);</code></p>
+</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

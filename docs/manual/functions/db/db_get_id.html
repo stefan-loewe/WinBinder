@@ -1,0 +1,47 @@
+<html>
+
+<head>
+
+<title>db_get_id</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+
+
+
+<link rel=stylesheet href="../../help.css" type="text/css">
+
+</head>
+
+<body>
+<!--KW:
+db_get_id-->
+<h2>db_get_id</h2>
+		<p>int <b>db_get_id </b>(string tablename, int index [, string idfield])</p>
+<p>Gets the identifier of an indexed record in a table.</p>
+<p><b>Arguments</b></p>
+<p><i>tablename</i> is the name of the table to be examined.<br><i>index</i> is the index
+position within the table.<br>
+			<i>idfield</i> is the name of identifier field (column). Default is &quot;id&quot; .</p>
+<p>
+			<b>Result</b></p>
+		<p>Returns the id found or NULL if no such identifier was found.</p>
+
+		<p><b>Example</b></p>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p><code>// Get the id of record in index position 3 in mytable<br>
+							<br>
+							$id = db_get_id(&quot;mytable&quot;, 3);<br>
+						</code></p>
+</td></tr>
+</table>
+<br>
+<p><b>See also</b></p>
+    <p><a href="../../reference/functions_database.html">Database functions</a><br><a href="../../overviews/database_support.html">Database support</a></p>
+
+
+
+</body>
+
+</html>

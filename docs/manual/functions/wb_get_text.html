@@ -1,0 +1,195 @@
+<html>
+
+<head>
+<title>wb_get_text</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_get_text
+-->
+<h2>wb_get_text</h2>
+<p>mixed <b>wb_get_text</b> (int wbobject [, int item [, int subitem]])</p>
+<p>Gets the text from a window, control, or control item.</p>
+<h1><b>Class-specific information</b></h1>
+<p>See the following table.</p>
+<table border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black" width="70%">
+    <tr>
+        <th width="92">            <p>Class</p>
+        </th>
+        <th width="143">            <p><i>item</i></p>
+        </th>
+        <th width="57">            <p><i>subitem</i></p>
+        </th>
+        <th width="545">            <p>What it retrieves</p>
+        </th>
+    </tr>
+    <tr>
+        <td width="92" rowspan="2">
+            <p><a href="../classes/listbox.html">ListBox</a></p>
+        </td>
+        <td width="143">
+            <p>NULL or empty</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the currently selected line</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>non-negative integer</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the line&nbsp;indicated by variable <i>item</i></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="92" rowspan="3">
+            <p><a href="../classes/combobox.html">ComboBox</a></p>
+        </td>
+        <td width="143">
+            <p>NULL or empty</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the currently selected line</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>non-negative integer</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the line indicated by variable <i>item</i></p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>negative integer</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the editable field in non-read-only combo boxes</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="92" rowspan="3">
+            <p><a href="../classes/listview.html">ListView</a></p>
+        </td>
+        <td width="143">
+            <p>non-negative integer</p>
+        </td>
+        <td width="57">
+            <p>integer</p>
+        </td>
+        <td width="545">
+<p>The text of the cell specified in <i>item</i>, <i>subitem</i> (row, column)</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>non-negative integer</p>
+        </td>
+        <td width="57">
+            <p>NULL</p>
+        </td>
+        <td width="545">
+<p>An array containing the texts of the row specified in <i>item</i>.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>NULL</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>An array containing the texts of the selected row.¹</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="92" rowspan="2">
+            <p><a href="../classes/treeview.html">TreeView</a></p>
+        </td>
+        <td width="143">
+            <p>non-negative integer</p>
+        </td>
+        <td width="57">
+            <p>NULL</p>
+        </td>
+        <td width="545">
+<p>The text of the node specified in <i>item</i>.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="143">
+            <p>NULL</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+<p>The text of the currently selected node.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="92">
+            <p>Other controls</p>
+        </td>
+        <td width="143">
+            <p>empty</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+            <p>The control caption.</p>
+        </td>
+    </tr>
+    <tr>
+        <td width="92">
+            <p>Window</p>
+        </td>
+        <td width="143">
+            <p>empty</p>
+        </td>
+        <td width="57">
+            <p>any</p>
+        </td>
+        <td width="545">
+            <p>The window caption.</p>
+        </td>
+    </tr>
+</table>
+<p>¹ If no cells are selected, the function&nbsp;will return a two-dimensional 
+array containing the text of all cells in the control, and the array will end 
+when it reaches the first blank line. If one or more cells are selected, the 
+function will return a&nbsp;two-dimensional array containing the text of the 
+selected cells in the control. Use the following table:</p>
+<h1><b>See also</b></h1>
+<p><a href="wb_get_selected.html"><b>wb_get_selected</b></a><b><br></b><a href="wb_get_value.html"><b>wb_get_value</b></a><b><br></b><a href="wb_set_text.html"><b>wb_set_text</b></a><b><a href="wb_set_text.html"><br></a></b><a href="../reference/functions_category.html#control">Control functions</a><br><a href="../reference/functions_category.html#window">Window functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>

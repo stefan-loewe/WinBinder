@@ -1,0 +1,53 @@
+<html>
+
+<head>
+<title>StatusBar class</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<!--KW:
+Classes
+Classes,StatusBar
+Status bars
+-->
+<h2>StatusBar class</h2>
+<p>The status bar is an optional horizontal bar that appears on the bottom of
+a parent window. To create a status bar, use the function <a href="../functions/wb_create_control.html"><b>wb_create_control()</b></a>
+passing <code>StatusBar</code> as the parameter <i>cclass</i>.</p>
+<p>If the parent of the status bar is a resizable window, the status bar is
+automatically given a sizing grip. When the parent window is resized, its
+width is adjusted automatically.</p>
+<p>WinBinder supports <b><i>multi-segment status bars</i></b>.&nbsp;To create 
+one, use <a href="../functions/wb_create_items.html"><b>wb_create_items()</b></a>. 
+Each item must be an array with a string (that may be empty) and a width. If 
+the width is empty, <span class="code">NULL</span>,&nbsp;zero or very small 
+(up to 4) it will be automatically calculated to the width of the string plus 
+a small margin, or a minimal width if the string is empty or <span class="code">NULL</span>. 
+If the last width is zero, <span class="code">NULL</span>&nbsp;or empty it will 
+extend the last segment to the right edge of the status bar independently of 
+the text contents of the last segment.</p>
+<p>For multi-segment status bars, parameter <i>item</i> in <a href="../functions/wb_set_text.html"><b>wb_set_text()</b></a> 
+will set the text of the specified segment (0 is default). For single-segment 
+status bars, <i>item</i> is ignored.</p>
+<h1><b>Example</b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td>
+            <p class="code">// Create the status bar</p>
+            <p class="code"><code>$statusbar = wb_create_control($mainwin, StatusBar, &quot;Hello, I'm the status bar.&quot;);</code></p>
+            <p class="code"><code>// Create segments in status bar</code></p>
+            <p class="code">wb_create_items($statusbar, array(<br>&nbsp;&nbsp;&nbsp;&nbsp;array('This 
+            has 120 pixels', 120),<br>&nbsp;&nbsp;&nbsp;&nbsp;array('', 20),<br>&nbsp;&nbsp;&nbsp;&nbsp;array('Just 
+            enough for this text', null), &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 
+            NULL may be suppressed<br>&nbsp;&nbsp;&nbsp;&nbsp;array('This one 
+            always extends to the end', null) // Here too</p>
+            <p class="code">));</p>
+</td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="../functions/wb_create_control.html"><b>wb_create_control</b></a><b><br></b><a href="../functions/wb_create_items.html"><b>wb_create_items</b></a><b><br></b><a href="../functions/wb_set_text.html"><b>wb_set_text</b></a><a href="../reference/classes_control.html"><br>Control
+classes</a></p>
+<p class="code">&nbsp;</p>
+</body>
+
+</html>

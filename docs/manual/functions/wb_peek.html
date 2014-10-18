@@ -1,0 +1,45 @@
+<html>
+
+<head>
+<title>wb_peek</title>
+<meta name="generator" content="Namo WebEditor v5.0">
+
+
+<link rel="stylesheet" href="../help.css">
+
+
+</head>
+
+<body>
+<!--KW:
+wb_peek
+-->
+<h2>wb_peek</h2>
+<p>string <b>wb_peek</b> (int address, [, int length])</p>
+<p>Gets the contents of a memory area pointed by <i>address</i>. If <i>length</i>
+is empty or zero, returns bytes up to the first NUL character (zero-character) or up to 32767
+            bytes, whichever comes first. If <i>length</i>&nbsp;is greater than
+zero, returns <i>length</i> bytes.</p>
+<h1><b>Example<br></b></h1>
+<table border="0" bgcolor="#E0E0E0" cellpadding="5" >
+<tr><td><pre>// Read the contents of a string
+
+echo wb_peek(wb_get_address(&quot;Demo string&quot;));
+
+// Read a WBOBJ structure
+
+define(&quot;WBOBJ&quot;,         &quot;Vhwnd/Vid/Vuclass/litem/lsubitem/Vstyle/Vparent/Vhandler/Vlparam/V8lparams/Vpbuffer&quot;);
+define(&quot;WBOBJ_RAW&quot;,     &quot;V3l2V13&quot;);
+define(&quot;WBOBJ_SIZE&quot;,    72);
+
+$wbobj = unpack(WBOBJ, wb_peek($window, WBOBJ_SIZE));
+print_r($wbobj);
+</pre></td></tr>
+</table>
+<h1><b>See also</b></h1>
+<p><a href="wb_get_address.html"><b>wb_get_address</b></a><b><br></b><a href="wb_poke.html"><b>wb_poke<br></b></a><a href="../reference/functions_category.html#lowlevel">Low-level functions</a></p>
+
+<p>&nbsp;</p>
+</body>
+
+</html>
