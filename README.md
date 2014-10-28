@@ -35,10 +35,9 @@ Prerequisites:
 Where to get further information?
 =================================
 
-Check out the original repository for any weird issues! https://github.com/stefan-loewe/WinBinder
+See docs/!
 
 Reporting Bugs
 ========================
 
-Report them HERE, and if they're a core WinBinder issue I will manage them with the original fork.
-However, if it's my problem, I will fix it.
+Report them via github issues.
