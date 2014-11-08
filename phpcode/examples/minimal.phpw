@@ -1,9 +1,0 @@
-<?php
-
-// Code sample: A Windows application with only three lines
-
-include "../include/winbinder.php";                             // Include WinBinder library
-wb_create_window(NULL, PopupWindow, "Hello world!", 480, 320);  // Create application window
-wb_main_loop();                                                 // Enter message loop
-
-?>

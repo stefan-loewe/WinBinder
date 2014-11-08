@@ -1,6 +1,0 @@
-<?php
-
-include_once('WinAPI.php');
-include_once('cStruct.php');
-
-Winmm::PlaySound("sound.wav", 0, 0);
