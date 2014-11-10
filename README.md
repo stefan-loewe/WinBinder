@@ -30,7 +30,7 @@ Prerequisites:
   4. Clone this repo into the folder ext/winbinder
   5. compile PHP with your options plus --with-winbinder, e.g. configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder
 
-  Note: This will statically compile it into PHP. Use --with-winbinder=shared to have it in it's own dll.
+  Note: This will statically compile it into PHP. Use --with-winbinder=shared to have it in it's own *.dll.
 
 Where to get further information?
 =================================
