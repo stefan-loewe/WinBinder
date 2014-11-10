@@ -1,0 +1,14 @@
+Q: How to get a more modern look and feel, instead of the default Windows XP style?
+A: You need a manifest file. Either create a manifest file next to your php.exe (called php.exe.manifest) or add the manifest file to php.exe
+
+Q: Where to get a manifest file?
+A: A ready-to-use template is available in the root folder of this repository, called 'php.exe.manifest'
+
+Q: When I do not want to have the manifest file next to my php.exe, can I add it somehow to php.exe directly?
+A: Yes, you can do so with the free program "Resource Hacker".
+  1. Open your php.exe in Resource Hacker
+  2. Select Action > Add a new resource from the menu
+  3. Select the manifest file you want to add to php.exe
+  4. Set the Resource Type to 24, Resource Name to 1 and Resource Language to 1033
+  5. Save php.exe
+  6. Restart your WinBinder App to see the results
