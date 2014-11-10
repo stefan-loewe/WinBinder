@@ -29,9 +29,10 @@ Prerequisites:
   3. Compile PHP by following this guide https://wiki.php.net/internals/windows/stepbystepbuild
   4. Clone this repo into the folder ext/winbinder
   5. compile PHP with your options
-    1. add <code>--with-winbinder</code> to compile WinBinder statically into php.exe
+    1. add <code>--with-winbinder</code> to compile WinBinder statically into php.exe<br/>
       <code>configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder</code>
-    2. compile shared, to get a *.dll: add --with-winbinder=shared, e.g., configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder=shared
+    2. add <code>--with-winbinder=shared</code> to compile WinBinder shared, i.e., to get a *.dll<br/>
+      <code>configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder=shared</code>
 
 Where to get further information?
 =================================
