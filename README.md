@@ -14,7 +14,7 @@ What is needed to start building WinBinder applications?
 
 You will need the source code of PHP plus the WinBinder source code.
 
-On whcih PHP versions has it been tested on?
+On which PHP versions has it been tested on?
   - PHP 5.6
   - PHP 5.5 
   - PHP 5.4
