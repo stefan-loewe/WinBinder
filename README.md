@@ -12,9 +12,9 @@ client-side applications for the Windows Platform in pure PHP.
 What is needed to start building WinBinder applications?
 ========================================================
 
-You will need PHP plus the WinBinder source code.
+You will need the source code of PHP plus the WinBinder source code.
 
-What has it been tested on?
+On which PHP versions has it been tested on?
   - PHP 5.6
   - PHP 5.5 
   - PHP 5.4
@@ -24,18 +24,20 @@ How to compile the WinBinder extension?
 
 Prerequisites:
 --------------
-  1. Get Microsoft Visual Studio.
-  2. Get PHP source code
-  3. Follow this guide to setup PHP https://wiki.php.net/internals/windows/stepbystepbuild
-  4. Clone this repo into ext/winbinder
-  5. compile PHP with your options plus --with-winbinder
-
-  Note: This will staiclly combine it into PHP. do --with-winbinder=shared to have it in it's own DLL.
+  1. Get Microsoft Visual Studio (Express version will do)
+  2. Get PHP source code, e.g. from http://windows.php.net/download/
+  3. Compile PHP by following this guide https://wiki.php.net/internals/windows/stepbystepbuild
+  4. Clone this repo into the folder ext/winbinder
+  5. compile PHP with your options
+    1. add <code>--with-winbinder</code> to compile WinBinder statically into php.exe<br/>
+      <code>configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder</code>
+    2. add <code>--with-winbinder=shared</code> to compile WinBinder shared, i.e., to get a *.dll<br/>
+      <code>configure.bat --enable-snapshot-build --enable-debug-pack --with-winbinder=shared</code>
 
 Where to get further information?
 =================================
 
-See docs/!
+See the docs!
 
 Reporting Bugs
 ========================
