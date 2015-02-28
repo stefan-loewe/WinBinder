@@ -2,7 +2,7 @@
 
  WINBINDER - The native Windows binding for PHP
 
- Copyright © Hypervisual - see LICENSE.TXT for details
+ Copyright ï¿½ Hypervisual - see LICENSE.TXT for details
  Author: Rubem Pechansky (http://winbinder.org/contact.php)
 
  Common header for WinBinder: all exported functions and constants
@@ -18,8 +18,8 @@
 // General defines
 
 #define NO_REGEX_EXTRA_H
-#define ZEND_WIN32
-#define PHP_WIN32
+//#define ZEND_WIN32
+//#define PHP_WIN32
 #define UNICODE
 #define _UNICODE
 
@@ -39,9 +39,10 @@
 // Define constants for recent Windows controls. For WINVER constants, See
 // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winprog/winprog/using_the_windows_headers.asp
 
-// Include targetver.h
-// Includes WINVER constans and NT, etc.
-#include "targetver.h"
+#ifdef __GNUC__						// For GCC
+#	define WINVER 			0x0501	// Internet Explorer 5.01
+#	define _WIN32_IE 		WINVER
+#endif
 
 #ifdef _MSC_VER						// For MSVC (Rick)
 #	if _MSC_VER < 1300
@@ -105,7 +106,7 @@
 
 // Strings
 
-#define RICHEDITCONTROL			TEXT("RichEdit41")
+#define RICHEDITCONTROL			TEXT("RichEdit20A")
 #define TAB_PAGE_CLASS			TEXT("wbTabPage")
 #define WB_EXTENSION			TEXT("phpw")
 

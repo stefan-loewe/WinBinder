@@ -1,3 +1,4 @@
+#pragma once
 
 /** Windows Constants **/
 #define WINVER 0x0501           // Windows XP

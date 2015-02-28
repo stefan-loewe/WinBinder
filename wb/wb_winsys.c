@@ -87,7 +87,8 @@ BOOL wbInit(void)
 	// Load the common control DLLs
 
 	InitCommonControls();
-	LoadLibrary(TEXT("Msftedit.dll")); // Version 4.1 of RichEdit, use becuase we drop all before XP support anyways.
+	if(!LoadLibrary(TEXT("RICHED20.DLL")))		// This is version 2.0 of the DLL
+		LoadLibrary(TEXT("RICHED32.DLL"));
 	icex.dwSize = sizeof(icex);
 	icex.dwICC  = ICC_DATE_CLASSES;			// Load date and time picker control class
 	InitCommonControlsEx(&icex);
