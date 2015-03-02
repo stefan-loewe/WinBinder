@@ -2,7 +2,7 @@
 
  WINBINDER - The native Windows binding for PHP for PHP
 
- Copyright © Hypervisual - see LICENSE.TXT for details
+ Copyright ï¿½ Hypervisual - see LICENSE.TXT for details
  Author: Rubem Pechansky (http://winbinder.org/contact.php)
 
  Common header for WinBinder for PHP
@@ -31,12 +31,16 @@
 #endif
 
 #define ZEND_DEBUG	FALSE	// Must be FALSE
-#define ZTS					// Must define ZTS (Zend Thread Safety)
+
+#ifndef ZTS
+#	define ZTS					// Must define ZTS (Zend Thread Safety)
+#endif
+
 #define PHP_REGEX_H			// Skip php_regex.h: '_off_t' not defined anywhere
 
 //----------------------------------------------------------------- DEPENDENCIES
 
-#include "wb.h"
+#include "wb/wb.h"
 #include <php.h>
 #include <windows.h>
 #pragma comment(lib,"kernel32.lib")
@@ -60,7 +64,7 @@
 
 extern zend_module_entry winbinder_module_entry;
 #define phpext_winbinder_ptr &winbinder_module_entry
-	
+
 	//---------------------------------------------------------- AUXILIARY FUNCTIONS
 
 int parse_array(zval *array, const char *fmt, ...);
