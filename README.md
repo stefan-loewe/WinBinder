@@ -1,6 +1,8 @@
 WinBinder
 =========
 
+[![Join the chat at https://gitter.im/stefan-loewe/WinBinder](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/stefan-loewe/WinBinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 WinBinder - The native Windows binding for PHP
 
 What is WinBinder?
