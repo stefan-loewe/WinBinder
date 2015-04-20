@@ -4,18 +4,18 @@
 ARG_WITH("winbinder", "Include windows GUI support", "no");
 
 if (PHP_WINBINDER == "yes") {
-	CHECK_HEADER_ADD_INCLUDE("wb.h", "CFLAGS_INTL", "ext/winbinder/wb")
+	PHP_INSTALL_HEADERS("ext/winbinder/wb", "wb.h");
 
 	EXTENSION("winbinder", "phpwb_bitmap.c phpwb_control.c phpwb_control_listview.c\
 	phpwb_control_menu.c phpwb_control_toolbar.c phpwb_control_treeview.c\
 	phpwb_draw.c phpwb_export.c phpwb_font.c phpwb_generic.c phpwb_lowlevel.c\
-	phpwb_sysdlg.c phpwb_wb_lib.c phpwb_window.c phpwb_winsys.c", false, "/Iext/wibinder/wb");
+	phpwb_sysdlg.c phpwb_wb_lib.c phpwb_window.c phpwb_winsys.c", true, "/Iext/wibinder/wb");
 
 	ADD_SOURCES("ext/winbinder/wb", "wb_bitmap.c wb_control.c\
 	wb_control_calendar.c wb_control_html.c wb_control_hyperlink.c\
 	wb_control_listview.c wb_control_menu.c wb_control_tab.c wb_control_toolbar.c\
 	wb_control_treeview.c wb_draw.c wb_font.c wb_generic.c wb_lowlevel.c\
-	wb_sysdlg.c wb_window.c wb_winsys.c")
+	wb_sysdlg.c wb_window.c wb_winsys.c", "winbinder")
 
-	AC_DEFINE('HAVE_WINBINDER', 1, 'Include windows GUI support', false);
+	AC_DEFINE('HAVE_WINBINDER', 1, 'Include Windows GUI support', false);
 }
