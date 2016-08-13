@@ -88,23 +88,23 @@ int parse_array(zval *array, const char *fmt, ...)
 			switch(fmt[i]) {
 
 				case 'l':
-					if(Z_TYPE_P(entry) == IS_NULL) {
+					if(Z_TYPE_PP(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
-						*((long *)arg) = Z_LVAL_P(*entry);
+						*((long *)arg) = (*entry)->value.lval;
 					break;
 
 				case 'd':
-					if(Z_TYPE_P(entry) == IS_NULL) {
+					if(Z_TYPE_PP(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
-						*((double *)arg) = Z_DVAL_P(*entry);
+						*((double *)arg) = (*entry)->value.dval;
 					break;
 
 				case 's':
-					if(Z_TYPE_P(entry) == IS_STRING) {
-						*((long *)arg) = (long)(Z_STRVAL_P(*entry));
-					} else if(Z_TYPE_P(entry) == IS_NULL) {
+					if(Z_TYPE_PP(entry) == IS_STRING) {
+						*((long *)arg) = (long)((*entry)->value.str.val);
+					} else if(Z_TYPE_PP(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
 						*((long *)arg) = (long)NULL;
@@ -130,14 +130,14 @@ int parse_array(zval *array, const char *fmt, ...)
 /* Function to process arrays. Returns a pointer to a zval element from array zitems or
   NULL if end of array is reached */
 
-zval *process_array(zval *zitems)
+zval *process_array(zval *zitems, TSRMLS_D)
 {
 	static int nelem = 0;
 	static int nelems = 0;
 	static HashTable *target_hash = NULL;
 	zval **entry = NULL;
 
-	if(Z_TYPE_P(zitems) != IS_ARRAY)
+	if(zitems->type != IS_ARRAY)
 		return FALSE;
 
 	// Prepare to read items from zitem array
@@ -189,12 +189,12 @@ zval *process_array(zval *zitems)
 
 	if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE)
 		zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
-		  nelem, get_active_function_name(TSRMLS_C));
+		  nelem, get_active_function_name(tsrm_ls));
 
 	return *entry;
 }
 
-TCHAR * Utf82WideChar(wchar_t str, int len)
+TCHAR * Utf82WideChar(const char *str, int len)
 {
 	TCHAR *wstr = 0;
 	int wlen = 0;

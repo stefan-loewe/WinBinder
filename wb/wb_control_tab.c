@@ -29,10 +29,10 @@ BOOL wbSetTabControlText(PWBOBJ pwboTab, LPCTSTR pszText)
 		return FALSE;
 
 	SendMessage(pwboTab->hwnd, TCM_DELETEALLITEMS, 0, 0);
-	ptr = wcstok(szTitle, TEXT("\r\n,"), *ptr);
+	ptr = wcstok(szTitle, TEXT("\r\n,"));
 	while(ptr) {
 		wbCreateTabItem(pwboTab, ptr);
-		ptr = wcstok(NULL, TEXT("\r\n,"), *ptr);
+		ptr = wcstok(NULL, TEXT("\r\n,"));
 	}
 	return TRUE;
 }

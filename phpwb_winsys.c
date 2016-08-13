@@ -50,7 +50,7 @@ ZEND_FUNCTION(wbtemp_set_accel_table)
 	 "lz!", &pwbo, &zarray) == FAILURE)
 		return;
 
-	if(Z_TYPE_P(zarray) == IS_ARRAY) {
+	if(zarray->type == IS_ARRAY) {
 
 		target_hash = HASH_OF(zarray);
 		if(!target_hash)
@@ -68,7 +68,7 @@ ZEND_FUNCTION(wbtemp_set_accel_table)
 				RETURN_NULL();
 			}
 
-			switch(Z_TYPE_P(entry)) {
+			switch(Z_TYPE_PP(entry)) {
 
 				case IS_ARRAY:				// An accelerator item is an array inside an array
 					parse_array(*entry, "ls", &accel[naccel].cmd, &str_accel);
@@ -112,22 +112,20 @@ ZEND_FUNCTION(wb_set_cursor)
 	 "lz!", &pwbo, &source) == FAILURE)
 		return;
 
-	zend_uchar sourcetype = Z_TYPE_P(source);
-
 	if(!source) {
 
 		hCursor = NULL;
 		pszCursorName = NULL;
 
-	} else if(sourcetype == IS_LONG) {
+	} else if(source->type == IS_LONG) {
 
 		hCursor = (HANDLE)source->value.lval;
 		pszCursorName = NULL;
 
-	} else if(sourcetype == IS_STRING) {
+	} else if(source->type == IS_STRING) {
 
 		hCursor = NULL;
-		pszCursorName = Utf82WideChar(Z_STRVAL_P(source), Z_STRLEN_P(source));
+		pszCursorName = Utf82WideChar(source->value.str.val, source->value.str.len);
 
 	} else {
 
@@ -192,19 +190,19 @@ ZEND_FUNCTION(wb_play_sound)
 	if(!source)
 		RETURN_NULL();
 
-	if(Z_TYPE_P(source) == IS_LONG) {			// It's an integer: Play system sound
+	if(source->type == IS_LONG) {			// It's an integer: Play system sound
 
 		RETURN_BOOL(wbPlaySystemSound(source->value.lval));
 
-	} else if(Z_TYPE_P(source) == IS_STRING) {	// It's an empty string or filename
+	} else if(source->type == IS_STRING) {	// It's an empty string or filename
 
-		if(*Z_STRVAL_P(source)) {
-			szPath = Utf82WideChar(Z_STRVAL_P(source), Z_STRLEN_P(source));
+		if(*source->value.str.val) {
+			szPath = Utf82WideChar(source->value.str.val, source->value.str.len);
 			MakeWinPath(szPath);
 			if(!EXISTFILE(szPath)) {
 				wbFree(szPath);
 				zend_error(E_WARNING, "Could not open media file %s in function %s()",
-					Z_STRVAL_P(source), get_active_function_name(TSRMLS_C));
+					source->value.str.val, get_active_function_name(TSRMLS_C));
 				RETURN_BOOL(FALSE);
 				return;
 			}
@@ -356,7 +354,7 @@ ZEND_FUNCTION(wb_get_system_info)
 		if(!*strval && (res == -1)) {		// Unrecognized parameter
 			RETURN_NULL();
 		} else {
-			RETURN_STRING(strval);
+			RETURN_STRING(strval, strlen(strval));
 		}
 	} else {
 		RETURN_LONG(res);
@@ -387,7 +385,7 @@ ZEND_FUNCTION(wb_find_file)
 	wbFindFile(szPath, MAX_PATH * 4);
 
 	WideCharCopy(szPath, path, MAX_PATH * 4);
-	RETURN_STRING(path);
+	RETURN_STRING(path, TRUE);
 }
 
 /*
@@ -425,9 +423,9 @@ ZEND_FUNCTION(wb_get_registry_key)
 	if(ret) {
 		if(*szVal) {
 			WideCharCopy(szVal, sval, buflen);
-			RETURN_STRING(sval)
+			RETURN_STRING(sval, TRUE)
 		} else
-			RETURN_STRING("")
+			RETURN_STRING("", TRUE)
 	} else {
 		RETURN_NULL();
 	}
@@ -449,8 +447,6 @@ ZEND_FUNCTION(wb_set_registry_key)
 	  "ss|sz!", &key, &key_len, &subkey, &subkey_len, &entry, &entry_len, &source) == FAILURE)
 		return;
 
-	zend_uchar sourcetype = Z_TYPE_P(source);
-
 	if(!source) {
 		szKey = Utf82WideChar(key, key_len);
 		szSubKey = Utf82WideChar(subkey, subkey_len);
@@ -459,8 +455,7 @@ ZEND_FUNCTION(wb_set_registry_key)
 		ret = wbWriteRegistryKey(szKey, szSubKey, szEntry, NULL, 0, TRUE);
 
 		RETURN_BOOL(ret);
-	// 2016_08_12 - Jared Allard: no more IS_BOOL, use IS_TRUE/IS_FALSE
-	} else if(sourcetype == IS_LONG || ( sourcetype == IS_FALSE || sourcetype == IS_TRUE)) {
+	} else if(source->type == IS_LONG || source->type == IS_BOOL) {
 		szKey = Utf82WideChar(key, key_len);
 		szSubKey = Utf82WideChar(subkey, subkey_len);
 		szEntry = Utf82WideChar(entry, entry_len);
@@ -468,7 +463,7 @@ ZEND_FUNCTION(wb_set_registry_key)
 		ret = wbWriteRegistryKey(szKey, szSubKey, szEntry, NULL, source->value.lval, FALSE);
 
 		RETURN_BOOL(ret);
-	} else if(sourcetype == IS_DOUBLE) {
+	} else if(source->type == IS_DOUBLE) {
 		TCHAR szAux[50];
 		wsprintf(szAux, TEXT("%20.20f"), source->value.dval);
 
@@ -479,11 +474,11 @@ ZEND_FUNCTION(wb_set_registry_key)
 		ret = wbWriteRegistryKey(szKey, szSubKey, szEntry, szAux, 0, TRUE);
 
 		RETURN_BOOL(ret);
-	} else if(sourcetype == IS_STRING) {
+	} else if(source->type == IS_STRING) {
 		szKey = Utf82WideChar(key, key_len);
 		szSubKey = Utf82WideChar(subkey, subkey_len);
 		szEntry = Utf82WideChar(entry, entry_len);
-		szVal = Utf82WideChar(Z_STRVAL_P(source), Z_STRLEN_P(source));
+		szVal = Utf82WideChar(source->value.str.val, source->value.str.len);
 
 		ret = wbWriteRegistryKey(szKey, szSubKey, szEntry, szVal, 0, TRUE);
 

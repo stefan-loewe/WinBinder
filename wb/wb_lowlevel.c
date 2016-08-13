@@ -138,7 +138,6 @@ FARPROC wbGetLibraryFunction(HMODULE hLib, LPCSTR pszFunction)
 	// Try appending '@' plus the number of parameters
 
 	for(i = 0; i <= 20; i++) {
-		// 2016_08_12 - Jared Allard: be safe with sprintf_s, add support later.
 		sprintf(szName, "%s@%d", pszFunction, i * 4);
 		pFn = GetProcAddress(hLib, szName);
 		if(pFn)

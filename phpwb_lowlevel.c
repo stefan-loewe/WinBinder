@@ -116,17 +116,14 @@ ZEND_FUNCTION(wb_get_address)
 	  "z", &source) == FAILURE)
 		return;
 
-	zend_uchar sourcetype = Z_TYPE_P(source);
-	if(sourcetype == IS_LONG) {
-		RETURN_LONG((LONG)(void *)&Z_LVAL_P(source));
-	} else if(sourcetype == IS_TRUE) {
-		RETURN_LONG((LONG)(void *)&Z_LVAL_P(source));
-	} else if (sourcetype == IS_FALSE) {
-		RETURN_LONG((LONG)(void *)&Z_LVAL_P(source));
-	} else if(sourcetype == IS_DOUBLE) {
-		RETURN_LONG((LONG)(void *)&Z_DVAL_P(source));
-	} else if(sourcetype == IS_STRING) {
-		RETURN_LONG((LONG)(void *)Z_STRVAL_P(source));
+	if(source->type == IS_LONG) {
+		RETURN_LONG((LONG)(void *)&source->value.lval);
+	} else if(source->type == IS_BOOL) {
+		RETURN_LONG((LONG)(void *)&source->value.lval);
+	} else if(source->type == IS_DOUBLE) {
+		RETURN_LONG((LONG)(void *)&source->value.dval);
+	} else if(source->type == IS_STRING) {
+		RETURN_LONG((LONG)(void *)source->value.str.val);
 	} else
 		RETURN_LONG((LONG)(void *)source)
 }
@@ -246,7 +243,7 @@ ZEND_FUNCTION(wb_call_function)
 					RETURN_NULL();
 				}
 
-				switch(Z_TYPE_P(entry)) {
+				switch(Z_TYPE_PP(entry)) {
 
 					case IS_ARRAY:				// Invalid types
 					case IS_OBJECT:
@@ -259,17 +256,16 @@ ZEND_FUNCTION(wb_call_function)
 						break;
 
 					case IS_STRING:
-						param[i] = (LONG)Z_STRVAL_P(*entry);
+						param[i] = (LONG)(*entry)->value.str.val;
 						break;
 
 					case IS_DOUBLE:
-						param[i] = (DWORD)Z_DVAL_P(*entry);
+						param[i] = (DWORD)(*entry)->value.dval;
 						break;
-					case IS_TRUE:
-						param[i] = Z_LVAL_P(*entry);
-						break;
-					case IS_FALSE:
-						param[i] = Z_LVAL_P(*entry);
+
+					case IS_LONG:
+					case IS_BOOL:
+						param[i] = (*entry)->value.lval;
 						break;
 				}
 

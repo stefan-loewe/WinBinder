@@ -97,14 +97,15 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 		return FALSE;
 	}
 
+	MAKE_STD_ZVAL(fname);
 	ZVAL_STRING(fname, pszFName, 1);
 
 	// Error checking is VERY POOR for user methods (i.e. when pszObjectName is not NULL)
-	if(!pszObjectName && !zend_is_callable(fname, 0, &pszFName)) {
+	if(!pszObjectName && !zend_is_callable(fname, 0, &pszFName, TSRMLS_C)) {
 		zend_error(E_WARNING, "%s(): '%s' is not a function or cannot be called",
 		  get_active_function_name(TSRMLS_C), pszFName);
 		efree(pszFName);				// These two lines prevent a leakage
-		efree(Z_STRVAL_P(fname));	// that occurred on every function call
+		efree(fname->value.str.val);	// that occurred on every function call
 		efree(fname);
 		return FALSE;
 	}
@@ -113,6 +114,7 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 
 	if(pszObjectName && *pszObjectName) {
 		pszOName = (char *)pszObjectName;
+		MAKE_STD_ZVAL(oname);
 		ZVAL_STRING(oname, pszOName, 1);
 		poname = &oname;
 	} else {
@@ -121,29 +123,27 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 		poname = NULL;
 	}
 
-	// 2016_08_12 - Jared Allard: no more ALLOC_ZVAL
-
-	// PWBOBJ pointer
-	ZVAL_LONG(z0, (LONG)pwboParent);
+	ALLOC_INIT_ZVAL(z0);
+	ZVAL_LONG(z0, (LONG)pwboParent);				// PWBOBJ pointer
 	parms[0] = &z0;
-	
-	// id
+
+	ALLOC_INIT_ZVAL(z1);							// id
 	ZVAL_LONG(z1, (LONG)id);
 	parms[1] = &z1;
-	
-	// control handle
+
+	ALLOC_INIT_ZVAL(z2);							// control handle
 	ZVAL_LONG(z2, (LONG)pctrl);
 	parms[2] = &z2;
-	
-	// lparam1
+
+	ALLOC_INIT_ZVAL(z3);							// lparam1
 	ZVAL_LONG(z3, (LONG)lParam1);
 	parms[3] = &z3;
 
-	// lparam2
+	ALLOC_INIT_ZVAL(z4);							// lparam2
 	ZVAL_LONG(z4, (LONG)lParam2);
 	parms[4] = &z4;
 
-	// lparam3
+	ALLOC_INIT_ZVAL(z5);							// lparam3
 	ZVAL_LONG(z5, (LONG)lParam3);
 	parms[5] = &z5;
 
@@ -176,7 +176,7 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 	efree(z1);
 	efree(z0);
 	efree(pszFName);				// These two lines prevent a leakage
-	efree(Z_STRVAL_P(fname));	// that occurred on every function call
+	efree(fname->value.str.val);	// that occurred on every function call
 	efree(fname);
 
 	return TRUE;

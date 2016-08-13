@@ -68,7 +68,7 @@ extern zend_module_entry winbinder_module_entry;
 	//---------------------------------------------------------- AUXILIARY FUNCTIONS
 
 int parse_array(zval *array, const char *fmt, ...);
-zval *process_array(zval *zitems);
+zval *process_array(zval *zitems, TSRMLS_D);
 
 
 // String encode converting function

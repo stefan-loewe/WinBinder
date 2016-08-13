@@ -108,8 +108,7 @@ ZEND_FUNCTION(wb_get_image_data)
 	if(!size || !lpBits)
 		RETURN_NULL();
 
-	// 2016_08_12 - Jared Allard: we don't need a TRUE to be passed anymore.
-	RETVAL_STRINGL(lpBits, size);
+	RETVAL_STRINGL(lpBits, size, TRUE);
 	efree(lpBits);
 }
 
