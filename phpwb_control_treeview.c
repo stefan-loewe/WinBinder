@@ -93,7 +93,7 @@ ZEND_FUNCTION(wbtemp_get_treeview_item_text)
 
 	wbGetTreeViewItemText((PWBOBJ)pwbo, (HTREEITEM)item, szItem, MAX_ITEM_STRING - 1);
 	str = WideChar2Utf8(szItem, &str_len);
-	RETURN_STRING(str, TRUE)
+	RETURN_STRING(str)
 }
 
 /*
@@ -106,7 +106,7 @@ If zparam is NULL, does not change associated value (does nothing).
 ZEND_FUNCTION(wbtemp_set_treeview_item_value)
 {
 	LONG pwbo, item, lparam = 0;
-	zval *zparam, *zcopy;
+	zval *zparam, zcopy;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "llz!", &pwbo, &item, &zparam) == FAILURE)
@@ -115,21 +115,15 @@ ZEND_FUNCTION(wbtemp_set_treeview_item_value)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL()
 
-	switch(zparam->type) {
+	switch(Z_TYPE_P(zparam)) {
 
 		case IS_NULL:				// Do not change lparam
 			lparam = 0;
 			break;
-
-		case IS_BOOL:
-		case IS_LONG:
-		case IS_STRING:
 		default:
 			// ****** Possible leak: Should free the existing copy of zparam here, if any
-			ALLOC_ZVAL(zcopy);		// Create a copy of zparam
-			*zcopy = *zparam;
-			zval_copy_ctor(zcopy);
-			lparam = (LONG)zcopy;
+			ZVAL_LONG(&zcopy, 0);
+			zcopy = *zparam;
 			break;
 	}
 
@@ -150,7 +144,7 @@ ZEND_FUNCTION(wbtemp_create_treeview_item)
 	LONG pwbo, where = 0, img1 = -1, img2 = -1, insertiontype = 0;
 	char *str;
 	int str_len, lparam = 0;
-	zval *zparam = NULL, *zcopy;
+	zval *zparam = NULL;
 	BOOL setlparam = FALSE;
 
 	TCHAR *wcs = 0;
@@ -163,22 +157,16 @@ ZEND_FUNCTION(wbtemp_create_treeview_item)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL()
 
-	switch(zparam->type) {
+	switch(Z_TYPE_P(zparam)) {
 
 		case IS_NULL:				// Do not change lparam
 			lparam = 0;
 			setlparam = FALSE;
 			break;
 
-		case IS_BOOL:
-		case IS_LONG:
-		case IS_STRING:
 		default:
-			// ****** Possible leak: Should free the existing copy of zparam here, if any
-			ALLOC_ZVAL(zcopy);		// Create a copy of zparam
-			*zcopy = *zparam;
-			zval_copy_ctor(zcopy);
-			lparam = (LONG)zcopy;
+			// 2016_08_12 - Jared Allard: Don't bother copying.
+			lparam = (LONG)zparam;
 			setlparam = TRUE;
 			break;
 	}

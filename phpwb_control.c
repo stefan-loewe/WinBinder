@@ -52,7 +52,9 @@ ZEND_FUNCTION(wbtemp_create_control)
 	if(!wbIsWBObj((void *)pwboparent, TRUE))
 		RETURN_NULL()
 
-	switch(zcaption->type) {
+	// 2016_08_12 PHP 7 no longer has the same zval struct, let's not be complicated and use *macros*
+	// switch(zcaption->type) {
+	switch(Z_TYPE_P(zcaption)) {
 
 		case IS_ARRAY:
 			parse_array(zcaption, "ss", &caption, &tooltip);
@@ -61,7 +63,8 @@ ZEND_FUNCTION(wbtemp_create_control)
 			break;
 
 		case IS_STRING:
-			wcsCaption = Utf82WideChar(zcaption->value.str.val, zcaption->value.str.len);
+			// 2016_08_12 - Jared Allard: why be so complicated when we can use the Z_STRVAL and Z_STRLEN macros?
+			wcsCaption = Utf82WideChar(Z_STRVAL_P(zcaption), Z_STRLEN_P(zcaption));
 			break;
 
 		case IS_NULL:
@@ -303,16 +306,22 @@ ZEND_FUNCTION(wb_get_value)
 		if(!zparam)
 			RETURN_NULL();
 
-		switch(zparam->type) {
+		// 2016_08_12 - Jared Allard: Use macros.
+		switch(Z_TYPE_P(zparam)) {
 			case IS_LONG:
-			case IS_BOOL:
-				RETURN_LONG(zparam->value.lval);
+			// 2016_08_12 - Jared Allard: no longer IS_BOOL, check for IS_TRUE or IS_FALSE
+			case IS_TRUE:
+				RETURN_LONG(Z_LVAL_P(zparam));
+				break;
+			case IS_FALSE:
+				RETURN_LONG(Z_LVAL_P(zparam));
 				break;
 			case IS_STRING:
-				RETURN_STRINGL(zparam->value.str.val, zparam->value.str.len, TRUE);
+				// 2016_08_12 - Jared Allard: use macros.
+				RETURN_STRINGL(Z_STRVAL_P(zparam), Z_STRLEN_P(zparam));
 				break;
 			case IS_DOUBLE:
-				RETURN_DOUBLE(zparam->value.dval);
+				RETURN_DOUBLE(Z_DVAL_P(zparam));
 				break;
 			default:
 				RETURN_NULL();
@@ -394,33 +403,38 @@ ZEND_FUNCTION(wb_set_image)
 
 	// Get the image handle from source
 
-	if(!source) {
+	zend_uchar sourcetype = Z_TYPE_P(source);
+
+	if (!source) {
 
 		hImage = NULL;
+	}
 
-	} else if(source->type == IS_LONG) {
+	if (source) {
+		if (sourcetype == IS_LONG) {
 
-		hImage = (HANDLE)source->value.lval;
+			hImage = (HANDLE)source->value.lval;
 
-	} else if(source->type == IS_STRING) {
+		} else if (sourcetype == IS_STRING) {
 
-		// Here param is the icon size: set it to 1 for a small icon
-		wcs = Utf82WideChar(source->value.str.val, source->value.str.len);
-		hImage = wbLoadImage(wcs, MAX(0, index), param);
-		wbFree(wcs);
+			// Here param is the icon size: set it to 1 for a small icon
+			wcs = Utf82WideChar(Z_STRVAL_P(source), Z_STRLEN_P(source));
+			hImage = wbLoadImage(wcs, MAX(0, index), param);
+			wbFree(wcs);
 
-		if(!hImage) {
-			zend_error(E_WARNING, "Invalid image file %s or image index %d",
-				source->value.str.val, index);
+			if (!hImage) {
+				zend_error(E_WARNING, "Invalid image file %s or image index %d",
+					Z_STRVAL_P(source), index);
+				RETURN_NULL();
+			}
+
+		} else {
+
+			zend_error(E_WARNING, "Invalid parameter type passed to function %s()",
+				get_active_function_name(TSRMLS_C));
 			RETURN_NULL();
+
 		}
-
-	} else {
-
-		zend_error(E_WARNING, "Invalid parameter type passed to function %s()",
-		  get_active_function_name(TSRMLS_C));
-		RETURN_NULL();
-
 	}
 
 //	printf("%d %d %d %d\n", pwbo, trcolor, param, hImage);
@@ -449,16 +463,19 @@ ZEND_FUNCTION(wb_set_item_image)
 
 	nclass = ((PWBOBJ)pwbo)->uClass;
 
+	zend_uchar zindextype = Z_TYPE_P(zindex);
+
 	switch(nclass) {
 
 		case ListView:
 
-			index1 = zindex->value.lval;
-			if(zindex->type != IS_NULL && zindex->type != IS_LONG) {
+			index1 = Z_LVAL_P(zindex);
+
+			if(zindextype != IS_NULL && zindextype != IS_LONG) {
 				zend_error(E_WARNING, "Parameter 2 expected to be an integer or NULL in function %s()",
 					get_active_function_name(TSRMLS_C));
 				RETURN_BOOL(FALSE);
-			} else if(zindex->type == IS_NULL || (zindex->type == IS_LONG && zindex->value.lval < 0)) {
+			} else if(zindextype == IS_NULL || (zindextype == IS_LONG && Z_LVAL_P(zindex) < 0)) {
 				RETURN_BOOL(wbSetListViewItemImage((PWBOBJ)pwbo, item, subitem, -1));
 			} else {
 				RETURN_BOOL(wbSetListViewItemImage((PWBOBJ)pwbo, item, subitem, index1));
@@ -467,7 +484,7 @@ ZEND_FUNCTION(wb_set_item_image)
 
 		case TreeView:
 
-			if(zindex->type == IS_ARRAY)
+			if(zindextype == IS_ARRAY)
 				parse_array(zindex, "ll", &index1, &index2);
 			else
 				index1 = zindex->value.lval;
@@ -576,14 +593,19 @@ ZEND_FUNCTION(wb_delete_items)
 	if(!zitems)						// Delete all items
 		RETURN_LONG(wbDeleteItems((PWBOBJ)pwbo, TRUE));
 
-	switch(zitems->type) {
+	switch(Z_TYPE_P(zitems)) {
 
 		case IS_NULL:				// Delete all items
 			RETURN_LONG(wbDeleteItems((PWBOBJ)pwbo, TRUE));
 			break;
 
 		case IS_LONG:				// Delete an item
-		case IS_BOOL:
+		// 2016_08_12 - Jared Allard: no more IS_BOOL, use IS_TRUE || IS_FALSE
+		case IS_TRUE:
+			((PWBOBJ)pwbo)->item = zitems->value.lval;
+			RETURN_LONG(wbDeleteItems((PWBOBJ)pwbo, FALSE));
+			break;
+		case IS_FALSE:
 			((PWBOBJ)pwbo)->item = zitems->value.lval;
 			RETURN_LONG(wbDeleteItems((PWBOBJ)pwbo, FALSE));
 			break;
@@ -592,17 +614,14 @@ ZEND_FUNCTION(wb_delete_items)
 			{
 				zval *zitem;
 
-				while((zitem = process_array(zitems, TSRMLS_C)) != NULL) {
-					((PWBOBJ)pwbo)->item = zitem->value.lval;
+				while((zitem = process_array(zitems)) != NULL) {
+					((PWBOBJ)pwbo)->item = Z_LVAL_P(zitem);
 					if(!wbDeleteItems((PWBOBJ)pwbo, FALSE))
 						bRet = FALSE;
 				}
 			}
 
 			RETURN_BOOL(bRet);
-
-		case IS_STRING:				// Invalid parameter
-		case IS_DOUBLE:
 		default:
 			zend_error(E_WARNING, "Parameter 2 expected to be an integer or array in function %s()",
 				get_active_function_name(TSRMLS_C));
@@ -732,7 +751,7 @@ ZEND_FUNCTION(wbtemp_create_statusbar_items)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL()
 
-	switch(zitems->type) {
+	switch(Z_TYPE_P(zitems)) {
 
 		case IS_ARRAY:
 			{
@@ -745,7 +764,7 @@ ZEND_FUNCTION(wbtemp_create_statusbar_items)
 
 				// Count array elements
 
-				while((zitem = process_array(zitems, TSRMLS_C)) != NULL) {
+				while((zitem = process_array(zitems)) != NULL) {
 					parse_array(zitem, "");
 					nParts++;
 				}
@@ -753,7 +772,7 @@ ZEND_FUNCTION(wbtemp_create_statusbar_items)
 				// Create the array of widths
 
 				i = 0;
-				while((zitem = process_array(zitems, TSRMLS_C)) != NULL) {
+				while((zitem = process_array(zitems)) != NULL) {
 					parse_array(zitem, "sl", &pszCaption, &nWidth);
 
 					if((i == nParts - 1) && (nWidth <= 0)) {
@@ -782,7 +801,7 @@ ZEND_FUNCTION(wbtemp_create_statusbar_items)
 				// Set the text of the various parts
 
 				i = 0;
-				while((zitem = process_array(zitems, TSRMLS_C)) != NULL) {
+				while((zitem = process_array(zitems)) != NULL) {
 					parse_array(zitem, "sl", &pszCaption, NULL);
 
 					if(!wbSetText((PWBOBJ)pwbo, pszCaption, i, FALSE))
@@ -817,7 +836,7 @@ ZEND_FUNCTION(wbtemp_set_text)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL()
 
-	switch(zcaption->type) {
+	switch(Z_TYPE_P(zcaption)) {
 
 		case IS_ARRAY:
 			parse_array(zcaption, "ss", &caption, &tooltip);
@@ -833,7 +852,7 @@ ZEND_FUNCTION(wbtemp_set_text)
 
 		case IS_STRING:
 			//caption = zcaption->value.str.val;
-			wcsCaption = Utf82WideChar(zcaption->value.str.val, zcaption->value.str.len);
+			wcsCaption = Utf82WideChar(Z_STRVAL_P(zcaption), Z_STRLEN_P(zcaption));
 			ret = wbSetText((PWBOBJ)pwbo, wcsCaption, item, FALSE);
 			wbFree(wcsCaption);
 			break;
@@ -942,12 +961,12 @@ ZEND_FUNCTION(wbtemp_get_text)
 			wbGetText((PWBOBJ)pwbo, ptext, len, index);
 			if(*ptext) {
 				str = WideChar2Utf8(ptext, &str_len);
-				RETURN_STRINGL(str, max(0, str_len - 1), TRUE)
+				RETURN_STRINGL(str, max(0, str_len - 1))
 			} else
-				RETURN_STRING("", TRUE)	// This is a valid empty string
+				RETURN_STRING("")	// This is a valid empty string
 		}
 	} else {
-		RETURN_STRING("", TRUE)	// This is a valid empty string
+		RETURN_STRING("")	// This is a valid empty string
 	}
 }
 

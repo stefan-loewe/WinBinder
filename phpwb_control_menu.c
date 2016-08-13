@@ -39,7 +39,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 	if(!wbIsWBObj((void *)pwboParent, TRUE))
 		RETURN_NULL()
 
-	if(zarray->type == IS_ARRAY) {
+	if(Z_TYPE_P(zarray) == IS_ARRAY) {
 
 		target_hash = HASH_OF(zarray);
 		if(!target_hash)
@@ -66,7 +66,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 
 			pitem[i] = emalloc(sizeof(WBITEM));
 
-			switch(Z_TYPE_PP(entry)) {
+			switch(Z_TYPE_P(entry)) {
 
 				case IS_ARRAY:				// A menu item is an array inside an array
 					parse_array(*entry, "lssss", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->pszImage, &str_accel);
@@ -92,7 +92,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 				case IS_STRING:				// Create first-level menu
 					pitem[i]->id = 0;
 					pitem[i]->index = 0;
-					pitem[i]->pszCaption = Utf82WideChar((*entry)->value.str.val, (*entry)->value.str.len);
+					pitem[i]->pszCaption = Utf82WideChar(Z_STRVAL_P(*entry), Z_STRLEN_P(*entry));
 					pitem[i]->pszHint = NULL;
 					pitem[i]->pszImage = NULL;
 					break;

@@ -43,7 +43,7 @@ ZEND_FUNCTION(wb_create_window)
 		y = WBC_CENTER;
 	}
 
-	switch(zcaption->type) {
+	switch(Z_TYPE_P(zcaption)) {
 
 		case IS_ARRAY:
 			parse_array(zcaption, "ss", &caption, &tooltip);
@@ -52,7 +52,7 @@ ZEND_FUNCTION(wb_create_window)
 			break;
 
 		case IS_STRING:
-			wcsCaption = Utf82WideChar(zcaption->value.str.val, zcaption->value.str.len);
+			wcsCaption = Utf82WideChar(Z_STRVAL_P(zcaption), Z_STRLEN_P(zcaption));
 			break;
 
 		case IS_NULL:
@@ -124,9 +124,9 @@ ZEND_FUNCTION(wb_get_size)
 	if(!source)
 		RETURN_NULL();
 
-	if(source->type == IS_LONG) {	// It's an integer: PWBO, HBITMAP or HICON
+	if(Z_TYPE_P(source) == IS_LONG) {	// It's an integer: PWBO, HBITMAP or HICON
 
-		if(!source->value.lval)
+		if(Z_LVAL_P(source))
 			RETURN_NULL()
 		else
 			pwbo = (PWBOBJ)(void *)source->value.lval;
@@ -153,16 +153,16 @@ ZEND_FUNCTION(wb_get_size)
 			size = wbGetImageDimensions((HBITMAP)source->value.lval);
 		}
 
-	} else if(source->type == IS_STRING) {
+	} else if(Z_TYPE_P(source) == IS_STRING) {
 
 		// Is source an image file?
-
-		if(strchr(source->value.str.val, '.') && (strstr(source->value.str.val, ".bmp") || strstr(source->value.str.val, ".ico") || strstr(source->value.str.val, ".icl") ||
-		  strstr(source->value.str.val, ".dll") || strstr(source->value.str.val, ".exe"))) {
+		wchar_t source_str_val = Z_STRVAL_P(source);
+		if(strchr(source_str_val, '.') && (strstr(source_str_val, ".bmp") || strstr(source_str_val, ".ico") || strstr(source_str_val, ".icl") ||
+		  strstr(source_str_val, ".dll") || strstr(source_str_val, ".exe"))) {
 
 			HBITMAP hbm;
 
-			wcs = Utf82WideChar(source->value.str.val, source->value.str.len);
+			wcs = Utf82WideChar(source_str_val, Z_STRLEN_P(source));
 			hbm = wbLoadImage(wcs, 0, 0);
 			if(hbm)
 				//size = wbGetImageDimensions(wbLoadImage(source->value.str.val, 0, 0));
@@ -170,7 +170,7 @@ ZEND_FUNCTION(wb_get_size)
 		} else {
 
 			SIZE siz;
-			wcs = Utf82WideChar(source->value.str.val, source->value.str.len);
+			wcs = Utf82WideChar(source_str_val, Z_STRLEN_P(source));
 			if(wbGetTextSize(&siz, wcs, lparam))
 				size = (DWORD)MAKELONG(siz.cx, siz.cy);
 			else
@@ -215,7 +215,7 @@ ZEND_FUNCTION(wb_set_size)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL()
 
-	if((zparm->type == IS_ARRAY) && ((PWBOBJ)pwbo)->uClass == ListView) {
+	if((Z_TYPE_P(zparm) == IS_ARRAY) && ((PWBOBJ)pwbo)->uClass == ListView) {
 
 		int i, nelem;
 		int pwidths[MAX_LISTVIEWCOLS];
@@ -237,16 +237,16 @@ ZEND_FUNCTION(wb_set_size)
 				  get_active_function_name(TSRMLS_C), i);
 				RETURN_NULL();
 			}
-			switch(Z_TYPE_PP(entry)) {
+			switch(Z_TYPE_P(entry)) {
 
 				case IS_LONG:
-					pwidths[i] = (*entry)->value.lval;
+					pwidths[i] = Z_LVAL_P(*entry);
 					break;
 
 				case IS_STRING:
 				case IS_DOUBLE:
 					convert_to_long_ex(entry);
-					pwidths[i] = (*entry)->value.lval;
+					pwidths[i] = Z_LVAL_P(*entry);
 					break;
 
 				case IS_NULL:
@@ -267,7 +267,7 @@ ZEND_FUNCTION(wb_set_size)
 
 	} else {
 
-		if(zparm->type != IS_LONG) {
+		if(Z_TYPE_P(zparm) != IS_LONG) {
 			zend_error(E_WARNING, "Wrong data type in width in function %s()",
 			  get_active_function_name(TSRMLS_C));
 			RETURN_NULL();
@@ -373,12 +373,12 @@ ZEND_FUNCTION(wb_set_handler)
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL();
 
-	switch(zparam->type) {
+	switch(Z_TYPE_P(zparam)) {
 		case IS_ARRAY:
 			parse_array(zparam, "ss", &objname, &handler);
 			break;
 		case IS_STRING:
-			handler = zparam->value.str.val;
+			handler = Z_STRVAL_P(zparam);
 			objname = NULL;
 			break;
 		default:
@@ -387,12 +387,11 @@ ZEND_FUNCTION(wb_set_handler)
 			RETURN_NULL();
 	}
 
-	MAKE_STD_ZVAL(name);
 	ZVAL_STRING(name, handler, 1);
 
 	// Error checking is VERY POOR for user methods (i.e. when zparam is an array)
 
-	if(!objname && !zend_is_callable(name, 0, &handler, TSRMLS_C)) {
+	if(!objname && !zend_is_callable(name, 0, &handler)) {
 		zend_error(E_WARNING, "%s(): '%s' is not a function or cannot be called",
 		  get_active_function_name(TSRMLS_C), handler);
 		efree(name);

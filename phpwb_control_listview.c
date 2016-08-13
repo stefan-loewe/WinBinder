@@ -182,7 +182,7 @@ ZEND_FUNCTION(wbtemp_get_listview_column_widths)
 			  get_active_function_name(TSRMLS_C), i);
 			RETURN_NULL();
 		}
-		switch(Z_TYPE_PP(entry)) {
+		switch(Z_TYPE_P(entry)) {
 
 			case IS_LONG:
 				break;
@@ -318,21 +318,23 @@ ZEND_FUNCTION(wbtemp_get_listview_text)
 
 		if(ncol >= 0) {										// A single cell
 			if(wbGetListViewItemText((PWBOBJ)pwbo, nitem, ncol, szItem, MAX_ITEM_STRING - 1))
-				RETURN_STRING(WideChar2Utf8(szItem, &len), TRUE)
+				RETURN_STRING(WideChar2Utf8(szItem, &len))
 			else
-				RETURN_STRING("", TRUE)
+				RETURN_STRING("")
 
 		} else {											// The entire row
 
 			ncols = wbGetListViewColumnWidths((PWBOBJ)pwbo, NULL);
 
 			array_init(return_value);
-			for(ncol = 0; ncol < ncols; ncol++) {
-				if(wbGetListViewItemText((PWBOBJ)pwbo, nitem, ncol, szItem, MAX_ITEM_STRING - 1)) {
+			for (ncol = 0; ncol < ncols; ncol++) {
+				if (wbGetListViewItemText((PWBOBJ)pwbo, nitem, ncol, szItem, MAX_ITEM_STRING - 1)) {
 					str = WideChar2Utf8(szItem, &len);
-					add_next_index_stringl(return_value, str, len, 1);
-				} else
-					add_next_index_stringl(return_value, "", 0, 1);
+					add_next_index_stringl(return_value, str, len);
+				}
+				else
+					add_next_index_stringl(return_value, "", 0);
+				
 			}
 		}
 
@@ -346,9 +348,9 @@ ZEND_FUNCTION(wbtemp_get_listview_text)
 			for(nitem = 0; nitem < nitems; nitem++) {
 				if(wbGetListViewItemText((PWBOBJ)pwbo, nitem, ncol, szItem, MAX_ITEM_STRING - 1)) {
 					str = WideChar2Utf8(szItem, &len);
-					add_next_index_stringl(return_value, str, len, 1);
+					add_next_index_stringl(return_value, str, len);
 				} else
-					add_next_index_stringl(return_value, "", 0, 1);
+					add_next_index_stringl(return_value, "", 0);
 			}
 		} else {											// All cells
 
@@ -360,9 +362,9 @@ ZEND_FUNCTION(wbtemp_get_listview_text)
 				for(ncol = 0; ncol < ncols; ncol++) {
 					if(wbGetListViewItemText((PWBOBJ)pwbo, nitem, ncol, szItem, MAX_ITEM_STRING - 1)) {
 						str = WideChar2Utf8(szItem, &len);
-						add_next_index_stringl(return_value, str, len, 1);
+						add_next_index_stringl(return_value, str, len);
 					} else
-						add_next_index_stringl(return_value, "", 0, 1);
+						add_next_index_stringl(return_value, "", 0);
 				}
 			}
 		}

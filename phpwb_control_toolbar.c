@@ -37,7 +37,7 @@ ZEND_FUNCTION(wbtemp_create_toolbar)
 	if(!wbIsWBObj((void *)pwboParent, TRUE))
 		RETURN_NULL()
 
-	if(zarray->type == IS_ARRAY) {
+	if(Z_TYPE_P(zarray) == IS_ARRAY) {
 
 		target_hash = HASH_OF(zarray);
 		if(!target_hash)
@@ -65,7 +65,7 @@ ZEND_FUNCTION(wbtemp_create_toolbar)
 
 			pitem[i] = emalloc(sizeof(WBITEM));
 
-			switch(Z_TYPE_PP(entry)) {
+			switch(Z_TYPE_P(entry)) {
 
 				case IS_ARRAY:				// Toolbar button
 					parse_array(*entry, "lssl", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->index);
