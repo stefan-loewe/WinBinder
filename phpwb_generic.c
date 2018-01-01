@@ -25,7 +25,7 @@ int parse_array(zval *array, const char *fmt, ...)
 {
 	int i, nelem;
 	void *arg;
-	zval **entry;
+	zval *entry = NULL;
 	va_list ap;
 	HashTable *target_hash;
 #if (PHP_MAJOR_VERSION >= 5)
@@ -74,7 +74,7 @@ int parse_array(zval *array, const char *fmt, ...)
 			}
 			continue;
 
-		} else if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+		} else if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 
 			zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
 			  i, __FUNCTION__);
@@ -82,7 +82,7 @@ int parse_array(zval *array, const char *fmt, ...)
 
 		} else {
 
-			if(!entry || !*entry)
+			if(!entry)
 				break;
 
 			switch(fmt[i]) {
@@ -91,19 +91,19 @@ int parse_array(zval *array, const char *fmt, ...)
 					if(Z_TYPE_P(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
-						*((long *)arg) = Z_LVAL_P(*entry);
+						*((long *)arg) = Z_LVAL_P(entry);
 					break;
 
 				case 'd':
 					if(Z_TYPE_P(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
-						*((double *)arg) = Z_DVAL_P(*entry);
+						*((double *)arg) = Z_DVAL_P(entry);
 					break;
 
 				case 's':
 					if(Z_TYPE_P(entry) == IS_STRING) {
-						*((long *)arg) = (long)(Z_STRVAL_P(*entry));
+						*((long *)arg) = (long)(Z_STRVAL_P(entry));
 					} else if(Z_TYPE_P(entry) == IS_NULL) {
 						*((long *)arg) = (long)NULL;
 					} else
@@ -135,7 +135,7 @@ zval *process_array(zval *zitems)
 	static int nelem = 0;
 	static int nelems = 0;
 	static HashTable *target_hash = NULL;
-	zval **entry = NULL;
+	zval *entry = NULL;
 
 	if(Z_TYPE_P(zitems) != IS_ARRAY)
 		return FALSE;
@@ -187,16 +187,16 @@ zval *process_array(zval *zitems)
 
 	// Get zval data
 
-	if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE)
+	if((entry = zend_hash_get_current_data(target_hash)) == NULL)
 		zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
-		  nelem, get_active_function_name(TSRMLS_C));
+		  nelem, get_active_function_name());
 
-	return *entry;
+	return entry;
 }
 
-TCHAR * Utf82WideChar(wchar_t str, int len)
+TCHAR * Utf82WideChar(const char *str, int len)
 {
-	TCHAR *wstr = 0;
+	TCHAR *wstr = NULL;
 	int wlen = 0;
 	if (!str)
 		return NULL;
@@ -204,7 +204,7 @@ TCHAR * Utf82WideChar(wchar_t str, int len)
 	if (len <= 0)
 		len = -1; //len = strlen(str);
 
-	wlen = MultiByteToWideChar(CP_UTF8, 0, str, len, wstr, 0);
+	wlen = MultiByteToWideChar(CP_UTF8, 0, str, len, NULL, 0);
 
 	wstr = wbMalloc(sizeof(TCHAR)*(wlen+1));
 	wstr[wlen] = '\0';

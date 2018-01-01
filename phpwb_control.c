@@ -25,9 +25,9 @@ extern BOOL DisplayHTMLPage(PWBOBJ pwbo, LPCTSTR pszWebPageName);
 
 ZEND_FUNCTION(wbtemp_create_control)
 {
-	LONG pwboparent;
-    LONG wbclass, x = WBC_CENTER, y = WBC_CENTER;
-    LONG w = CW_USEDEFAULT, h = CW_USEDEFAULT, id = 32767, style = 0, param = 0, ntab = 0;
+	zend_long pwboparent;
+	zend_long wbclass, x = WBC_CENTER, y = WBC_CENTER;
+	zend_long w = CW_USEDEFAULT, h = CW_USEDEFAULT, id = 32767, style = 0, param = 0, ntab = 0;
 	int nargs;
     zval *zcaption;
 	char *caption = "";
@@ -79,7 +79,7 @@ ZEND_FUNCTION(wbtemp_create_control)
 
 ZEND_FUNCTION(wb_destroy_control)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -93,7 +93,7 @@ ZEND_FUNCTION(wb_destroy_control)
 
 ZEND_FUNCTION(wb_get_visible)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -107,8 +107,8 @@ ZEND_FUNCTION(wb_get_visible)
 
 ZEND_FUNCTION(wb_set_visible)
 {
-	LONG pwbo;
-    long b;
+	zend_long pwbo;
+	zend_long b;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll", &pwbo, &b) == FAILURE)
@@ -122,7 +122,7 @@ ZEND_FUNCTION(wb_set_visible)
 
 ZEND_FUNCTION(wb_set_focus)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -138,8 +138,8 @@ ZEND_FUNCTION(wb_set_focus)
 
 ZEND_FUNCTION(wb_set_state)
 {
-	LONG pwbo, item;
-	BOOL state = TRUE;
+	zend_long pwbo, item;
+	zend_long state = TRUE;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "lll", &pwbo, &item, &state) == FAILURE)
@@ -158,7 +158,7 @@ ZEND_FUNCTION(wb_set_state)
 
 ZEND_FUNCTION(wb_get_state)
 {
-	LONG pwbo, item;
+	zend_long pwbo, item;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &pwbo, &item) == FAILURE)
@@ -177,7 +177,7 @@ ZEND_FUNCTION(wb_get_state)
 
 ZEND_FUNCTION(wb_get_parent)
 {
-	LONG pwbo, item = 0;
+	zend_long pwbo, item = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l|l", &pwbo, &item) == FAILURE)
@@ -205,8 +205,8 @@ ZEND_FUNCTION(wb_get_focus)
 
 ZEND_FUNCTION(wb_set_style)
 {
-	LONG pwbo, style;
-	BOOL value = TRUE;
+	zend_long pwbo, style;
+	zend_long value = TRUE;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll|l", &pwbo, &style, &value) == FAILURE)
@@ -220,7 +220,7 @@ ZEND_FUNCTION(wb_set_style)
 
 ZEND_FUNCTION(wb_get_class)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -234,7 +234,7 @@ ZEND_FUNCTION(wb_get_class)
 
 ZEND_FUNCTION(wb_set_range)
 {
-	LONG pwbo, min = 0, max = 0;
+	zend_long pwbo, min = 0, max = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "lll", &pwbo, &min, &max) == FAILURE)
@@ -248,7 +248,7 @@ ZEND_FUNCTION(wb_set_range)
 
 ZEND_FUNCTION(wb_get_id)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -262,7 +262,7 @@ ZEND_FUNCTION(wb_get_id)
 
 ZEND_FUNCTION(wb_get_value)
 {
-	LONG pwbo, item = -1, subitem = -1;
+	zend_long pwbo, item = -1, subitem = -1;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l|ll", &pwbo, &item, &subitem) == FAILURE)
@@ -336,7 +336,7 @@ ZEND_FUNCTION(wb_get_value)
 
 ZEND_FUNCTION(wb_get_selected)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -389,9 +389,9 @@ ZEND_FUNCTION(wb_get_selected)
 
 ZEND_FUNCTION(wb_set_image)
 {
-    LONG pwbo, trcolor = NOCOLOR, index = 0, param = 0;
+	zend_long pwbo, trcolor = NOCOLOR, index = 0, param = 0;
     zval *source = NULL;
-	HANDLE hImage;
+	HANDLE hImage = NULL;
 	TCHAR *wcs = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
@@ -453,7 +453,7 @@ ZEND_FUNCTION(wb_set_image)
 
 ZEND_FUNCTION(wb_set_item_image)
 {
-    LONG pwbo, item = 0, subitem = 0;
+	zend_long pwbo, item = 0, subitem = 0;
     zval *zindex = NULL;
     int nclass, index1 = 0, index2 = 0;
 
@@ -505,8 +505,8 @@ ZEND_FUNCTION(wb_set_item_image)
 
 ZEND_FUNCTION(wb_get_control)
 {
-    LONG id = 0;
-	LONG pwboparent;
+	zend_long id = 0;
+	zend_long pwboparent;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l|l", &pwboparent, &id) == FAILURE)
@@ -520,7 +520,7 @@ ZEND_FUNCTION(wb_get_control)
 
 ZEND_FUNCTION(wb_set_enabled)
 {
-	LONG pwbo, state;
+	zend_long pwbo, state;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll", &pwbo, &state) == FAILURE)
@@ -534,7 +534,7 @@ ZEND_FUNCTION(wb_set_enabled)
 
 ZEND_FUNCTION(wb_get_enabled)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -550,8 +550,8 @@ ZEND_FUNCTION(wb_get_enabled)
 
 ZEND_FUNCTION(wb_refresh)
 {
-	LONG pwbo, now = TRUE;
-	LONG x = 0, y = 0, width = 0, height = 0;
+	zend_long pwbo, now = TRUE;
+	zend_long x = 0, y = 0, width = 0, height = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l|lllll", &pwbo, &now, &x, &y, &width, &height) == FAILURE)
@@ -565,7 +565,7 @@ ZEND_FUNCTION(wb_refresh)
 
 ZEND_FUNCTION(wb_get_item_count)
 {
-	LONG pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -579,7 +579,7 @@ ZEND_FUNCTION(wb_get_item_count)
 
 ZEND_FUNCTION(wb_delete_items)
 {
-	LONG pwbo;
+	zend_long pwbo;
 	zval *zitems = NULL;
 	BOOL bRet = TRUE;
 
@@ -631,7 +631,7 @@ ZEND_FUNCTION(wb_delete_items)
 
 ZEND_FUNCTION(wb_sort)
 {
-	LONG pwbo, ascending = TRUE, subitem = 0;
+	zend_long pwbo, ascending = TRUE, subitem = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l|ll", &pwbo, &ascending, &subitem) == FAILURE)
@@ -650,8 +650,8 @@ ZEND_FUNCTION(wb_sort)
 ZEND_FUNCTION(wb_set_location)
 {
 	char *location;
-	int location_len;
-	LONG pwbo;
+	zend_long location_len;
+	zend_long pwbo;
 
 	TCHAR *wcs = 0;
 
@@ -674,8 +674,8 @@ ZEND_FUNCTION(wb_set_location)
 
 ZEND_FUNCTION(wbtemp_select_tab)
 {
-	LONG pwbo;
-	int ntab;
+	zend_long pwbo;
+	zend_long ntab;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll", &pwbo, &ntab) == FAILURE)
@@ -689,7 +689,7 @@ ZEND_FUNCTION(wbtemp_select_tab)
 
 ZEND_FUNCTION(wbtemp_set_value)
 {
-	LONG pwbo, value, item = 0, subitem = 0;
+	zend_long pwbo, value, item = 0, subitem = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll|ll", &pwbo, &value, &item, &subitem) == FAILURE)
@@ -706,7 +706,7 @@ ZEND_FUNCTION(wbtemp_set_value)
 
 ZEND_FUNCTION(wbtemp_set_range)
 {
-	LONG pwbo, min = 0, max = 0;
+	zend_long pwbo, min = 0, max = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll|l", &pwbo, &min, &max) == FAILURE)
@@ -722,7 +722,7 @@ ZEND_FUNCTION(wbtemp_create_item)
 {
 	char *s;
 	int s_len;
-	LONG pwbo, param = 0;
+	zend_long pwbo, param = 0;
 
 	TCHAR *wcs = 0;
 
@@ -740,7 +740,7 @@ ZEND_FUNCTION(wbtemp_create_item)
 
 ZEND_FUNCTION(wbtemp_create_statusbar_items)
 {
-	LONG pwbo, clear, param;
+	zend_long pwbo, clear, param;
 	zval *zitems = NULL;
 	BOOL bRet = TRUE;
 
@@ -820,7 +820,7 @@ ZEND_FUNCTION(wbtemp_create_statusbar_items)
 
 ZEND_FUNCTION(wbtemp_set_text)
 {
-	LONG pwbo, item = 0;
+	zend_long pwbo, item = 0;
 	BOOL ret = TRUE;
     zval *zcaption;
 	char *caption = "";
@@ -936,8 +936,8 @@ ZEND_FUNCTION(wbtemp_set_text)
 ZEND_FUNCTION(wbtemp_get_text)
 {
 	TCHAR *ptext;
-	LONG pwbo;
-	int len, index = -1;
+	zend_long pwbo;
+	zend_long len, index = -1;
 
 	char *str = 0;
 	int str_len = 0;

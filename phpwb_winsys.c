@@ -36,13 +36,13 @@ ZEND_FUNCTION(wb_main_loop)
 ZEND_FUNCTION(wbtemp_set_accel_table)
 {
 	int i, nelem;
-	zval *zarray, **entry;
+	zval *zarray = NULL, *entry = NULL;
 	HashTable *target_hash;
 	char *str_accel;
 	ACCEL accel[MAX_ACCELS];
 	DWORD dwacc;
 	int naccel= 0;
-	long pwbo;
+	zend_long pwbo;
 
 	// Get function parameters
 
@@ -62,7 +62,7 @@ ZEND_FUNCTION(wbtemp_set_accel_table)
 		// Loop to read array items
 
 		for(i = 0; i < nelem; i++) {
-			if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+			if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 				zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
 				  i, get_active_function_name(TSRMLS_C));
 				RETURN_NULL();
@@ -71,7 +71,7 @@ ZEND_FUNCTION(wbtemp_set_accel_table)
 			switch(Z_TYPE_P(entry)) {
 
 				case IS_ARRAY:				// An accelerator item is an array inside an array
-					parse_array(*entry, "ls", &accel[naccel].cmd, &str_accel);
+					parse_array(entry, "ls", &accel[naccel].cmd, &str_accel);
 					if(str_accel && *str_accel && naccel < MAX_ACCELS) {
 						dwacc = wbMakeAccelFromString(str_accel);
 						accel[naccel].key = LOWORD(dwacc);
@@ -103,7 +103,7 @@ ZEND_FUNCTION(wbtemp_set_accel_table)
 
 ZEND_FUNCTION(wb_set_cursor)
 {
-	LONG pwbo;
+	zend_long pwbo;
 	zval *source = NULL;
 	HANDLE hCursor;
 	LPTSTR pszCursorName;
@@ -248,7 +248,7 @@ ZEND_FUNCTION(wb_stop_sound)
 ZEND_FUNCTION(wb_message_box)
 {
 	char *msg, *title = NULL;
-	long pwbo, style = 0;
+	zend_long pwbo, style = 0;
 	int msg_len, title_len = 0, ret;
 
 	TCHAR *szMsg = 0;
@@ -292,7 +292,7 @@ ZEND_FUNCTION(wb_exec)
 {
 	char *pgm, *parm = NULL;
 	int pgm_len, parm_len = 0;
-	BOOL show;
+	zend_long show;
 
 	TCHAR *szPgm = 0;
 	TCHAR *szParm = 0;
@@ -497,8 +497,8 @@ ZEND_FUNCTION(wb_set_registry_key)
 
 ZEND_FUNCTION(wb_create_timer)
 {
-	long pwbo;
-	int id, ms;
+	zend_long pwbo;
+	zend_long id, ms;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "lll", &pwbo, &id, &ms) == FAILURE)
@@ -512,8 +512,8 @@ ZEND_FUNCTION(wb_create_timer)
 
 ZEND_FUNCTION(wb_destroy_timer)
 {
-	long pwbo;
-	int id;
+	zend_long pwbo;
+	zend_long id;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll", &pwbo, &id) == FAILURE)
@@ -527,7 +527,7 @@ ZEND_FUNCTION(wb_destroy_timer)
 
 ZEND_FUNCTION(wb_wait)
 {
-	long pwbo = 0, pause = 0, flags = WBC_KEYDOWN;
+	zend_long pwbo = 0, pause = 0, flags = WBC_KEYDOWN;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "|lll", &pwbo, &pause, &flags) == FAILURE)

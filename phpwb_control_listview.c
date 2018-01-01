@@ -21,7 +21,7 @@
 
 ZEND_FUNCTION(wbtemp_create_listview_item)
 {
-	long pwbo, nitem, nimage;
+	zend_long pwbo, nitem, nimage;
 	char *s;
 	int s_len, newitem;
 
@@ -76,7 +76,7 @@ ZEND_FUNCTION(wbtemp_create_listview_item)
 
 ZEND_FUNCTION(wbtemp_set_listview_item_text)
 {
-	long pwbo, item, sub;
+	zend_long pwbo, item, sub;
 	char *s;
 	int s_len;
 
@@ -95,7 +95,7 @@ ZEND_FUNCTION(wbtemp_set_listview_item_text)
 
 ZEND_FUNCTION(wbtemp_set_listview_item_checked)
 {
-	long pwbo, item, checked;
+	zend_long pwbo, item, checked;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "lll", &pwbo, &item, &checked) == FAILURE)
@@ -111,7 +111,7 @@ ZEND_FUNCTION(wbtemp_set_listview_item_checked)
 
 ZEND_FUNCTION(wbtemp_create_listview_column)
 {
-	long pwbo, ncol, w = 0, align = 0;
+	zend_long pwbo, ncol, w = 0, align = 0;
 	char *s;
 	int s_len;
 
@@ -157,7 +157,7 @@ ZEND_FUNCTION(wbtemp_get_listview_column_widths)
 	int i, nelem;
 	long pwbo;
 	int pwidths[MAX_LISTVIEWCOLS];
-	zval *array, **entry;
+	zval *array, *entry;
 	HashTable *target_hash;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
@@ -177,7 +177,7 @@ ZEND_FUNCTION(wbtemp_get_listview_column_widths)
 	// Loop to read array items
 
 	for(i = 0; i < nelem; i++) {
-		if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+		if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 			zend_error(E_WARNING, "%s(): Could not retrieve element %d from array",
 			  get_active_function_name(TSRMLS_C), i);
 			RETURN_NULL();
@@ -198,7 +198,7 @@ ZEND_FUNCTION(wbtemp_get_listview_column_widths)
 				RETURN_NULL();
 		}
 
-		pwidths[i] = (*entry)->value.lval;
+		pwidths[i] = (entry)->value.lval;
 		zend_hash_move_forward(target_hash);
 	}
 
@@ -209,7 +209,7 @@ ZEND_FUNCTION(wbtemp_get_listview_column_widths)
 
 ZEND_FUNCTION(wbtemp_get_listview_columns)
 {
-	long pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l", &pwbo) == FAILURE)
@@ -240,7 +240,7 @@ ZEND_FUNCTION(wbtemp_set_listview_item_image)
 
 ZEND_FUNCTION(wbtemp_get_listview_item_checked)
 {
-	long pwbo, item;
+	zend_long pwbo, item;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &pwbo, &item) == FAILURE)
@@ -254,7 +254,7 @@ ZEND_FUNCTION(wbtemp_get_listview_item_checked)
 
 ZEND_FUNCTION(wbtemp_clear_listview_columns)
 {
-	long pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l", &pwbo) == FAILURE)
@@ -268,7 +268,7 @@ ZEND_FUNCTION(wbtemp_clear_listview_columns)
 
 ZEND_FUNCTION(wbtemp_select_listview_item)
 {
-	long pwbo, nitem, state;
+	zend_long pwbo, nitem, state;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "lll", &pwbo, &nitem, &state) == FAILURE)
@@ -284,7 +284,7 @@ ZEND_FUNCTION(wbtemp_select_listview_item)
 
 ZEND_FUNCTION(wbtemp_select_all_listview_items)
 {
-	long pwbo, state;
+	zend_long pwbo, state;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &pwbo, &state) == FAILURE)
@@ -301,7 +301,7 @@ ZEND_FUNCTION(wbtemp_select_all_listview_items)
 ZEND_FUNCTION(wbtemp_get_listview_text)
 {
 	int ncols, nitems;
-	long pwbo, nitem = -1, ncol = -1;
+	zend_long pwbo, nitem = -1, ncol = -1;
 	TCHAR szItem[MAX_ITEM_STRING];
 
 	char *str  = 0;

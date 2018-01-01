@@ -24,7 +24,7 @@ TODO: handle could also be a bitmap file?
 ZEND_FUNCTION(wb_get_pixel)
 {
 	if(ZEND_NUM_ARGS() == 3) {
-		LONG handle, x, y;
+		zend_long handle, x, y;
 
 		if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 		  "lll", &handle, &x, &y) == FAILURE)
@@ -36,7 +36,7 @@ ZEND_FUNCTION(wb_get_pixel)
 
 		// With four parameters: call wbGetPixelDirect() for faster performance (not stable)
 
-		LONG x, y;
+		zend_long x, y;
 		unsigned char *pixdata;
 		int pixdata_len;
 		BOOL compress4to3 = FALSE;
@@ -57,7 +57,7 @@ TODO: handle could also be a bitmap file??
 
 ZEND_FUNCTION(wb_draw_point)
 {
-    LONG handle, x, y, color;
+	zend_long handle, x, y, color;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "llll", &handle, &x, &y, &color) == FAILURE)
@@ -69,7 +69,7 @@ ZEND_FUNCTION(wb_draw_point)
 
 ZEND_FUNCTION(wb_draw_line)
 {
-    LONG handle, x0, y0, x1, y1, color, linewidth = 0, linestyle = 0;
+	zend_long handle, x0, y0, x1, y1, color, linewidth = 0, linestyle = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "llllll|ll", &handle, &x0, &y0, &x1, &y1, &color, &linewidth, &linestyle) == FAILURE)
@@ -80,7 +80,7 @@ ZEND_FUNCTION(wb_draw_line)
 
 ZEND_FUNCTION(wb_draw_rect)
 {
-    LONG handle, x, y, width, height, color, filled = TRUE, linewidth = 0, linestyle = 0;
+	zend_long handle, x, y, width, height, color, filled = TRUE, linewidth = 0, linestyle = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "llllll|lll", &handle, &x, &y, &width, &height, &color, &filled, &linewidth, &linestyle) == FAILURE)
@@ -91,7 +91,7 @@ ZEND_FUNCTION(wb_draw_rect)
 
 ZEND_FUNCTION(wb_draw_ellipse)
 {
-    LONG handle, x, y, width, height, color, filled = TRUE, linewidth = 0, linestyle = 0;
+	zend_long handle, x, y, width, height, color, filled = TRUE, linewidth = 0, linestyle = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "llllll|lll", &handle, &x, &y, &width, &height, &color, &filled, &linewidth, &linestyle) == FAILURE)
@@ -102,7 +102,7 @@ ZEND_FUNCTION(wb_draw_ellipse)
 
 ZEND_FUNCTION(wb_draw_text)
 {
-    LONG handle, x, y, width = 0, height = 0, nfont = -1, flags = 0;
+	zend_long handle, x, y, width = 0, height = 0, nfont = -1, flags = 0;
     char *text;
     int text_len;
     int nargs;
@@ -136,7 +136,7 @@ ZEND_FUNCTION(wb_draw_text)
 
 ZEND_FUNCTION(wb_draw_image)
 {
-    LONG handle, hbm, x = 0, y = 0, w = 0, h = 0, cx = 0, cy = 0;
+	zend_long handle, hbm, x = 0, y = 0, w = 0, h = 0, cx = 0, cy = 0;
     COLORREF transpcolor = NOCOLOR;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,

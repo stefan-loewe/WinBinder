@@ -67,15 +67,14 @@ BOOL wbError(LPCTSTR szFunction, int nType, LPCTSTR pszFmt, ...)
 
 BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ pwboParent, PWBOBJ pctrl, UINT id, LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 {
-	zval *fname;
-	zval *oname;
-	zval **poname;
-	zval *return_value = NULL;
-	zval **parms[CALLBACK_ARGS];
-	zval *z0, *z1, *z2, *z3, *z4, *z5;
+	zval fname = { 0 };
+	zval oname = { 0 };
+	zval return_value = { 0 };
+	zval parms[CALLBACK_ARGS];
 	BOOL bRet;
 	char *pszFName;
 	char *pszOName;
+	zend_string *funName;
 	int name_len = 0;
 
 	TSRMLS_FETCH();
@@ -97,62 +96,45 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 		return FALSE;
 	}
 
-	ZVAL_STRING(fname, pszFName, 1);
+	ZVAL_STRING(&fname, pszFName);
 
 	// Error checking is VERY POOR for user methods (i.e. when pszObjectName is not NULL)
-	if(!pszObjectName && !zend_is_callable(fname, 0, &pszFName)) {
+	if(!pszObjectName && !zend_is_callable(&fname, 0, &funName)) {
 		zend_error(E_WARNING, "%s(): '%s' is not a function or cannot be called",
-		  get_active_function_name(TSRMLS_C), pszFName);
-		efree(pszFName);				// These two lines prevent a leakage
-		efree(Z_STRVAL_P(fname));	// that occurred on every function call
-		efree(fname);
+		  get_active_function_name(TSRMLS_C), funName);
+		efree(funName);				// These two lines prevent a leakage
 		return FALSE;
 	}
 
 	// In case of an object
-
 	if(pszObjectName && *pszObjectName) {
-		pszOName = (char *)pszObjectName;
-		ZVAL_STRING(oname, pszOName, 1);
-		poname = &oname;
-	} else {
-		pszOName = NULL;
-		oname = NULL;
-		poname = NULL;
-	}
+		ZVAL_STRING(&oname, pszObjectName);
+	} 
 
-	// 2016_08_12 - Jared Allard: no more ALLOC_ZVAL
 
 	// PWBOBJ pointer
-	ZVAL_LONG(z0, (LONG)pwboParent);
-	parms[0] = &z0;
+	ZVAL_LONG(&parms[0], (LONG)pwboParent);
 	
 	// id
-	ZVAL_LONG(z1, (LONG)id);
-	parms[1] = &z1;
+	ZVAL_LONG(&parms[1], (LONG)id);
 	
 	// control handle
-	ZVAL_LONG(z2, (LONG)pctrl);
-	parms[2] = &z2;
+	ZVAL_LONG(&parms[2], (LONG)pctrl);
 	
 	// lparam1
-	ZVAL_LONG(z3, (LONG)lParam1);
-	parms[3] = &z3;
+	ZVAL_LONG(&parms[3], (LONG)lParam1);
 
 	// lparam2
-	ZVAL_LONG(z4, (LONG)lParam2);
-	parms[4] = &z4;
+	ZVAL_LONG(&parms[4], (LONG)lParam2);
 
 	// lparam3
-	ZVAL_LONG(z5, (LONG)lParam3);
-	parms[5] = &z5;
+	ZVAL_LONG(&parms[5], (LONG)lParam3);
 
 	// Call the user function
-
 	bRet = call_user_function_ex(
 		CG(function_table),			// Hash value for the function table
-		poname,						// Pointer to an object (may be NULL)
-		fname,						// Function name
+		&oname,						// Pointer to an object (may be NULL)
+		&fname,						// Function name
 		&return_value,				// Return value
 		CALLBACK_ARGS,				// Parameter count
 		parms,						// Parameter array
@@ -166,19 +148,7 @@ BOOL wbCallUserFunction(LPCTSTR pszFunctionName, LPCTSTR pszObjectName, PWBOBJ p
 	}
 
 	// Free everything we can
-
-	zval_ptr_dtor(&return_value);
-
-	efree(z5);
-	efree(z4);
-	efree(z3);
-	efree(z2);
-	efree(z1);
-	efree(z0);
-	efree(pszFName);				// These two lines prevent a leakage
-	efree(Z_STRVAL_P(fname));	// that occurred on every function call
-	efree(fname);
-
+	efree(funName);			
 	return TRUE;
 }
 

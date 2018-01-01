@@ -22,8 +22,8 @@
 
 ZEND_FUNCTION(wb_send_message)
 {
-    long msg, w, l;
-	long pwbo;
+	zend_long msg, w, l;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll|ll", &pwbo, &msg, &w, &l) == FAILURE)
@@ -36,7 +36,7 @@ ZEND_FUNCTION(wb_send_message)
 
 ZEND_FUNCTION(wb_peek)
 {
-	long address, bytes = 0;
+	zend_long address, bytes = 0;
 	char *ptr;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
@@ -64,7 +64,7 @@ ZEND_FUNCTION(wb_peek)
 
 ZEND_FUNCTION(wb_poke)
 {
-	long address, bytes = 0;
+	zend_long address, bytes = 0;
 	char *contents;
 	int contents_len;
 	void *ptr;
@@ -157,7 +157,7 @@ ZEND_FUNCTION(wb_load_library)
 
 ZEND_FUNCTION(wb_release_library)
 {
-	LONG hlib;
+	zend_long hlib;
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l", &hlib) == FAILURE)
@@ -178,7 +178,7 @@ ZEND_FUNCTION(wb_get_function_address)
 {
 	char *fun;
 	int fun_len;
-	LONG addr, hlib = (LONG)NULL;
+	zend_long addr, hlib = (LONG)NULL;
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "s|l", &fun, &fun_len, &hlib) == FAILURE)
@@ -205,9 +205,9 @@ ZEND_FUNCTION(wb_get_function_address)
 
 ZEND_FUNCTION(wb_call_function)
 {
-	LONG addr, retval = 0;
-	DWORD *param;
-	zval *array = NULL, **entry;
+	zend_long addr, retval = 0;
+	DWORD *param = NULL;
+	zval *array = NULL, *entry = NULL;
 	int i, nelem = 0;
 	HashTable *target_hash;
 
@@ -240,12 +240,11 @@ ZEND_FUNCTION(wb_call_function)
 			// Loop to read array items
 
 			for(i = 0; i < nelem; i++) {
-				if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+				if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 					zend_error(E_WARNING, "%s(): Could not retrieve element %d from array",
 					  get_active_function_name(TSRMLS_C), i);
 					RETURN_NULL();
 				}
-
 				switch(Z_TYPE_P(entry)) {
 
 					case IS_ARRAY:				// Invalid types
@@ -259,17 +258,16 @@ ZEND_FUNCTION(wb_call_function)
 						break;
 
 					case IS_STRING:
-						param[i] = (LONG)Z_STRVAL_P(*entry);
+						param[i] = (LONG)Z_STRVAL_P(entry);
 						break;
 
 					case IS_DOUBLE:
-						param[i] = (DWORD)Z_DVAL_P(*entry);
+						param[i] = (DWORD)Z_DVAL_P(entry);
 						break;
-					case IS_TRUE:
-						param[i] = Z_LVAL_P(*entry);
-						break;
-					case IS_FALSE:
-						param[i] = Z_LVAL_P(*entry);
+
+					case IS_LONG:
+					case _IS_BOOL:
+						param[i] = Z_LVAL_P(entry);
 						break;
 				}
 

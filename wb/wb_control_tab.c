@@ -20,7 +20,8 @@
 BOOL wbSetTabControlText(PWBOBJ pwboTab, LPCTSTR pszText)
 {
 	TCHAR *szTitle = _wcsdup(pszText);
-	TCHAR *ptr;
+	TCHAR *ptr = NULL;
+	TCHAR *next = NULL;
 
 	if(!pwboTab || !pwboTab->hwnd || !IsWindow(pwboTab->hwnd))
 		return FALSE;
@@ -29,10 +30,10 @@ BOOL wbSetTabControlText(PWBOBJ pwboTab, LPCTSTR pszText)
 		return FALSE;
 
 	SendMessage(pwboTab->hwnd, TCM_DELETEALLITEMS, 0, 0);
-	ptr = wcstok(szTitle, TEXT("\r\n,"), *ptr);
+	ptr = wcstok(szTitle, TEXT("\r\n,"), &next);
 	while(ptr) {
 		wbCreateTabItem(pwboTab, ptr);
-		ptr = wcstok(NULL, TEXT("\r\n,"), *ptr);
+		ptr = wcstok(NULL, TEXT("\r\n,"), &next);
 	}
 	return TRUE;
 }

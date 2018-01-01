@@ -19,7 +19,7 @@
 
 ZEND_FUNCTION(wb_create_font)
 {
-    LONG height = 10, color = 0x000000, flags = 0;
+	zend_long height = 10, color = 0x000000, flags = 0;
     char *name;
     int name_len;
 
@@ -37,7 +37,7 @@ ZEND_FUNCTION(wb_create_font)
 
 ZEND_FUNCTION(wb_destroy_font)
 {
-    int nfont = 0;
+	zend_long nfont = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "|l", &nfont) == FAILURE)
@@ -50,7 +50,7 @@ ZEND_FUNCTION(wb_destroy_font)
 
 ZEND_FUNCTION(wb_set_font)
 {
-    LONG pwbo, nfont = 0, redraw;
+	zend_long pwbo, nfont = 0, redraw;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l|ll", &pwbo, &nfont, &redraw) == FAILURE)

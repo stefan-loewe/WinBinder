@@ -17,8 +17,8 @@
 
 ZEND_FUNCTION(wb_create_window)
 {
-	LONG pwboparent, pwbo;
-    LONG wbclass, x = WBC_CENTER, y = WBC_CENTER, w = CW_USEDEFAULT, h = CW_USEDEFAULT, style = 0, lparam = 0;
+	zend_long pwboparent, pwbo;
+	zend_long wbclass, x = WBC_CENTER, y = WBC_CENTER, w = CW_USEDEFAULT, h = CW_USEDEFAULT, style = 0, lparam = 0;
     int nargs;
     zval *zcaption;
 	char *caption = "";
@@ -73,7 +73,7 @@ ZEND_FUNCTION(wb_create_window)
 
 ZEND_FUNCTION(wb_destroy_window)
 {
-	long pwbo;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "l", &pwbo) == FAILURE)
@@ -88,7 +88,7 @@ ZEND_FUNCTION(wb_destroy_window)
 ZEND_FUNCTION(wb_get_instance)
 {
 	char *caption = "";
-	int caption_len = 0;
+	zend_long caption_len = 0;
 	BOOL bringtofront = FALSE;
 
 	TCHAR *szCaption = 0;
@@ -112,7 +112,7 @@ ZEND_FUNCTION(wb_get_size)
 {
     zval *source;
 	DWORD size;
-	LONG lparam = 0;
+	zend_long lparam = 0;
 	PWBOBJ pwbo;
 
 	TCHAR *wcs = 0;
@@ -201,8 +201,8 @@ ZEND_FUNCTION(wb_get_size)
 
 ZEND_FUNCTION(wb_set_size)
 {
-	long pwbo;
-    long h = 65535;
+	zend_long pwbo;
+	zend_long h = 65535;
     int nargs;
 	zval *zparm = NULL;
 
@@ -220,7 +220,7 @@ ZEND_FUNCTION(wb_set_size)
 		int i, nelem;
 		int pwidths[MAX_LISTVIEWCOLS];
 		HashTable *target_hash;
-		zval **entry;
+		zval *entry = NULL;
 
 		target_hash = HASH_OF(zparm);
 		if(!target_hash)
@@ -232,7 +232,7 @@ ZEND_FUNCTION(wb_set_size)
 		// Loop to read zparm items
 
 		for(i = 0; i < nelem; i++) {
-			if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+			if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 				zend_error(E_WARNING, "%s(): Could not retrieve element %d from zparm",
 				  get_active_function_name(TSRMLS_C), i);
 				RETURN_NULL();
@@ -240,13 +240,13 @@ ZEND_FUNCTION(wb_set_size)
 			switch(Z_TYPE_P(entry)) {
 
 				case IS_LONG:
-					pwidths[i] = Z_LVAL_P(*entry);
+					pwidths[i] = Z_LVAL_P(entry);
 					break;
 
 				case IS_STRING:
 				case IS_DOUBLE:
 					convert_to_long_ex(entry);
-					pwidths[i] = Z_LVAL_P(*entry);
+					pwidths[i] = Z_LVAL_P(entry);
 					break;
 
 				case IS_NULL:
@@ -284,9 +284,9 @@ ZEND_FUNCTION(wb_set_size)
 
 ZEND_FUNCTION(wb_get_position)
 {
-	long pwbo;
+	zend_long pwbo;
 	DWORD pos;
-	LONG clientarea = FALSE;
+	zend_long clientarea = FALSE;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l|l", &pwbo, &clientarea) == FAILURE)
@@ -305,7 +305,7 @@ ZEND_FUNCTION(wb_get_position)
 
 ZEND_FUNCTION(wb_set_position)
 {
-	long pwbo, x, y;
+	zend_long pwbo, x, y;
 
 	// Default parameter values
 
@@ -325,7 +325,7 @@ ZEND_FUNCTION(wb_set_position)
 ZEND_FUNCTION(wb_set_area)
 {
     int nargs;
-	long pwbo, type, x, y, w, h;
+	zend_long pwbo, type, x, y, w, h;
 
 	// Default parameter values
 
@@ -358,10 +358,10 @@ ZEND_FUNCTION(wb_set_area)
 
 ZEND_FUNCTION(wb_set_handler)
 {
-	long pwbo;
-	char *handler;
-	char *objname;
-	zval *name, *zparam;
+	zend_long pwbo;
+	zend_string *handler = NULL;
+	zend_string *objname = NULL;
+	zval name = {0}, *zparam = NULL;
 
 	TCHAR *wcsObjname = 0;
 	TCHAR *wcsHandler = 0;
@@ -372,14 +372,13 @@ ZEND_FUNCTION(wb_set_handler)
 
 	if(!wbIsWBObj((void *)pwbo, TRUE))
 		RETURN_NULL();
-
+/*
 	switch(Z_TYPE_P(zparam)) {
 		case IS_ARRAY:
 			parse_array(zparam, "ss", &objname, &handler);
 			break;
 		case IS_STRING:
-			handler = Z_STRVAL_P(zparam);
-			objname = NULL;
+			handler = zparam->value.str;
 			break;
 		default:
 			zend_error(E_WARNING, "Wrong data type in function %s()",
@@ -387,27 +386,23 @@ ZEND_FUNCTION(wb_set_handler)
 			RETURN_NULL();
 	}
 
-	ZVAL_STRING(name, handler, 1);
-
+	ZVAL_STRING(&name, handler->val);
+*/
 	// Error checking is VERY POOR for user methods (i.e. when zparam is an array)
-
-	if(!objname && !zend_is_callable(name, 0, &handler)) {
+	if(!objname && !zend_is_callable(zparam, 0, &handler)) {
 		zend_error(E_WARNING, "%s(): '%s' is not a function or cannot be called",
 		  get_active_function_name(TSRMLS_C), handler);
-		efree(name);
 		RETURN_NULL();
 	} else {
-		efree(name);
-
-		wcsObjname = Utf82WideChar(objname, 0);
-		wcsHandler = Utf82WideChar(handler, 0);
-		RETURN_BOOL(wbSetWindowHandler((PWBOBJ)pwbo, wcsObjname, wcsHandler));
+		//wcsObjname = Utf82WideChar(objname, 0);
+		wcsHandler = Utf82WideChar(handler->val, 0);
+		RETURN_BOOL(wbSetWindowHandler((PWBOBJ)pwbo, objname, wcsHandler));
 	}
 }
 
 ZEND_FUNCTION(wb_get_item_list)
 {
-	long pwboparent;
+	zend_long pwboparent;
 	PWBOBJ *plist;
 	int nctrls, i;
 
