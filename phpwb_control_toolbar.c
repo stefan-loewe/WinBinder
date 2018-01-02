@@ -17,12 +17,12 @@
 
 ZEND_FUNCTION(wbtemp_create_toolbar)
 {
-	int i, nelem, s_len = 0;
-	zval *zarray, **entry;
+	zend_long i, nelem, s_len = 0;
+	zval *zarray = NULL, *entry = NULL;
 	HashTable *target_hash;
-	HANDLE hImage;
+	HANDLE hImage = NULL;
 	LONG l;
-	long pwboParent, width = 0, height = 0;
+	zend_long pwboParent, width = 0, height = 0;
 	char *s = "";
 	PWBITEM *pitem;
 
@@ -54,7 +54,7 @@ ZEND_FUNCTION(wbtemp_create_toolbar)
 
 		for(i = 0; i < nelem; i++) {
 
-			if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+			if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 				zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
 				  i, get_active_function_name(TSRMLS_C));
 				efree(pitem);
@@ -68,7 +68,7 @@ ZEND_FUNCTION(wbtemp_create_toolbar)
 			switch(Z_TYPE_P(entry)) {
 
 				case IS_ARRAY:				// Toolbar button
-					parse_array(*entry, "lssl", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->index);
+					parse_array(entry, "lssl", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->index);
 					pitem[i]->pszCaption = Utf82WideChar(pitem[i]->pszCaption, 0);
 					pitem[i]->pszHint = Utf82WideChar(pitem[i]->pszHint, 0);
 					break;

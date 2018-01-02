@@ -24,8 +24,8 @@ ZEND_FUNCTION(wb_load_image)
 {
 	char *s;
 	int s_len;
-	long index;
-	long param = 0;
+	zend_long index;
+	zend_long param = 0;
 	HANDLE hImage;
 
 	TCHAR *wcs = 0;
@@ -51,7 +51,7 @@ ZEND_FUNCTION(wb_load_image)
 
 ZEND_FUNCTION(wb_save_image)
 {
-	long hbm;
+	zend_long hbm;
 	char *s;
 	int s_len;
 
@@ -74,7 +74,7 @@ ZEND_FUNCTION(wb_save_image)
 
 ZEND_FUNCTION(wb_create_image)
 {
-    long w, h, bmi = 0, bits = 0;
+	zend_long w, h, bmi = 0, bits = 0;
     int nargs;
 
 	nargs = ZEND_NUM_ARGS();
@@ -94,10 +94,10 @@ ZEND_FUNCTION(wb_create_image)
 
 ZEND_FUNCTION(wb_get_image_data)
 {
-    long hbm;
+	zend_long hbm;
     BYTE *lpBits = NULL;
     DWORD size;
-    BOOL compress4to3 = FALSE;
+	zend_long compress4to3 = FALSE;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l|l", &hbm, &compress4to3) == FAILURE)
@@ -117,7 +117,7 @@ ZEND_FUNCTION(wb_get_image_data)
 
 ZEND_FUNCTION(wb_create_mask)
 {
-    long hbm, c;
+	zend_long hbm, c;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &hbm, &c) == FAILURE)
@@ -131,7 +131,7 @@ ZEND_FUNCTION(wb_create_mask)
 
 ZEND_FUNCTION(wb_destroy_image)
 {
-    long hbm;
+	zend_long hbm;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "l", &hbm) == FAILURE)

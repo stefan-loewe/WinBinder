@@ -96,15 +96,15 @@ BOOL wbInit(void)
 		return FALSE;
 
 	// Get the handle of the file used to create this process
-
+	/*
 	hAppInstance = GetModuleHandle(NULL);
 
 	// Set the background color for tab controls
 
 	ovInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx(&ovInfo);
+	GetVersionExW(&ovInfo);
 
-	if(ovInfo.dwMajorVersion >= 5 && ovInfo.dwMinorVersion >= 1) {	// Windows XP only
+	if(ovInfo.dwMajorVersion >= 5 && ovInfo.dwMinorVersion >= 1) {	// Windows XP only */
 
 		// Check if a manifest file exists
 
@@ -153,7 +153,7 @@ BOOL wbInit(void)
 				}
 			}
 		}
-	}
+	//}
 
 	if(!RegisterClasses())
 		return FALSE;
@@ -1136,7 +1136,7 @@ LONG wbGetSystemInfo(LPCTSTR pszInfo, BOOL *pbIsString, LPTSTR pszString, UINT u
 		return 0;
 
 	} else if(!lstrcmpi(pszInfo, L"osnumber")) {
-
+/*
 		OSVERSIONINFO ovInfo;
 
 		ovInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -1146,6 +1146,7 @@ LONG wbGetSystemInfo(LPCTSTR pszInfo, BOOL *pbIsString, LPTSTR pszString, UINT u
 			ovInfo.dwMajorVersion,
 			ovInfo.dwMinorVersion);
 		*pbIsString = TRUE;
+		*/
 		return 0;
 
 	} else if(!lstrcmpi(pszInfo, L"consolemode")) {
@@ -1220,7 +1221,7 @@ LONG wbGetSystemInfo(LPCTSTR pszInfo, BOOL *pbIsString, LPTSTR pszString, UINT u
 		return 0;
 
 	} else if(!lstrcmpi(pszInfo, L"appmemory")) {
-
+		/*
 		OSVERSIONINFO ovInfo;
 
 		*pbIsString = FALSE;
@@ -1229,7 +1230,8 @@ LONG wbGetSystemInfo(LPCTSTR pszInfo, BOOL *pbIsString, LPTSTR pszString, UINT u
 		GetVersionEx(&ovInfo);
 		if(ovInfo.dwPlatformId != VER_PLATFORM_WIN32_NT)	// Only NT-based
 			return 0;
-		else {
+		else { */
+		
 			HANDLE hProcess;
 			HMODULE hLib = NULL;
 //			BOOL WINAPI (*w_GetProcessMemoryInfo)(HANDLE Process, PPROCESS_MEMORY_COUNTERS ppsmemCounters, DWORD cb);
@@ -1254,7 +1256,7 @@ LONG wbGetSystemInfo(LPCTSTR pszInfo, BOOL *pbIsString, LPTSTR pszString, UINT u
 				return pmc.WorkingSetSize;
 			}
 			return 0;
-		}
+//		}
 
 	} else if(!lstrcmpi(pszInfo, L"totalmemory")) {
 
@@ -1329,15 +1331,16 @@ static HKEY _GetKeyFromString(LPCTSTR pszKey)
 
 static int _GetUserObjects(void)
 {
+	/*
 	OSVERSIONINFO ovInfo;
 
 	ovInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&ovInfo);
 
-	if(ovInfo.dwPlatformId == VER_PLATFORM_WIN32_NT) {
+	if(ovInfo.dwPlatformId == VER_PLATFORM_WIN32_NT) { */
 		return GetGuiResources(GetCurrentProcess(), GR_USEROBJECTS);
-	} else
-		return 0;
+/*	} else
+		return 0; */
 }
 
 /* Counts GDI objects.
@@ -1349,6 +1352,8 @@ static int _GetUserObjects(void)
 
 static int _GetGDIObjects(void)
 {
+	return GetGuiResources(GetCurrentProcess(), GR_GDIOBJECTS);
+	/*
 	OSVERSIONINFO ovInfo;
 
 	ovInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -1403,6 +1408,7 @@ static int _GetGDIObjects(void)
 
 		return nObjCount;
 	}
+	*/
 }
 
 // This code is adapted from MSDN article 'Getting the system version':
@@ -1410,6 +1416,8 @@ static int _GetGDIObjects(void)
 
 static BOOL _GetOSVersionString(LPTSTR pszString)
 {
+	
+	/*
 	TCHAR szOS[256] = L"";
 	TCHAR szVer[256]= L"";
 	TCHAR szSP[256] = L"";
@@ -1427,7 +1435,7 @@ static BOOL _GetOSVersionString(LPTSTR pszString)
 		if(!GetVersionEx((OSVERSIONINFO *) &osvi))
 			return FALSE;
 	}
-
+	
 	switch(osvi.dwPlatformId) {
 
 
@@ -1568,7 +1576,7 @@ static BOOL _GetOSVersionString(LPTSTR pszString)
 	}
 
 	wsprintf(pszString, L"%s %s %s", szOS, szVer, szSP);
-
+	*/
 	return TRUE;
 }
 

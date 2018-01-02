@@ -20,12 +20,12 @@
 ZEND_FUNCTION(wbtemp_create_menu)
 {
 	int i, nelem;
-	zval *zarray, **entry;
+	zval *zarray = NULL, *entry = NULL;
 	HashTable *target_hash;
-	long pwboParent;
-	PWBITEM *pitem;
+	zend_long pwboParent;
+	PWBITEM *pitem = NULL;
 	LONG l;
-	char *str_accel;
+	char *str_accel = NULL;
 	ACCEL accel[MAX_ACCELS];
 	DWORD dwacc;
 	int naccel= 0;
@@ -55,7 +55,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 		// Loop to read array items
 
 		for(i = 0; i < nelem; i++) {
-			if(zend_hash_get_current_data(target_hash, (void **) &entry) == FAILURE) {
+			if((entry = zend_hash_get_current_data(target_hash)) == NULL) {
 				zend_error(E_WARNING, "Could not retrieve element %d from array in function %s()",
 				  i, get_active_function_name(TSRMLS_C));
 				efree(pitem);
@@ -69,7 +69,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 			switch(Z_TYPE_P(entry)) {
 
 				case IS_ARRAY:				// A menu item is an array inside an array
-					parse_array(*entry, "lssss", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->pszImage, &str_accel);
+					parse_array(entry, "lssss", &pitem[i]->id, &pitem[i]->pszCaption, &pitem[i]->pszHint, &pitem[i]->pszImage, &str_accel);
 					pitem[i]->pszCaption = Utf82WideChar(pitem[i]->pszCaption, 0);
 					pitem[i]->pszHint = Utf82WideChar(pitem[i]->pszHint, 0);
 					pitem[i]->pszImage = Utf82WideChar(pitem[i]->pszImage, 0);
@@ -92,7 +92,7 @@ ZEND_FUNCTION(wbtemp_create_menu)
 				case IS_STRING:				// Create first-level menu
 					pitem[i]->id = 0;
 					pitem[i]->index = 0;
-					pitem[i]->pszCaption = Utf82WideChar(Z_STRVAL_P(*entry), Z_STRLEN_P(*entry));
+					pitem[i]->pszCaption = Utf82WideChar(Z_STRVAL_P(entry), Z_STRLEN_P(entry));
 					pitem[i]->pszHint = NULL;
 					pitem[i]->pszImage = NULL;
 					break;
@@ -122,8 +122,8 @@ ZEND_FUNCTION(wbtemp_create_menu)
 
 ZEND_FUNCTION(wbtemp_get_menu_item_checked)
 {
-    long id;
-	long pwbo;
+	zend_long id;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "ll", &pwbo, &id) == FAILURE)
@@ -136,8 +136,8 @@ ZEND_FUNCTION(wbtemp_get_menu_item_checked)
 
 ZEND_FUNCTION(wbtemp_set_menu_item_checked)
 {
-    long id, b;
-	long pwbo;
+	zend_long id, b;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "lll", &pwbo, &id, &b) == FAILURE)
@@ -155,7 +155,7 @@ ZEND_FUNCTION(wbtemp_set_menu_item_checked)
 
 ZEND_FUNCTION(wbtemp_set_menu_item_selected)
 {
-	long pwbo, id, state;
+	zend_long pwbo, id, state;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "lll", &pwbo, &id, &state) == FAILURE)
@@ -168,8 +168,8 @@ ZEND_FUNCTION(wbtemp_set_menu_item_selected)
 
 ZEND_FUNCTION(wbtemp_set_menu_item_image)
 {
-    long id, handle;
-	long pwbo;
+	zend_long id, handle;
+	zend_long pwbo;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	 "lll", &pwbo, &id, &handle) == FAILURE)

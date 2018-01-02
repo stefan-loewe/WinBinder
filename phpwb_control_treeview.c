@@ -23,7 +23,7 @@ extern UINT wbGetTreeViewItemLevel(PWBOBJ pwbo, HTREEITEM hItem);
 
 ZEND_FUNCTION(wb_get_level)
 {
-	LONG pwbo, item = 0;
+	zend_long pwbo, item = 0;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &pwbo, &item) == FAILURE)
@@ -45,7 +45,7 @@ ZEND_FUNCTION(wb_get_level)
 
 ZEND_FUNCTION(wbtemp_set_treeview_item_selected)
 {
-	LONG pwbo, item;
+	zend_long pwbo, item;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
 	  "ll", &pwbo, &item) == FAILURE)
@@ -59,7 +59,7 @@ ZEND_FUNCTION(wbtemp_set_treeview_item_selected)
 
 ZEND_FUNCTION(wbtemp_set_treeview_item_text)
 {
-	LONG pwbo, item;
+	zend_long pwbo, item;
 	char *s;
 	int s_len;
 
@@ -78,7 +78,7 @@ ZEND_FUNCTION(wbtemp_set_treeview_item_text)
 
 ZEND_FUNCTION(wbtemp_get_treeview_item_text)
 {
-	LONG pwbo, item = 0;
+	zend_long pwbo, item = 0;
 	TCHAR szItem[MAX_ITEM_STRING];
 
 	char *str = 0;
@@ -105,7 +105,7 @@ If zparam is NULL, does not change associated value (does nothing).
 
 ZEND_FUNCTION(wbtemp_set_treeview_item_value)
 {
-	LONG pwbo, item, lparam = 0;
+	zend_long pwbo, item, lparam = 0;
 	zval *zparam, zcopy;
 
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
@@ -141,7 +141,7 @@ If zparam is NULL, does not change associated value.
 
 ZEND_FUNCTION(wbtemp_create_treeview_item)
 {
-	LONG pwbo, where = 0, img1 = -1, img2 = -1, insertiontype = 0;
+	zend_long pwbo, where = 0, img1 = -1, img2 = -1, insertiontype = 0;
 	char *str;
 	int str_len, lparam = 0;
 	zval *zparam = NULL;

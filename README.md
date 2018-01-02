@@ -20,6 +20,7 @@ On which PHP versions has it been tested on?
   - PHP 5.6
   - PHP 5.5 
   - PHP 5.4
+  - PHP 7.0 
 
 How to compile the WinBinder extension?
 =======================================

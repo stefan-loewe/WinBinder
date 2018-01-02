@@ -79,7 +79,7 @@ PWBOBJ wbCreateControl(PWBOBJ pwboParent, UINT uWinBinderClass, LPCTSTR pszSourc
 	LPTSTR pszClass;
 	int nVisible;
 	DWORD dwStyle, dwExStyle;
-	HWND hTab, hwndParent;
+	HWND hTab = NULL, hwndParent = NULL;
 	TCHAR *pszCaption;
 	TCHAR *pszTooltip;
 
@@ -573,7 +573,7 @@ BOOL wbDestroyControl(PWBOBJ pwbo)
 
 PWBOBJ wbGetControl(PWBOBJ pwboParent, int id)
 {
-	PWBOBJ pwbo;
+	PWBOBJ pwbo = NULL;
 
 	if(!wbIsWBObj(pwboParent, TRUE)) {				// Is it a valid control?
 		wbError(TEXT(__FUNCTION__), MB_ICONWARNING, TEXT("First parameter is not a valid WinBinder control"));
@@ -1756,7 +1756,7 @@ For opaque bitmaps, set clTransp to NOCOLOR
 static BOOL SetTransparentBitmap(HWND hwnd, HBITMAP hbmBits, BOOL bStatic, COLORREF clTransp)
 {
 //	static HBITMAP hbm = NULL, hbmMask;
-	HBITMAP hbm, hbmMask, hbmOld;
+	HBITMAP hbm, hbmMask = NULL, hbmOld;
 	HDC hdc;
 	RECT rc;
 	HBRUSH hbr;

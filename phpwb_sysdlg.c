@@ -19,11 +19,11 @@
 
 ZEND_FUNCTION(wbtemp_sys_dlg_open)
 {
-    long pwboParent = (long)NULL;
+	zend_long pwboParent = (long)NULL;
 	char *title = "", *filter = "", *path = "";
 	TCHAR  *Current, firstString[MAX_PATH];
 	int title_len = 0, filter_len = 0, path_len = 0, numCount=0, fileCount = 0;
-	long style;
+	zend_long style;
 	TCHAR szFile[MAX_PATH] = TEXT("");
 
 	char *file = 0;
@@ -108,7 +108,7 @@ ZEND_FUNCTION(wbtemp_sys_dlg_open)
 
 ZEND_FUNCTION(wbtemp_sys_dlg_save)
 {
-    long pwboParent = (long)NULL;
+	zend_long pwboParent = (long)NULL;
 	char *title = "", *filter = "", *path = "", *file = "", *defext = "";
 	int title_len = 0, filter_len = 0, path_len = 0, file_len = 0, defext_len = 0;
 	TCHAR szFile[MAX_PATH] = TEXT("");
@@ -147,7 +147,7 @@ ZEND_FUNCTION(wbtemp_sys_dlg_save)
 
 ZEND_FUNCTION(wb_sys_dlg_path)
 {
-    long pwboParent = (long)NULL;
+	zend_long pwboParent = (long)NULL;
 	char *title = "", *path = "";
 	int title_len = 0, path_len = 0;
 	TCHAR szSelPath[MAX_PATH] = TEXT("");
@@ -179,8 +179,8 @@ ZEND_FUNCTION(wb_sys_dlg_path)
 
 ZEND_FUNCTION(wb_sys_dlg_color)
 {
-    long pwboParent = (long)NULL;
-    long color = NOCOLOR;
+	zend_long pwboParent = (long)NULL;
+	zend_long color = NOCOLOR;
 	char *title = "";
 	int title_len = 0;
 
