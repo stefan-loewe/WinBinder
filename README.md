@@ -1,3 +1,10 @@
+
+Note
+=========
+As of 2018-01-01, this repository is shut down, to be restricted to be read-only.
+
+For an up-to-date development, please consider the fork of user [wagy](https://github.com/wagy/) at [https://github.com/wagy/WinBinder/](https://github.com/wagy/WinBinder/)
+
 WinBinder
 =========
 
