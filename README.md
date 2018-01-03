@@ -3,7 +3,7 @@ Note
 =========
 As of 2018-01-01, this repository is shut down, to be restricted to be read-only.
 
-For an up-to-date development, please consider the fork of user [wagy](https://github.com/wagy/) at [https://github.com/wagy/WinBinder/](https://github.com/wagy/WinBinder/)
+For an up-to-date development, please consider the fork of user [wagy](https://github.com/wagy/) at [https://github.com/wagy/WinBinder/](https://github.com/wagy/WinBinder/), which reportedly also has PHP 7.X support.
 
 WinBinder
 =========
@@ -27,6 +27,8 @@ On which PHP versions has it been tested on?
   - PHP 5.6
   - PHP 5.5 
   - PHP 5.4
+
+For a release working with PHP 7, please consider the fork of user [wagy](https://github.com/wagy/) at [https://github.com/wagy/WinBinder/](https://github.com/wagy/WinBinder/).
 
 How to compile the WinBinder extension?
 =======================================
