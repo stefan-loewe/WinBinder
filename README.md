@@ -3,6 +3,8 @@ Note
 =========
 As of 2018-01-01, this repository is shut down, to be restricted to be read-only.
 
+Thanks everybody for their support, esp. @jaredallard!
+
 For an up-to-date development, please consider the fork of user [wagy](https://github.com/wagy/) at [https://github.com/wagy/WinBinder/](https://github.com/wagy/WinBinder/), which reportedly also has PHP 7.X support.
 
 WinBinder
